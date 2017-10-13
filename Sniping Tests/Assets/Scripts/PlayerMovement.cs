@@ -47,30 +47,30 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Game quitting ---------------- NEEDS MOVING TO A UI SCRIPT
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (MyInput.GetButtonDown("Pause"))
             Application.Quit();
         
         //Walking and sprinting
-        if (Input.GetKey(KeyCode.W))
+        if (MyInput.GetButton("Forward"))
             transform.Translate(Vector3.forward * ((Input.GetKey(KeyCode.LeftShift) && !isCrouching && IsGrounded()) ? movementSpeedSprint : movementSpeedForward) * Time.deltaTime);
-        if (Input.GetKey(KeyCode.S))
+        else if (MyInput.GetButton("Backward"))
             transform.Translate(Vector3.back * movementSpeedForward * Time.deltaTime);
-        if (Input.GetKey(KeyCode.A))
+        else if (MyInput.GetButton("Left"))
             transform.Translate(Vector3.left * movementSpeedSideways * Time.deltaTime);
-        if (Input.GetKey(KeyCode.D))
+        else if (MyInput.GetButton("Right"))
             transform.Translate(Vector3.right * movementSpeedSideways * Time.deltaTime);
         
         //Jumping
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !isCrouching)
+        if (MyInput.GetButtonDown("Jump") && IsGrounded() && !isCrouching)
             mainRigidBody.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
 
         //Crouching
-        if (Input.GetKeyDown(KeyCode.LeftControl) && IsGrounded())
+        if (MyInput.GetButtonDown("Crouch") && IsGrounded())
         {
             isCrouching = true;
             topAnimator.SetTrigger("Crouch");
         }
-        if (Input.GetKeyUp(KeyCode.LeftControl) && IsGrounded())
+        else if (MyInput.GetButtonUp("Crouch") && IsGrounded())
         {
             isCrouching = false;
             topAnimator.SetTrigger("Stand");
@@ -122,13 +122,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isScoped)
         {
-            lookSensitivityX *= 8;
-            lookSensitivityY *= 8;
+            lookSensitivityX = lookSensitivityY *= 8;
         }
         else
         {
-            lookSensitivityX /= 8;
-            lookSensitivityY /= 8;
+            lookSensitivityX = lookSensitivityY /= 8;
         }
     }
 }

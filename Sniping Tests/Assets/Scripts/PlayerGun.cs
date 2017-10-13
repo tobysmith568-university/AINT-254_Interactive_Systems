@@ -30,7 +30,7 @@ public class PlayerGun : MonoBehaviour
     private void Update()
     {
         //Firing
-        if (Input.GetMouseButtonDown(0))
+        if (MyInput.GetButtonDown("Shoot"))
         {
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
@@ -44,7 +44,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Scoping
-        if (Input.GetMouseButtonDown(1))
+        if (MyInput.GetButtonDown("Scope"))
             ToggleScoped();
     }
 
