@@ -17,6 +17,9 @@ public class PlayerGun : MonoBehaviour
     Camera scopeCamera;
     Camera currentCamera;
 
+    [SerializeField]
+    ParticleSystem flame;
+
     RaycastHit raycastHit;
 
     bool isScoped;
@@ -38,7 +41,8 @@ public class PlayerGun : MonoBehaviour
             {
                 if (raycastHit.transform.tag == "Target")
                     raycastHit.transform.SendMessage("BeenShot");
-            }            
+            }
+            flame.Play();
             if (isScoped)
                 Invoke("ToggleScoped", 0.10f);
         }
