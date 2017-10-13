@@ -76,15 +76,16 @@ public class PlayerMovement : MonoBehaviour
             topAnimator.SetTrigger("Stand");
         }
         
-        //Looking
+        //Looking X axis
         rotationX += Input.GetAxis("Mouse X") * lookSensitivityX;
-        rotationY += Input.GetAxis("Mouse Y") * lookSensitivityY;
         rotationX = ClampAngle(rotationX, -360F, 360F);
-        rotationY = ClampAngle(rotationY, -60F, 60F);
         Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
-        Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, -Vector3.right);
-
         player.localRotation = originalRotation * xQuaternion;
+
+        //Looking Y axis
+        rotationY += Input.GetAxis("Mouse Y") * lookSensitivityY;
+        rotationY = ClampAngle(rotationY, -60F, 60F);
+        Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, -Vector3.right);
         topTransform.localRotation = originalRotation * yQuaternion;
     }
 
