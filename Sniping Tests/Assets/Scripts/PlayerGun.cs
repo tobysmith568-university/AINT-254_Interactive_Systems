@@ -68,6 +68,7 @@ public class PlayerGun : MonoBehaviour
     /// </summary>
     private void Hit()
     {
+        int noscopeBonus = 0, quickscopeBonus = 0, longshotBonus = 0, chainkillBonus = 0;
         if (raycastHit.transform.tag == "Target")
         {
             //Cancel invokes
@@ -77,12 +78,42 @@ public class PlayerGun : MonoBehaviour
             //Tell the target it has been hit
             raycastHit.transform.SendMessage("BeenShot");
 
-            //Find and show the kill stats
+            //Find the kill stats
+            if (sinceScope < 40)
+                noscopeBonus = 30;
+            else if (sinceScope < 50)
+                quickscopeBonus = 50;
+            else if (sinceScope < 60)
+                quickscopeBonus = 40;
+            else if (sinceScope < 70)
+                quickscopeBonus = 30;
+            else if (sinceScope < 80)
+                quickscopeBonus = 20;
+            else if (sinceScope < 90)
+                quickscopeBonus = 10;
+
             shootdistance = Vector3.Distance(playerTransform.position, raycastHit.transform.position);
-            SetScoreMessage("Scoped time: " + sinceScope +
-                          "\nHit distance: " + Mathf.Round(shootdistance) +
-                          "\nHit interval: " + sinceKill +
-                          "\nHit time: " + Scoring.Time.ToString("n2"));
+            if (shootdistance > 50)
+                longshotBonus = (int)shootdistance - 50;
+            
+            if (sinceKill < 150)
+                chainkillBonus = 30;
+
+            string message = "Kill: 100";
+            if (noscopeBonus != 0)
+                message += "\nNo-scope Bonus: " + noscopeBonus;
+            if (quickscopeBonus != 0)
+                message += "\nQuick-scope Bonus: " + quickscopeBonus;
+            if (longshotBonus != 0)
+                message += "\nLongshot Bonus: " + longshotBonus;
+            if (chainkillBonus != 0)
+                message += "\nChainkill Bonus: " + chainkillBonus;
+
+            //Show the kill stats
+            SetScoreMessage(message);
+
+            //Increment the player score
+            Scoring.AddScore(100 + noscopeBonus + quickscopeBonus + longshotBonus + chainkillBonus);
 
             //Set up next kill stats
             Invoke("HideScoreMessage", 2f);
