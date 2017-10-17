@@ -51,27 +51,7 @@ public class PlayerGun : MonoBehaviour
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
             if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit))
             {
-                if (raycastHit.transform.tag == "Target")
-                {
-                    //Cancel invokes
-                    CancelInvoke("HideScoreMessage");
-                    CancelInvoke("IncrementSinceKill");
-
-                    //Tell the target it has been hit
-                    raycastHit.transform.SendMessage("BeenShot");
-
-                    //Find and show the kill stats
-                    shootdistance = Vector3.Distance(playerTransform.position, raycastHit.transform.position);
-                    SetScoreMessage("Scoped time: " + sinceScope +
-                                  "\nHit distance: " + Mathf.Round(shootdistance) +
-                                  "\nHit interval: " + sinceKill +
-                                  "\nHit time: " + Scoring.Time.ToString("n2"));
-
-                    //Set up next kill stats
-                    Invoke("HideScoreMessage", 2f);
-                    sinceKill = 0;
-                    InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
-                }
+                Hit();
             }
             flame.Play();
             if (isScoped)
@@ -81,6 +61,34 @@ public class PlayerGun : MonoBehaviour
         //Scoping
         if (MyInput.GetButtonDown("Scope"))
             ToggleScoped();
+    }
+
+    /// <summary>
+    /// Ran when the gun is fired and hits an object
+    /// </summary>
+    private void Hit()
+    {
+        if (raycastHit.transform.tag == "Target")
+        {
+            //Cancel invokes
+            CancelInvoke("HideScoreMessage");
+            CancelInvoke("IncrementSinceKill");
+
+            //Tell the target it has been hit
+            raycastHit.transform.SendMessage("BeenShot");
+
+            //Find and show the kill stats
+            shootdistance = Vector3.Distance(playerTransform.position, raycastHit.transform.position);
+            SetScoreMessage("Scoped time: " + sinceScope +
+                          "\nHit distance: " + Mathf.Round(shootdistance) +
+                          "\nHit interval: " + sinceKill +
+                          "\nHit time: " + Scoring.Time.ToString("n2"));
+
+            //Set up next kill stats
+            Invoke("HideScoreMessage", 2f);
+            sinceKill = 0;
+            InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
+        }
     }
 
     public void ToggleScoped()
