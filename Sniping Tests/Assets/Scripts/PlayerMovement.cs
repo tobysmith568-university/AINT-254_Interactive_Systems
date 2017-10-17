@@ -53,11 +53,11 @@ public class PlayerMovement : MonoBehaviour
         //Walking and sprinting
         if (MyInput.GetButton("Forward"))
             transform.Translate(Vector3.forward * ((Input.GetKey(KeyCode.LeftShift) && !isCrouching && IsGrounded()) ? movementSpeedSprint : movementSpeedForward) * Time.deltaTime);
-        else if (MyInput.GetButton("Backward"))
+        if (MyInput.GetButton("Backward"))
             transform.Translate(Vector3.back * movementSpeedForward * Time.deltaTime);
-        else if (MyInput.GetButton("Left"))
+        if (MyInput.GetButton("Left"))
             transform.Translate(Vector3.left * movementSpeedSideways * Time.deltaTime);
-        else if (MyInput.GetButton("Right"))
+        if (MyInput.GetButton("Right"))
             transform.Translate(Vector3.right * movementSpeedSideways * Time.deltaTime);
         
         //Jumping
