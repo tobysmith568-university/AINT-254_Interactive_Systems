@@ -30,11 +30,12 @@ public class PlayerGun : MonoBehaviour
     RaycastHit raycastHit;
 
     bool isScoped;
+    bool canFire = true;
 
     int sinceScope = 0;
     int sinceKill = 0;
     float shootdistance = 0;
-
+    
     private void Start()
     {
         Cursor.visible = false;
@@ -45,7 +46,7 @@ public class PlayerGun : MonoBehaviour
     private void Update()
     {
         //Firing
-        if (MyInput.GetButtonDown("Shoot"))
+        if (MyInput.GetButtonDown("Shoot") && canFire)
         {
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
@@ -157,6 +158,16 @@ public class PlayerGun : MonoBehaviour
     private void HideScoreMessage()
     {
         scoreMessage.text = "";
+    }
+
+    public void CantFire()
+    {
+        canFire = false;
+    }
+
+    public void CanFire()
+    {
+        canFire = true;
     }
 
 #endregion
