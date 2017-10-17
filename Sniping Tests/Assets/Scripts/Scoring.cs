@@ -6,17 +6,24 @@ using System.Timers;
 
 public class Scoring : MonoBehaviour
 {
+    /// <summary>
+    /// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
+    /// </summary>
+
+
+
     [SerializeField]
     Text timeText;
 
     public static float Time { get; private set; }
     public static int Score { get; private set; }
 
-    private void Start()
+    void Start()
     {
         StartTimer();
     }
 
+#region Time
     void StartTimer()
     {
         InvokeRepeating("Tick", 0.01f, 0.01f);
@@ -32,4 +39,12 @@ public class Scoring : MonoBehaviour
         Time = Time + 0.01f;
         timeText.text = Time.ToString("n2");
     }
+#endregion
+
+#region Score
+    void  AddScore(int score)
+    {
+        Score += score;
+    }
+#endregion
 }
