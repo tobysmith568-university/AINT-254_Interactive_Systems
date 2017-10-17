@@ -63,8 +63,8 @@ public class PlayerGun : MonoBehaviour
                     //Find and show the kill stats
                     shootdistance = Vector3.Distance(playerTransform.position, raycastHit.transform.position);
                     SetScoreMessage("Hit time: " + sinceScope +
-                                    "\nHit distance: " + Mathf.Round(shootdistance) +
-                                    "\nHit interval: " + sinceKill);
+                                  "\nHit distance: " + Mathf.Round(shootdistance) +
+                                  "\nHit interval: " + sinceKill);
 
                     //Set up next kill stats
                     Invoke("HideScoreMessage", 2f);
