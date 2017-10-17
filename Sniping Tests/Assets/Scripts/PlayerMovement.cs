@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     float jumpPower = 10;
+
+    [SerializeField]
+    Text text;
     
     float rotationX = 0F;
     float rotationY = 0F;
