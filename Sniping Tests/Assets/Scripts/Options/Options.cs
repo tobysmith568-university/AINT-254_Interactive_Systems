@@ -27,6 +27,17 @@ public class Options : MonoBehaviour
 
         xToggle.isOn = MyPrefs.GetBool(BoolPref.xInverted);
         yToggle.isOn = MyPrefs.GetBool(BoolPref.yInverted);
+
+        if (!MyPrefs.HasFloat(FloatPref.CrosshairRed))
+            MyPrefs.SetFloat(FloatPref.CrosshairRed, 0);
+        if (!MyPrefs.HasFloat(FloatPref.CrosshairGreen))
+            MyPrefs.SetFloat(FloatPref.CrosshairGreen, 0);
+        if (!MyPrefs.HasFloat(FloatPref.CrosshairBlue))
+            MyPrefs.SetFloat(FloatPref.CrosshairBlue, 0);
+
+        redSlider.value = MyPrefs.GetFloat(FloatPref.CrosshairRed);
+        greenSlider.value = MyPrefs.GetFloat(FloatPref.CrosshairGreen);
+        blueSlider.value = MyPrefs.GetFloat(FloatPref.CrosshairBlue);
     }
 
     #region Panels

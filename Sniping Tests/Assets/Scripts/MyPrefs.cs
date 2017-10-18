@@ -9,7 +9,10 @@ public enum IntPref
 public enum FloatPref
 {
     XSensitivity,
-    YSensitivity
+    YSensitivity,
+    CrosshairRed,
+    CrosshairGreen,
+    CrosshairBlue
 }
 
 public enum StringPref

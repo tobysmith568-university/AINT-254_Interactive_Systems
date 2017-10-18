@@ -27,6 +27,9 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     Text scoreMessage;
 
+    [SerializeField]
+    Image crosshair;
+
     RaycastHit raycastHit;
 
     bool isScoped;
@@ -42,6 +45,9 @@ public class PlayerGun : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         gunAnimator = GetComponent<Animator>();
         InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
+        crosshair.color = new Color(MyPrefs.GetFloat(FloatPref.CrosshairRed),
+                                    MyPrefs.GetFloat(FloatPref.CrosshairGreen),
+                                    MyPrefs.GetFloat(FloatPref.CrosshairBlue));
     }
 
     private void Update()

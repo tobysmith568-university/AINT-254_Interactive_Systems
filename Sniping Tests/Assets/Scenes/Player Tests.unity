@@ -4317,6 +4317,7 @@ MonoBehaviour:
   scopeCamera: {fileID: 1902955937}
   flame: {fileID: 897170358}
   scoreMessage: {fileID: 1608814150}
+  crosshair: {fileID: 1111512407}
 --- !u!95 &1167481465
 Animator:
   serializedVersion: 3
