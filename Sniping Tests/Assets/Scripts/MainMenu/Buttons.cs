@@ -9,4 +9,9 @@ public class Buttons : MonoBehaviour
     {
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
+
+    public void Options()
+    {
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
+    }
 }
