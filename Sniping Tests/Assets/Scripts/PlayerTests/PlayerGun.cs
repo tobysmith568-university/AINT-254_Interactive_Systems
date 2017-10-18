@@ -39,6 +39,7 @@ public class PlayerGun : MonoBehaviour
     private void Start()
     {
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         gunAnimator = GetComponent<Animator>();
         InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
     }
