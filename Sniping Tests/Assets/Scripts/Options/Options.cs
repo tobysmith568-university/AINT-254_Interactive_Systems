@@ -6,15 +6,26 @@ using UnityEngine.UI;
 
 public class Options : MonoBehaviour
 {
+    private void Start()
+    {
+        //Panels
+        ShowPanel0();
+
+        //General
+        if (!MyPrefs.HasFloat(FloatPref.XSensitivity))
+            MyPrefs.SetFloat(FloatPref.XSensitivity, 3);
+        if (!MyPrefs.HasFloat(FloatPref.YSensitivity))
+            MyPrefs.SetFloat(FloatPref.YSensitivity, 3);
+
+        xSlider.value = MyPrefs.GetFloat(FloatPref.XSensitivity);
+        ySlider.value = MyPrefs.GetFloat(FloatPref.YSensitivity);
+    }
+
+    #region Panels
     [SerializeField]
     GameObject[] panels;
 
     int currentPanel = -1;
-
-    private void Start()
-    {
-        ShowPanel0();
-    }
 
     private void HideAllPanels()
     {
@@ -64,4 +75,30 @@ public class Options : MonoBehaviour
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
+    #endregion
+
+    #region General
+    [SerializeField]
+    Text xValue;
+    [SerializeField]
+    Text yValue;
+
+    [SerializeField]
+    Slider xSlider;
+    [SerializeField]
+    Slider ySlider;
+
+    public void XAxisChanged()
+    {
+        xValue.text = ((int)(25 * xSlider.value - 25)).ToString();
+        MyPrefs.SetFloat(FloatPref.XSensitivity, xSlider.value);
+    }
+
+    public void YAxisChanged()
+    {
+        yValue.text = ((int)(25 * ySlider.value - 25)).ToString();
+        MyPrefs.SetFloat(FloatPref.YSensitivity, ySlider.value);
+    }
+    #endregion
 }
+    

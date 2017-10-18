@@ -4,6 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+public enum Control
+{
+    Shoot,
+    Scope,
+    Forward,
+    Backward,
+    Left,
+    Right,
+    Sprint,
+    Crouch,
+    Jump,
+    Pause
+}
+
 public class Mapping
 {
     public string Name { get; set; }
@@ -27,13 +41,13 @@ public class MyInput : MonoBehaviour
     static MyInput()
     {
         //DEBUG LINES -------------------------------------------------------------------------------------------------------------------------- NEEDS TO BE REMOVED FOR INPUTS TO BE SETTABLE
-        PlayerPrefs.DeleteKey("PrimaryInputs");
-        PlayerPrefs.DeleteKey("SecondryInputs");
+        MyPrefs.DeleteString(StringPref.primaryInputs);
+        MyPrefs.DeleteString(StringPref.secondryInputs);
         //END DEBUG LINES
 
         //If the PlayerPref for the inputs cannot be found, add the defaults
-        if (!PlayerPrefs.HasKey("PrimaryInputs")) PlayerPrefs.SetString("PrimaryInputs", defaultPrimaryKeys);
-        if (!PlayerPrefs.HasKey("SecondryInputs")) PlayerPrefs.SetString("SecondryInputs", defaultSecondryKeys);
+        if (!MyPrefs.HasString(StringPref.primaryInputs)) MyPrefs.SetString(StringPref.primaryInputs, defaultPrimaryKeys);
+        if (!MyPrefs.HasString(StringPref.secondryInputs)) MyPrefs.SetString(StringPref.secondryInputs, defaultSecondryKeys);
 
         InitializeMaps();
     }
@@ -44,19 +58,18 @@ public class MyInput : MonoBehaviour
     /// </summary>
     private static void InitializeMaps()
     {
-        string[] primaryButtonStings = PlayerPrefs.GetString("PrimaryInputs").Split('|');
-        string[] secondryButtonStings = PlayerPrefs.GetString("SecondryInputs").Split('|');
-        string[] inputs = { "Shoot", "Scope", "Forward", "Backward", "Left", "Right", "Sprint", "Crouch", "Jump", "Pause" };
-        
-        for (int i = 0; i < primaryButtonStings.Length; i++)
+        string[] primaryButtonStings = MyPrefs.GetString(StringPref.primaryInputs).Split('|');
+        string[] secondryButtonStings = MyPrefs.GetString(StringPref.secondryInputs).Split('|');
+
+        for (int i = 0; i < Enum.GetValues(typeof(Control)).Length; i++)
         {
             if (secondryButtonStings[i] == "null")
                 keyMaps.Add(new Mapping(
-                    inputs[i],
+                    ((Control)Enum.GetValues(typeof(Control)).GetValue(i)).ToString(),
                     (KeyCode)Enum.Parse(typeof(KeyCode), primaryButtonStings[i])));
             else
                 keyMaps.Add(new Mapping(
-                    inputs[i],
+                    ((Control)Enum.GetValues(typeof(Control)).GetValue(i)).ToString(),
                     (KeyCode)Enum.Parse(typeof(KeyCode), primaryButtonStings[i]),
                     (KeyCode)Enum.Parse(typeof(KeyCode), secondryButtonStings[i])));
         }
@@ -74,8 +87,8 @@ public class MyInput : MonoBehaviour
             primaryDataToSave += "|" + mapping.PrimaryInput.ToString();
             secondaryDataToSave += "|" + mapping.SecondryInput.ToString();
         }
-        PlayerPrefs.SetString("PrimaryInputs", primaryDataToSave.Substring(1));
-        PlayerPrefs.SetString("SecondryInputs", primaryDataToSave.Substring(1));
+        MyPrefs.SetString(StringPref.primaryInputs, primaryDataToSave.Substring(1));
+        MyPrefs.SetString(StringPref.secondryInputs, primaryDataToSave.Substring(1));
     }
 
     /// <summary>
@@ -83,8 +96,8 @@ public class MyInput : MonoBehaviour
     /// </summary>
     public static void ResetAllKeys()
     {
-        PlayerPrefs.SetString("PrimaryInputs", defaultPrimaryKeys);
-        PlayerPrefs.SetString("SecondryInputs", defaultSecondryKeys);
+        MyPrefs.SetString(StringPref.primaryInputs, defaultPrimaryKeys);
+        MyPrefs.SetString(StringPref.secondryInputs, defaultSecondryKeys);
         Save();
         InitializeMaps();
     }
@@ -118,6 +131,17 @@ public class MyInput : MonoBehaviour
     }
 
     /// <summary>
+    /// Finds an input by it's name and returns the paired KeyCode
+    /// </summary>
+    /// <param name="input">The name of the input</param>
+    /// <returns>The KeyCode assigned to that name</returns>
+    public static Mapping GetKeyMap(Control control)
+    {
+        string input = control.ToString();
+        return keyMaps.FirstOrDefault(a => a.Name == input);
+    }
+
+    /// <summary>
     /// Finds an input by it's name and returns if this is the current update where it first pressed down
     /// </summary>
     /// <param name="input">The name of the input</param>
@@ -126,6 +150,21 @@ public class MyInput : MonoBehaviour
     {
         if (keyMaps.Where(a => a.Name == input).Count() != 1)
             throw new ArgumentException("Invalid KeyMap in GetButtonDown: " + input);
+        Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
+        if (map.SecondryInput != null)
+            return Input.GetKeyDown(map.PrimaryInput) || Input.GetKeyDown((KeyCode)map.SecondryInput);
+        else
+            return Input.GetKeyDown(map.PrimaryInput);
+    }
+
+    /// <summary>
+    /// Finds an input by it's name and returns if this is the current update where it first pressed down
+    /// </summary>
+    /// <param name="input">The name of the input</param>
+    /// <returns>True if the input is pressed down but wasn't in the previous update</returns>
+    public static bool GetButtonDown(Control control)
+    {
+        string input = control.ToString();
         Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
         if (map.SecondryInput != null)
             return Input.GetKeyDown(map.PrimaryInput) || Input.GetKeyDown((KeyCode)map.SecondryInput);
@@ -150,6 +189,21 @@ public class MyInput : MonoBehaviour
     }
 
     /// <summary>
+    /// Finds an input by it's name and returns if this is the current update where it first released
+    /// </summary>
+    /// <param name="input">The name of the input</param>
+    /// <returns>True if the input is not pressed down but was in the previous update</returns>
+    public static bool GetButtonUp(Control control)
+    {
+        string input = control.ToString();
+        Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
+        if (map.SecondryInput != null)
+            return Input.GetKeyUp(map.PrimaryInput) || Input.GetKeyUp((KeyCode)map.SecondryInput);
+        else
+            return Input.GetKeyUp(map.PrimaryInput);
+    }
+
+    /// <summary>
     /// Finds an input by it's name and returns if it is pressed down or not
     /// </summary>
     /// <param name="input">The name of the input</param>
@@ -158,6 +212,21 @@ public class MyInput : MonoBehaviour
     {
         if (keyMaps.Where(a => a.Name == input).Count() != 1)
             throw new ArgumentException("Invalid KeyMap in GetButton: " + input);
+        Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
+        if (map.SecondryInput != null)
+            return Input.GetKey(map.PrimaryInput) || Input.GetKey((KeyCode)map.SecondryInput);
+        else
+            return Input.GetKey(map.PrimaryInput);
+    }
+
+    /// <summary>
+    /// Finds an input by it's name and returns if it is pressed down or not
+    /// </summary>
+    /// <param name="input">The name of the input</param>
+    /// <returns>True if the input is pressed down irrelevant of the last update</returns>
+    public static bool GetButton(Control control)
+    {
+        string input = control.ToString();
         Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
         if (map.SecondryInput != null)
             return Input.GetKey(map.PrimaryInput) || Input.GetKey((KeyCode)map.SecondryInput);

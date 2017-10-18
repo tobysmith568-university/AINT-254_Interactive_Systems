@@ -17,9 +17,9 @@ public class PlayerMovement : MonoBehaviour
     Collider bottomCollider;
 
     [SerializeField]
-    float lookSensitivityX = 15f;
+    float lookSensitivityX = 3f;
     [SerializeField]
-    float lookSensitivityY = 15f;
+    float lookSensitivityY = 3f;
 
     [SerializeField]
     float movementSpeedForward = 5f;
@@ -46,35 +46,38 @@ public class PlayerMovement : MonoBehaviour
         mainRigidBody = GetComponent<Rigidbody>();
         originalRotation = transform.localRotation;
         distToGround = bottomCollider.bounds.extents.y;
+
+        lookSensitivityX = MyPrefs.GetFloat(FloatPref.XSensitivity);
+        lookSensitivityY = MyPrefs.GetFloat(FloatPref.YSensitivity);
     }
 
     void Update()
     {
         //Game quitting ---------------- NEEDS MOVING TO A UI SCRIPT
-        if (MyInput.GetButtonDown("Pause"))
+        if (MyInput.GetButtonDown(Control.Pause))
             Application.Quit();
         
         //Walking and sprinting
-        if (MyInput.GetButton("Forward"))
+        if (MyInput.GetButton(Control.Forward))
             transform.Translate(Vector3.forward * ((Input.GetKey(KeyCode.LeftShift) && !isCrouching && IsGrounded()) ? movementSpeedSprint : movementSpeedForward) * Time.deltaTime);
-        if (MyInput.GetButton("Backward"))
+        if (MyInput.GetButton(Control.Backward))
             transform.Translate(Vector3.back * movementSpeedForward * Time.deltaTime);
-        if (MyInput.GetButton("Left"))
+        if (MyInput.GetButton(Control.Left))
             transform.Translate(Vector3.left * movementSpeedSideways * Time.deltaTime);
-        if (MyInput.GetButton("Right"))
+        if (MyInput.GetButton(Control.Right))
             transform.Translate(Vector3.right * movementSpeedSideways * Time.deltaTime);
         
         //Jumping
-        if (MyInput.GetButtonDown("Jump") && IsGrounded() && !isCrouching)
+        if (MyInput.GetButtonDown(Control.Jump) && IsGrounded() && !isCrouching)
             mainRigidBody.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
 
         //Crouching
-        if (MyInput.GetButtonDown("Crouch") && IsGrounded())
+        if (MyInput.GetButtonDown(Control.Crouch) && IsGrounded())
         {
             isCrouching = true;
             topAnimator.SetTrigger("Crouch");
         }
-        else if (MyInput.GetButtonUp("Crouch") && IsGrounded())
+        else if (MyInput.GetButtonUp(Control.Crouch) && IsGrounded())
         {
             isCrouching = false;
             topAnimator.SetTrigger("Stand");
