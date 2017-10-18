@@ -20,6 +20,8 @@ public enum StringPref
 
 public enum BoolPref
 {
+    xInverted,
+    yInverted
 }
 
 public static class MyPrefs

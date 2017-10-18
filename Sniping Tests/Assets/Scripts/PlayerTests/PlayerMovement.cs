@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     Quaternion originalRotation;
     float distToGround;
     bool isCrouching;
+    bool invertX;
+    bool invertY;
 
     void Start()
     {
@@ -47,6 +49,9 @@ public class PlayerMovement : MonoBehaviour
         originalRotation = transform.localRotation;
         distToGround = bottomCollider.bounds.extents.y;
 
+        //Find PlayPrefs
+        invertX = MyPrefs.GetBool(BoolPref.xInverted);
+        invertY = MyPrefs.GetBool(BoolPref.yInverted);
         lookSensitivityX = MyPrefs.GetFloat(FloatPref.XSensitivity);
         lookSensitivityY = MyPrefs.GetFloat(FloatPref.YSensitivity);
     }
@@ -86,13 +91,13 @@ public class PlayerMovement : MonoBehaviour
         //Looking X axis
         rotationX += Input.GetAxis("Mouse X") * lookSensitivityX;
         rotationX = ClampAngle(rotationX, -360F, 360F);
-        Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
+        Quaternion xQuaternion = Quaternion.AngleAxis((invertX) ? -rotationX : rotationX, Vector3.up);
         player.localRotation = originalRotation * xQuaternion;
 
         //Looking Y axis
         rotationY += Input.GetAxis("Mouse Y") * lookSensitivityY;
         rotationY = ClampAngle(rotationY, -60F, 60F);
-        Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, -Vector3.right);
+        Quaternion yQuaternion = Quaternion.AngleAxis((invertY) ? -rotationY : rotationY, -Vector3.right);
         topTransform.localRotation = originalRotation * yQuaternion;
     }
 

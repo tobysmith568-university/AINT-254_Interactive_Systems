@@ -19,6 +19,14 @@ public class Options : MonoBehaviour
 
         xSlider.value = MyPrefs.GetFloat(FloatPref.XSensitivity);
         ySlider.value = MyPrefs.GetFloat(FloatPref.YSensitivity);
+        
+        if (!MyPrefs.HasBool(BoolPref.xInverted))
+            MyPrefs.SetBool(BoolPref.yInverted, false);
+        if (!MyPrefs.HasBool(BoolPref.xInverted))
+            MyPrefs.SetBool(BoolPref.yInverted, false);
+
+        xToggle.isOn = MyPrefs.GetBool(BoolPref.xInverted);
+        yToggle.isOn = MyPrefs.GetBool(BoolPref.yInverted);
     }
 
     #region Panels
@@ -88,6 +96,21 @@ public class Options : MonoBehaviour
     [SerializeField]
     Slider ySlider;
 
+    [SerializeField]
+    Toggle xToggle;
+    [SerializeField]
+    Toggle yToggle;
+
+    [SerializeField]
+    Image crosshair;
+
+    [SerializeField]
+    Slider redSlider;
+    [SerializeField]
+    Slider greenSlider;
+    [SerializeField]
+    Slider blueSlider;
+
     public void XAxisChanged()
     {
         xValue.text = ((int)(25 * xSlider.value - 25)).ToString();
@@ -99,6 +122,33 @@ public class Options : MonoBehaviour
         yValue.text = ((int)(25 * ySlider.value - 25)).ToString();
         MyPrefs.SetFloat(FloatPref.YSensitivity, ySlider.value);
     }
+
+    public void XToggled()
+    {
+        MyPrefs.SetBool(BoolPref.xInverted, xToggle.isOn);
+    }
+
+    public void YToggled()
+    {
+        MyPrefs.SetBool(BoolPref.yInverted, yToggle.isOn);
+    }
+
+    public void RedChanged()
+    {
+        crosshair.color = new Color(redSlider.value, crosshair.color.g, crosshair.color.b);
+        MyPrefs.SetFloat(FloatPref.CrosshairRed, redSlider.value);
+    }
+
+    public void GreenChanged()
+    {
+        crosshair.color = new Color(crosshair.color.r, greenSlider.value, crosshair.color.b);
+        MyPrefs.SetFloat(FloatPref.CrosshairGreen, greenSlider.value);
+    }
+
+    public void BlueChanged()
+    {
+        crosshair.color = new Color(crosshair.color.r, crosshair.color.g, blueSlider.value);
+        MyPrefs.SetFloat(FloatPref.CrosshairBlue, blueSlider.value);
+    }
     #endregion
 }
-    
