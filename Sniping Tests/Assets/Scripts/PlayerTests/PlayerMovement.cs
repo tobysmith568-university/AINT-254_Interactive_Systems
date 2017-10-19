@@ -30,9 +30,6 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     float jumpPower = 10;
-
-    [SerializeField]
-    Text text;
     
     float rotationX = 0F;
     float rotationY = 0F;
