@@ -29,7 +29,6 @@ public enum BoolPref
 
 public static class MyPrefs
 {
-
     static MyPrefs()
     {
         //foreach (IntPref pref in System.Enum.GetValues(typeof(IntPref)))
@@ -56,8 +55,8 @@ public static class MyPrefs
 
     static void doesExist(string pref)
     {
-        if (!PlayerPrefs.HasKey(pref))
-            throw new System.Exception("Pref doesn't exist!");
+        //if (!PlayerPrefs.HasKey(pref))
+        //    throw new System.Exception("Pref doesn't exist!");
     }
 
     #region Getters

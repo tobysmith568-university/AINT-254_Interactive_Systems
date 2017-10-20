@@ -7,7 +7,7 @@ public class Target : MonoBehaviour
     [SerializeField]
     ParticleSystem smoke;
 
-    void BeenShot()
+    public void BeenShot()
     {
         smoke.Play();
         Invoke("Hide", 0.2f);

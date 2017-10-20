@@ -84,7 +84,7 @@ public class PlayerGun : MonoBehaviour
             CancelInvoke("IncrementSinceKill");
 
             //Tell the target it has been hit
-            raycastHit.transform.SendMessage("BeenShot");
+            raycastHit.transform.GetComponent<Target>().BeenShot();
 
             //Find the kill stats
             if (sinceScope < 40)
