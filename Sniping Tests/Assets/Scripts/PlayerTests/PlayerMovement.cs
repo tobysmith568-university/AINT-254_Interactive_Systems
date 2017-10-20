@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
             isCrouching = false;
             topAnimator.SetTrigger("Stand");
         }
-        
+
         //Looking X axis
         rotationX += Input.GetAxis("Mouse X") * lookSensitivityX;
         rotationX = ClampAngle(rotationX, -360F, 360F);
