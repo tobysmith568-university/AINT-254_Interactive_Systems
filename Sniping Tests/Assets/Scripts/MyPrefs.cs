@@ -54,48 +54,62 @@ public static class MyPrefs
         //}
     }
 
+    static void doesExist(string pref)
+    {
+        if (!PlayerPrefs.HasKey(pref))
+            throw new System.Exception("Pref doesn't exist!");
+    }
+
     #region Getters
     public static int GetInt(IntPref pref)
     {
+        doesExist(pref.ToString());
         return PlayerPrefs.GetInt(pref.ToString());
     }
 
     public static float GetFloat(FloatPref pref)
     {
+        doesExist(pref.ToString());
         return PlayerPrefs.GetFloat(pref.ToString());
     }
 
     public static string GetString(StringPref pref)
     {
+        doesExist(pref.ToString());
         return PlayerPrefs.GetString(pref.ToString());
     }
 
     public static bool GetBool(BoolPref pref)
     {
+        doesExist(pref.ToString());
         return (PlayerPrefs.GetInt(pref.ToString()) == 0) ? false : true;
     }
     #endregion
     #region Setters
     public static void SetInt(IntPref pref, int value)
     {
+        doesExist(pref.ToString());
         PlayerPrefs.SetInt(pref.ToString(), value);
         PlayerPrefs.Save();
     }
 
     public static void SetFloat(FloatPref pref, float value)
     {
+        doesExist(pref.ToString());
         PlayerPrefs.SetFloat(pref.ToString(), value);
         PlayerPrefs.Save();
     }
 
     public static void SetString(StringPref pref, string value)
     {
+        doesExist(pref.ToString());
         PlayerPrefs.SetString(pref.ToString(), value);
         PlayerPrefs.Save();
     }
 
     public static void SetBool(BoolPref pref, bool value)
     {
+        doesExist(pref.ToString());
         PlayerPrefs.SetInt(pref.ToString(), value ? 1 : 0);
         PlayerPrefs.Save();
     }
@@ -124,24 +138,28 @@ public static class MyPrefs
     #region Delete
     public static void DeleteInt(IntPref pref)
     {
+        doesExist(pref.ToString());
         PlayerPrefs.DeleteKey(pref.ToString());
         PlayerPrefs.Save();
     }
 
     public static void DeleteFloat(FloatPref pref)
     {
+        doesExist(pref.ToString());
         PlayerPrefs.DeleteKey(pref.ToString());
         PlayerPrefs.Save();
     }
 
     public static void DeleteString(StringPref pref)
     {
+        doesExist(pref.ToString());
         PlayerPrefs.DeleteKey(pref.ToString());
         PlayerPrefs.Save();
     }
 
     public static void DeleteBool(BoolPref pref)
     {
+        doesExist(pref.ToString());
         PlayerPrefs.DeleteKey(pref.ToString());
         PlayerPrefs.Save();
     }
