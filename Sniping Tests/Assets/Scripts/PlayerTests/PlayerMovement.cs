@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     Quaternion originalRotation;
     float distToGround;
     bool isCrouching;
+    bool isFloating;
     bool invertX;
     bool invertY;
 
@@ -53,6 +54,18 @@ public class PlayerMovement : MonoBehaviour
         lookSensitivityY = MyPrefs.GetFloat(FloatPref.YSensitivity);
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Water")
+            isFloating = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Water")
+            isFloating = false;
+    }
+
     void Update()
     {
         //Game quitting ---------------- NEEDS MOVING TO A UI SCRIPT
@@ -61,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
         
         //Walking and sprinting
         if (MyInput.GetButton(Control.Forward))
-            transform.Translate(Vector3.forward * ((Input.GetKey(KeyCode.LeftShift) && !isCrouching && IsGrounded()) ? movementSpeedSprint : movementSpeedForward) * Time.deltaTime);
+            transform.Translate(Vector3.forward * ((Input.GetKey(KeyCode.LeftShift) && !isCrouching && IsGrounded() && !isFloating) ? movementSpeedSprint : movementSpeedForward) * Time.deltaTime);
         if (MyInput.GetButton(Control.Backward))
             transform.Translate(Vector3.back * movementSpeedForward * Time.deltaTime);
         if (MyInput.GetButton(Control.Left))
@@ -70,11 +83,11 @@ public class PlayerMovement : MonoBehaviour
             transform.Translate(Vector3.right * movementSpeedSideways * Time.deltaTime);
         
         //Jumping
-        if (MyInput.GetButtonDown(Control.Jump) && IsGrounded() && !isCrouching)
+        if (MyInput.GetButtonDown(Control.Jump) && IsGrounded() && !isCrouching && !isFloating)
             mainRigidBody.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
 
         //Crouching
-        if (MyInput.GetButtonDown(Control.Crouch) && IsGrounded())
+        if (MyInput.GetButtonDown(Control.Crouch) && IsGrounded() && !isFloating)
         {
             isCrouching = true;
             topAnimator.SetTrigger("Crouch");
@@ -93,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Looking Y axis
         rotationY += Input.GetAxis("Mouse Y") * lookSensitivityY;
-        rotationY = ClampAngle(rotationY, -60F, 60F);
+        rotationY = ClampAngle(rotationY, -40F, 80F);
         Quaternion yQuaternion = Quaternion.AngleAxis((invertY) ? -rotationY : rotationY, -Vector3.right);
         topTransform.localRotation = originalRotation * yQuaternion;
     }
