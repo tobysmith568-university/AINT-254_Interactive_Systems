@@ -39,6 +39,7 @@ public class PlayerGun : MonoBehaviour
 
     bool isScoped;
     bool canFire = true;
+    bool justFired = false;
 
     int sinceScope = 0;
     int sinceKill = 0;
@@ -68,10 +69,16 @@ public class PlayerGun : MonoBehaviour
             }
             flame.Play();
             if (isScoped)
-                Invoke("ToggleScoped", 0.10f);
+                justFired = true;
         }
 
         //Scoping
+        if (justFired && MyInput.GetButtonUp(Control.Shoot))
+        {
+            Invoke("ToggleScoped", 0.10f);
+            justFired = false;
+        }
+
         if (MyInput.GetButtonDown("Scope"))
             ToggleScoped();
 
@@ -140,7 +147,6 @@ public class PlayerGun : MonoBehaviour
 
     public void ToggleScoped()
     {
-        playerMovement.SendMessage("SetScoped", isScoped);
         gunAnimator.SetTrigger((isScoped) ? "ScopeOut" : "ScopeUp");
         isScoped = !isScoped;
 
@@ -187,12 +193,14 @@ public class PlayerGun : MonoBehaviour
 
     public void InFront()
     {
+        playerMovement.SetScoped(true);
         //m.material.renderQueue = 500;
         //Debug.Log("Set to: " + m.material.renderQueue);
     }
 
     public void NotInFront()
     {
+        playerMovement.SetScoped(false);
         //m.material.renderQueue = defaultQueue;
         //Debug.Log("Set to: " + m.material.renderQueue);
     }

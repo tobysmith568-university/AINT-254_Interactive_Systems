@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
     /// Used by other objects, this slows or re-speeds up the look sensitivity while scoped
     /// </summary>
     /// <param name="isScoped"></param>
-    void SetScoped(bool isScoped)
+    public void SetScoped(bool isScoped)
     {
         if (isScoped)
         {

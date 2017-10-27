@@ -7,7 +7,7 @@ public class Buttons : MonoBehaviour
 {
     public void Play()
     {
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene(4, LoadSceneMode.Single);
     }
 
     public void Options()
