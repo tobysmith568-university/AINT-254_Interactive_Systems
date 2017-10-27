@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Timers;
-using UnityEngine.SceneManagement;
 
 public class Scoring : MonoBehaviour
 {
@@ -28,16 +27,6 @@ public class Scoring : MonoBehaviour
     {
         singleton = this;
         StartTimer();
-    }
-    void Update()
-    {
-        //End of game
-        if (targets.childCount == 0)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            SceneManager.LoadScene(3, LoadSceneMode.Single);
-        }
     }
 
     #region Time

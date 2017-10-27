@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Target : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class Target : MonoBehaviour
     [SerializeField]
     GameObject[] newTargets;
 
+    Transform parent;
+
+    void Start()
+    {
+        parent = GetComponent<Transform>().parent;
+    }
+
     public void BeenShot()
     {
         smoke.Play();
@@ -18,6 +26,15 @@ public class Target : MonoBehaviour
         foreach (GameObject target in newTargets)
         {
             target.SetActive(true);
+            target.GetComponent<Transform>().SetParent(parent);
+        }
+
+        //End of game
+        if (parent.childCount == 1)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            SceneManager.LoadScene(3, LoadSceneMode.Single);
         }
     }
 
