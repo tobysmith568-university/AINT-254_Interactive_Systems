@@ -31,8 +31,9 @@ public class PlayerGun : MonoBehaviour
     Image crosshair;
 
     [SerializeField]
-    MeshRenderer m;
-    int defaultQueue;
+    Text targetsRemaining;
+    [SerializeField]
+    Transform targets;
 
     RaycastHit raycastHit;
 
@@ -73,6 +74,9 @@ public class PlayerGun : MonoBehaviour
         //Scoping
         if (MyInput.GetButtonDown("Scope"))
             ToggleScoped();
+
+        //Scope UI
+        targetsRemaining.text = "Targets Remaining: " + targets.childCount;
     }
 
     /// <summary>

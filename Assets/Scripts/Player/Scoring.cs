@@ -56,13 +56,13 @@ public class Scoring : MonoBehaviour
         Time = Time + 0.01f;
         timeText.text = "Time: " + Time.ToString("n2");
     }
-#endregion
+    #endregion
 
-#region Score
+    #region Score
     public static void AddScore(int score)
     {
         Score += score;
         singleton.scoreText.text = "Score: " + Score;
     }
-#endregion
+    #endregion
 }
