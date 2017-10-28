@@ -12,10 +12,12 @@ public class Target : MonoBehaviour
     GameObject[] newTargets;
 
     Transform parent;
+    MeshRenderer mesh;
 
     void Start()
     {
         parent = GetComponent<Transform>().parent;
+        mesh = GetComponent<MeshRenderer>();
     }
 
     public void BeenShot()
@@ -40,7 +42,16 @@ public class Target : MonoBehaviour
 
     void Hide()
     {
-        GetComponent<MeshRenderer>().enabled = false;
+        if(mesh != null)
+            mesh.enabled = false;
+        else
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.name != "Particle System")
+                    child.gameObject.SetActive(false);
+            }
+        }
     }
 
     void Kill()
