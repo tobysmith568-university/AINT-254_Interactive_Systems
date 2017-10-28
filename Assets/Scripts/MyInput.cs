@@ -15,6 +15,7 @@ public enum Control
     Sprint,
     Crouch,
     Jump,
+    Reload,
     Pause
 }
 
@@ -35,8 +36,8 @@ public class MyInput : MonoBehaviour
 {
     public static List<Mapping> keyMaps = new List<Mapping>();
 
-    static string defaultPrimaryKeys = "Mouse0|Mouse1|W|S|A|D|LeftShift|LeftControl|Space|Escape";
-    static string defaultSecondryKeys = "null|null|UpArrow|DownArrow|LeftArrow|RightArrow|null|null|null|P";
+    static string defaultPrimaryKeys = "Mouse0|Mouse1|W|S|A|D|LeftShift|LeftControl|Space|R|Escape";
+    static string defaultSecondryKeys = "null|null|UpArrow|DownArrow|LeftArrow|RightArrow|null|null|null|null|P";
 
     static MyInput()
     {

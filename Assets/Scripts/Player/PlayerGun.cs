@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,7 +45,23 @@ public class PlayerGun : MonoBehaviour
     int sinceScope = 0;
     int sinceKill = 0;
     float shootDistance = 0;
-    
+
+    [SerializeField]
+    int magSize = 8;
+    [SerializeField]
+    Text ammoText;
+    int ammoCount;
+    public int AmmoCount
+    {
+        get { return ammoCount; }
+        set
+        {
+            ammoCount = value;
+            ammoText.text = "Ammo: " + value;
+        }
+    }
+    bool queuedReload = false;
+
     void Start()
     {
         Cursor.visible = false;
@@ -54,12 +71,13 @@ public class PlayerGun : MonoBehaviour
         crosshair.color = new Color(MyPrefs.GetFloat(FloatPref.CrosshairRed),
                                     MyPrefs.GetFloat(FloatPref.CrosshairGreen),
                                     MyPrefs.GetFloat(FloatPref.CrosshairBlue));
+        AmmoCount = magSize;
     }
 
     void Update()
     {
         //Firing
-        if (MyInput.GetButtonDown("Shoot") && canFire)
+        if (MyInput.GetButtonDown(Control.Shoot) && canFire && AmmoCount > 0)
         {
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
@@ -68,6 +86,9 @@ public class PlayerGun : MonoBehaviour
             flame.Play();
             if (isScoped)
                 justFired = true;
+            AmmoCount--;
+            if (AmmoCount == 0 && !isScoped)
+                Reload();
         }
 
         //Scoping
@@ -79,6 +100,10 @@ public class PlayerGun : MonoBehaviour
 
         if (MyInput.GetButtonDown("Scope"))
             ToggleScoped();
+
+        //Reloading
+        if (MyInput.GetButtonDown(Control.Reload) && canFire)
+            Reload();
 
         //Scope UI
         targetsRemaining.text = "Targets Remaining: " + targets.childCount;
@@ -169,6 +194,20 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called by either the shoot method or by a player input to reload the players gun
+    /// </summary>
+    void Reload()
+    {
+        if (isScoped)
+        {
+            ToggleScoped();
+            queuedReload = true;
+        }
+        else
+            gunAnimator.SetTrigger("Reload");
+    }
+
     #region Methods for Invoking
 
     /// <summary>
@@ -218,6 +257,40 @@ public class PlayerGun : MonoBehaviour
     public void CanFire()
     {
         canFire = true;
+    }
+    
+    /// <summary>
+    /// Called when the gun is scoped out. If it scoped out because the player
+    /// pressed reload then called a reload too
+    /// </summary>
+    public void ScopedOut()
+    {
+        if (AmmoCount == 0)
+            Reload();
+        if (queuedReload)
+            Reload();
+    }
+
+    /// <summary>
+    /// Called by the reload animation to set the ammo count to 0 when the magazine is
+    /// removed from the gun
+    /// </summary>
+    public void ClearMag()
+    {
+        AmmoCount = 0;
+    }
+
+    /// <summary>
+    /// Called by the reload animation when it is finished
+    /// </summary>
+    public void Reloaded()
+    {
+        AmmoCount = magSize;
+        if (queuedReload)
+        {
+            ToggleScoped();
+            queuedReload = false;
+        }
     }
 
     /* TEST METHODS: For keeping the gun on top of everything else */
