@@ -45,7 +45,7 @@ public class PlayerGun : MonoBehaviour
     int sinceKill = 0;
     float shootDistance = 0;
     
-    private void Start()
+    void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -56,7 +56,7 @@ public class PlayerGun : MonoBehaviour
                                     MyPrefs.GetFloat(FloatPref.CrosshairBlue));
     }
 
-    private void Update()
+    void Update()
     {
         //Firing
         if (MyInput.GetButtonDown("Shoot") && canFire)
@@ -87,7 +87,7 @@ public class PlayerGun : MonoBehaviour
     /// <summary>
     /// Ran when the gun is fired and hits an object
     /// </summary>
-    private void Hit()
+    void Hit()
     {
         int noscopeBonus = 0, quickscopeBonus = 0, longshotBonus = 0, chainkillBonus = 0, headshotBonus = 0;
         if (raycastHit.transform.tag.Split('|')[0] == "Target")
@@ -99,7 +99,7 @@ public class PlayerGun : MonoBehaviour
             //Tell the target it has been hit
             raycastHit.transform.GetComponent<Target>().BeenShot();
 
-            //Find the kill stats
+            //Find the no-scope stat
             if (sinceScope < 40)
                 noscopeBonus = 30;
             else if (sinceScope < 50)
@@ -113,13 +113,16 @@ public class PlayerGun : MonoBehaviour
             else if (sinceScope < 90)
                 quickscopeBonus = 10;
 
+            //Find the long-shot stat
             shootDistance = Vector3.Distance(playerTransform.position, raycastHit.transform.position);
             if (shootDistance > 50)
                 longshotBonus = (int)shootDistance - 50;
-            
+
+            //Find the chainkill stat
             if (sinceKill < 150)
                 chainkillBonus = 30;
 
+            //Find the headshot stat
             if (raycastHit.collider.tag == "Target|Head")
                 headshotBonus = 25;
 
@@ -136,6 +139,7 @@ public class PlayerGun : MonoBehaviour
             if (headshotBonus != 0)
                 message += "\nHeadshot Bonus: " + headshotBonus;
 
+            //Show the messages to the player
             SetScoreMessage(message);
 
             //Increment the player score
@@ -148,6 +152,9 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Changes the state of the player's scope
+    /// </summary>
     public void ToggleScoped()
     {
         gunAnimator.SetTrigger((isScoped) ? "ScopeOut" : "ScopeUp");
@@ -162,38 +169,58 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
-#region Methods for Invoking
+    #region Methods for Invoking
 
-    private void IncrementSinceScope()
+    /// <summary>
+    /// Invoked to increase the time since the user scoped up
+    /// </summary>
+    void IncrementSinceScope()
     {
         sinceScope++;
     }
 
-    private void IncrementSinceKill()
+    /// <summary>
+    /// Invoked to increase the time since the user killed
+    /// </summary>
+    void IncrementSinceKill()
     {
         sinceKill++;
     }
-
-    private void SetScoreMessage(string message)
+    
+    /// <summary>
+    /// Sets the score message
+    /// </summary>
+    /// <param name="message">The text to set the message to</param>
+    void SetScoreMessage(string message)
     {
         scoreMessage.text = message;
     }
 
-    private void HideScoreMessage()
+    /// <summary>
+    /// Invoked to hide the score message
+    /// </summary>
+    void HideScoreMessage()
     {
         scoreMessage.text = "";
     }
 
+    /// <summary>
+    /// Called to disable firing
+    /// </summary>
     public void CantFire()
     {
         canFire = false;
     }
 
+    /// <summary>
+    /// Called to enable firing
+    /// </summary>
     public void CanFire()
     {
         canFire = true;
     }
 
+    /* TEST METHODS: For keeping the gun on top of everything else */
     public void InFront()
     {
         playerMovement.SetScoped(true);
@@ -207,6 +234,8 @@ public class PlayerGun : MonoBehaviour
         //m.material.renderQueue = defaultQueue;
         //Debug.Log("Set to: " + m.material.renderQueue);
     }
+
+    /* END TEST METHODS */
 
     #endregion
 }

@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //Game quitting ---------------- NEEDS MOVING TO A UI SCRIPT
+        //Game quitting ---------------- PROBABLY NEEDS MOVING TO A UI SCRIPT
         if (MyInput.GetButtonDown(Control.Pause))
             Application.Quit();
         

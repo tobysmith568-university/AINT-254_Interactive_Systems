@@ -94,7 +94,7 @@ public static class MyPrefs
     }
 
     /// <summary>
-    /// Returns the value of a bool PlayerPref
+    /// Returns the value of a boolean PlayerPref
     /// </summary>
     /// <param name="pref">The name of the PlayerPref</param>
     /// <returns>The PlayerPrefs value</returns>
@@ -105,6 +105,11 @@ public static class MyPrefs
     }
     #endregion
     #region Setters
+    /// <summary>
+    /// Sets an interger PlayerPref
+    /// </summary>
+    /// <param name="pref">The PlayerPref to set</param>
+    /// <param name="value">The value to set the PlayerPref to</param>
     public static void SetInt(IntPref pref, int value)
     {
         doesExist(pref.ToString());
@@ -112,6 +117,11 @@ public static class MyPrefs
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Sets a float PlayerPref
+    /// </summary>
+    /// <param name="pref">The PlayerPref to set</param>
+    /// <param name="value">The value to set the PlayerPref to</param>
     public static void SetFloat(FloatPref pref, float value)
     {
         doesExist(pref.ToString());
@@ -119,6 +129,11 @@ public static class MyPrefs
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Sets a string PlayerPref
+    /// </summary>
+    /// <param name="pref">The PlayerPref to set</param>
+    /// <param name="value">The value to set the PlayerPref to</param>
     public static void SetString(StringPref pref, string value)
     {
         doesExist(pref.ToString());
@@ -126,6 +141,11 @@ public static class MyPrefs
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Sets a boolean PlayerPref
+    /// </summary>
+    /// <param name="pref">The PlayerPref to set</param>
+    /// <param name="value">The value to set the PlayerPref to</param>
     public static void SetBool(BoolPref pref, bool value)
     {
         doesExist(pref.ToString());
@@ -134,27 +154,52 @@ public static class MyPrefs
     }
     #endregion
     #region Has
+    /// <summary>
+    /// Tests to see if an integer PlayerPref exsists
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref</param>
+    /// <returns>True if it does exist</returns>
     public static bool HasInt(IntPref pref)
     {
         return PlayerPrefs.HasKey(pref.ToString());
     }
 
+    /// <summary>
+    /// Tests to see if a float PlayerPref exsists
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref</param>
+    /// <returns>True if it does exist</returns>
     public static bool HasFloat(FloatPref pref)
     {
         return PlayerPrefs.HasKey(pref.ToString());
     }
 
+    /// <summary>
+    /// Tests to see if a string PlayerPref exsists
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref</param>
+    /// <returns>True if it does exist</returns>
     public static bool HasString(StringPref pref)
     {
         return PlayerPrefs.HasKey(pref.ToString());
     }
 
+    /// <summary>
+    /// Tests to see if a boolean PlayerPref exsists
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref</param>
+    /// <returns>True if it does exist</returns>
     public static bool HasBool(BoolPref pref)
     {
         return (PlayerPrefs.HasKey(pref.ToString()));
     }
     #endregion
     #region Delete
+    /// <summary>
+    /// Deletes an integer PlayerPref
+    /// Note: it will still stay in the IntPref enum
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref to delete</param>
     public static void DeleteInt(IntPref pref)
     {
         doesExist(pref.ToString());
@@ -162,6 +207,11 @@ public static class MyPrefs
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Deletes a float PlayerPref
+    /// Note: it will still stay in the IntPref enum
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref to delete</param>
     public static void DeleteFloat(FloatPref pref)
     {
         doesExist(pref.ToString());
@@ -169,6 +219,11 @@ public static class MyPrefs
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Deletes a string PlayerPref
+    /// Note: it will still stay in the IntPref enum
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref to delete</param>
     public static void DeleteString(StringPref pref)
     {
         doesExist(pref.ToString());
@@ -176,6 +231,11 @@ public static class MyPrefs
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Deletes a boolean PlayerPref
+    /// Note: it will still stay in the IntPref enum
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref to delete</param>
     public static void DeleteBool(BoolPref pref)
     {
         doesExist(pref.ToString());
