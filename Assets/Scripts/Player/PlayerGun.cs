@@ -98,7 +98,7 @@ public class PlayerGun : MonoBehaviour
             justFired = false;
         }
 
-        if (MyInput.GetButtonDown("Scope"))
+        if (MyInput.GetButtonDown("Scope") && canFire)
             ToggleScoped();
 
         //Reloading
@@ -199,6 +199,7 @@ public class PlayerGun : MonoBehaviour
     /// </summary>
     void Reload()
     {
+        CantFire();
         if (isScoped)
         {
             ToggleScoped();
@@ -285,6 +286,7 @@ public class PlayerGun : MonoBehaviour
     /// </summary>
     public void Reloaded()
     {
+        CanFire();
         AmmoCount = magSize;
         if (queuedReload)
         {
