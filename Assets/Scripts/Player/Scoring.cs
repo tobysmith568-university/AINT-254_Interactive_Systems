@@ -19,8 +19,11 @@ public class Scoring : MonoBehaviour
 
     [SerializeField]
     Transform targets;
-
+    
+    //The duration of the current level
     public static float Time { get; private set; }
+
+    //The players current socre
     public static int Score { get; private set; }
 
     void Start()
@@ -29,6 +32,9 @@ public class Scoring : MonoBehaviour
         StartTimer();
     }
 
+    /// <summary>
+    /// Code to change the game time
+    /// </summary>
     #region Time
     static void StartTimer()
     {
@@ -47,6 +53,9 @@ public class Scoring : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// Code to change the player's score
+    /// </summary>
     #region Score
     public static void AddScore(int score)
     {

@@ -20,6 +20,9 @@ public class Target : MonoBehaviour
         mesh = GetComponent<MeshRenderer>();
     }
 
+    /// <summary>
+    /// Called by the player when they have shot this target
+    /// </summary>
     public void BeenShot()
     {
         smoke.Play();
@@ -31,7 +34,7 @@ public class Target : MonoBehaviour
             target.GetComponent<Transform>().SetParent(parent);
         }
 
-        //End of game
+        //Check if the game is over
         if (parent.childCount == 1)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -40,10 +43,15 @@ public class Target : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Hides this target except for it's particle system
+    /// </summary>
     void Hide()
     {
+        //If this is a box target
         if(mesh != null)
             mesh.enabled = false;
+        //Else if this is a player target
         else
         {
             foreach (Transform child in transform)

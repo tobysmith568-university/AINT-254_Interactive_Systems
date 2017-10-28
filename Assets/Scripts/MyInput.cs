@@ -40,7 +40,7 @@ public class MyInput : MonoBehaviour
 
     static MyInput()
     {
-        //DEBUG LINES -------------------------------------------------------------------------------------------------------------------------- NEEDS TO BE REMOVED FOR INPUTS TO BE SETTABLE
+        //DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------  NEEDS TO BE REMOVED FOR INPUTS TO BE SETTABLE
         MyPrefs.DeleteString(StringPref.primaryInputs);
         MyPrefs.DeleteString(StringPref.secondryInputs);
         //END DEBUG LINES
@@ -54,7 +54,7 @@ public class MyInput : MonoBehaviour
 
     /// <summary>
     /// This method takes the saved PlayerPref for the inputs and sets up
-    /// dictionary entries in the key map dictionary for each
+    /// dictionary entries in the key map dictionary for each of them
     /// </summary>
     private static void InitializeMaps()
     {

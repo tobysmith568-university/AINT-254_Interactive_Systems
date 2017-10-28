@@ -60,24 +60,44 @@ public static class MyPrefs
     }
 
     #region Getters
+    /// <summary>
+    /// Returns the value of an integer PlayerPref
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref</param>
+    /// <returns>The PlayerPrefs value</returns>
     public static int GetInt(IntPref pref)
     {
         doesExist(pref.ToString());
         return PlayerPrefs.GetInt(pref.ToString());
     }
 
+    /// <summary>
+    /// Returns the value of a float PlayerPref
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref</param>
+    /// <returns>The PlayerPrefs value</returns>
     public static float GetFloat(FloatPref pref)
     {
         doesExist(pref.ToString());
         return PlayerPrefs.GetFloat(pref.ToString());
     }
 
+    /// <summary>
+    /// Returns the value of a string PlayerPref
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref</param>
+    /// <returns>The PlayerPrefs value</returns>
     public static string GetString(StringPref pref)
     {
         doesExist(pref.ToString());
         return PlayerPrefs.GetString(pref.ToString());
     }
 
+    /// <summary>
+    /// Returns the value of a bool PlayerPref
+    /// </summary>
+    /// <param name="pref">The name of the PlayerPref</param>
+    /// <returns>The PlayerPrefs value</returns>
     public static bool GetBool(BoolPref pref)
     {
         doesExist(pref.ToString());
