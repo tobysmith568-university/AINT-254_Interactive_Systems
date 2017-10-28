@@ -64,9 +64,7 @@ public class PlayerGun : MonoBehaviour
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
             if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit))
-            {
                 Hit();
-            }
             flame.Play();
             if (isScoped)
                 justFired = true;
@@ -91,8 +89,8 @@ public class PlayerGun : MonoBehaviour
     /// </summary>
     private void Hit()
     {
-        int noscopeBonus = 0, quickscopeBonus = 0, longshotBonus = 0, chainkillBonus = 0;
-        if (raycastHit.transform.tag == "Target")
+        int noscopeBonus = 0, quickscopeBonus = 0, longshotBonus = 0, chainkillBonus = 0, headshotBonus = 0;
+        if (raycastHit.transform.tag.Split('|')[0] == "Target")
         {
             //Cancel invokes
             CancelInvoke("HideScoreMessage");
@@ -122,6 +120,10 @@ public class PlayerGun : MonoBehaviour
             if (sinceKill < 150)
                 chainkillBonus = 30;
 
+            if (raycastHit.collider.tag == "Target|Head")
+                headshotBonus = 25;
+
+            //Show the kill stats
             string message = "Kill: 100";
             if (noscopeBonus != 0)
                 message += "\nNo-scope Bonus: " + noscopeBonus;
@@ -131,12 +133,13 @@ public class PlayerGun : MonoBehaviour
                 message += "\nLongshot Bonus: " + longshotBonus;
             if (chainkillBonus != 0)
                 message += "\nChainkill Bonus: " + chainkillBonus;
+            if (headshotBonus != 0)
+                message += "\nHeadshot Bonus: " + headshotBonus;
 
-            //Show the kill stats
             SetScoreMessage(message);
 
             //Increment the player score
-            Scoring.AddScore(100 + noscopeBonus + quickscopeBonus + longshotBonus + chainkillBonus);
+            Scoring.AddScore(100 + noscopeBonus + quickscopeBonus + longshotBonus + chainkillBonus + headshotBonus);
 
             //Set up next kill stats
             Invoke("HideScoreMessage", 2f);
