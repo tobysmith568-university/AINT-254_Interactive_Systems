@@ -37,6 +37,8 @@ public class Target : MonoBehaviour
         //Check if the game is over
         if (parent.childCount == 1)
         {
+            MyPrefs.SetInt(IntPref.Score, Scoring.Score);
+            MyPrefs.SetInt(IntPref.Time, Scoring.Time);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             SceneManager.LoadScene(3, LoadSceneMode.Single);
