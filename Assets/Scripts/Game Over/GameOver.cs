@@ -12,8 +12,7 @@ public class GameOver : MonoBehaviour
     Text score;
     void Start()
     {
-        
-        time.text = "Time:\n" + new System.DateTime().Add(System.TimeSpan.FromSeconds(Scoring.Time)).ToString("m:ss");
+        time.text = "Time:\n" + new System.DateTime().Add(System.TimeSpan.FromSeconds(Scoring.Time)).ToString("m:ss:f");
         score.text = "Score:\n" + Scoring.Score.ToString();
     }
 

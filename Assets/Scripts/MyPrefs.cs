@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum IntPref
 {
-    Time,
     Score
 }
 
@@ -14,7 +13,8 @@ public enum FloatPref
     YSensitivity,
     CrosshairRed,
     CrosshairGreen,
-    CrosshairBlue
+    CrosshairBlue,
+    Time
 }
 
 public enum StringPref

@@ -15,13 +15,14 @@ public class Scoring : MonoBehaviour
 
     [SerializeField]
     Text scoreText;
+
     static Scoring singleton;
 
     [SerializeField]
     Transform targets;
     
     //The duration of the current level
-    public static int Time { get; private set; }
+    public static float Time { get; private set; }
 
     //The players current socre
     public static int Score { get; private set; }
@@ -38,7 +39,7 @@ public class Scoring : MonoBehaviour
     #region Time
     static void StartTimer()
     {
-        singleton.InvokeRepeating("Tick", 1f, 1f);
+        singleton.InvokeRepeating("Tick", 0.1f, 0.1f);
     }
 
     static void StopTimer()
@@ -48,8 +49,8 @@ public class Scoring : MonoBehaviour
 
     void Tick()
     {
-        Time = Time + 1;
-        timeText.text = "Time: " + Time.ToString();
+        Time = Time + 0.1f;
+        timeText.text = "Time: " + Time.ToString("0.0");
     }
     #endregion
 

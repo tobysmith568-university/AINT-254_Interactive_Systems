@@ -38,7 +38,7 @@ public class Target : MonoBehaviour
         if (parent.childCount == 1)
         {
             MyPrefs.SetInt(IntPref.Score, Scoring.Score);
-            MyPrefs.SetInt(IntPref.Time, Scoring.Time);
+            MyPrefs.SetFloat(FloatPref.Time, Scoring.Time);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             SceneManager.LoadScene(3, LoadSceneMode.Single);
