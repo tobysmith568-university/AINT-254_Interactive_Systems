@@ -40,4 +40,22 @@ public class HighscoreScript : MonoBehaviour
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
+
+    /// <summary>
+    /// Called by the ClearAll button to clear all the highscores
+    /// </summary>
+    public void ClearScores()
+    {
+        MyPrefs.HighScores = new GameScore[]
+            {
+                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore(),
+                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore()
+            };
+        MyPrefs.LowTimes = new GameScore[]
+            {
+                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore(),
+                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore()
+            };
+        Start();
+    }
 }
