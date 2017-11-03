@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -70,8 +71,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //Game quitting ---------------- PROBABLY NEEDS MOVING TO A UI SCRIPT
         if (MyInput.GetButtonDown(Control.Pause))
-            Application.Quit();
-        
+            SceneManager.LoadScene(0, LoadSceneMode.Single);
+
         //Walking and sprinting
         if (MyInput.GetButton(Control.Forward))
             transform.Translate(Vector3.forward * ((Input.GetKey(KeyCode.LeftShift) && !isCrouching && IsGrounded() && !isFloating) ? movementSpeedSprint : movementSpeedForward) * Time.deltaTime);

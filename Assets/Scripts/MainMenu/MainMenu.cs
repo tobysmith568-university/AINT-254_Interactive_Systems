@@ -12,6 +12,8 @@ public class MainMenu : MonoBehaviour
     bool DeleteAllPrefs = false;
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         if (DeleteAllPrefs)
             PlayerPrefs.DeleteAll();
     }
@@ -38,5 +40,10 @@ public class MainMenu : MonoBehaviour
     public void Options()
     {
         SceneManager.LoadScene(2, LoadSceneMode.Single);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
