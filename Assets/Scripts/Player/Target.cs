@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class Target : MonoBehaviour
 {
     [SerializeField]
@@ -28,6 +29,8 @@ public class Target : MonoBehaviour
         smoke.Play();
         Invoke("Hide", 0.2f);
         Invoke("Kill", 0.5f);
+
+        //Spawn in the new targets for this target
         foreach (GameObject target in newTargets)
         {
             target.SetActive(true);
@@ -37,8 +40,7 @@ public class Target : MonoBehaviour
         //Check if the game is over
         if (parent.childCount == 1)
         {
-            MyPrefs.SetInt(IntPref.Score, Scoring.Score);
-            MyPrefs.SetFloat(FloatPref.Time, Scoring.Time);
+            MyPrefs.LastPlay = new GameScore(MyPrefs.LastPlay.Name, Scoring.Score, System.TimeSpan.FromSeconds(Scoring.Time));
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             SceneManager.LoadScene(3, LoadSceneMode.Single);

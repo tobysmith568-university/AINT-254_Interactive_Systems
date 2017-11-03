@@ -48,10 +48,10 @@ public class PlayerMovement : MonoBehaviour
         distToGround = bottomCollider.bounds.extents.y;
 
         //Find PlayPrefs
-        invertX = MyPrefs.GetBool(BoolPref.xInverted);
-        invertY = MyPrefs.GetBool(BoolPref.yInverted);
-        lookSensitivityX = MyPrefs.GetFloat(FloatPref.XSensitivity);
-        lookSensitivityY = MyPrefs.GetFloat(FloatPref.YSensitivity);
+        invertX = MyPrefs.XAxisInverted;
+        invertY = MyPrefs.YAxisInverted;
+        lookSensitivityX = MyPrefs.XSensitivity;
+        lookSensitivityY = MyPrefs.YSensitivity;
     }
 
     void OnTriggerEnter(Collider other)

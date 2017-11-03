@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Timers;
 
+/// <summary>
+/// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
+/// </summary>
 public class Scoring : MonoBehaviour
-{
-    /// <summary>
-    /// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
-    /// </summary>
-            
+{            
     [SerializeField]
     Text timeText;
 
@@ -24,13 +22,22 @@ public class Scoring : MonoBehaviour
     //The duration of the current level
     public static float Time { get; private set; }
 
-    //The players current socre
+    //The players current score
     public static int Score { get; private set; }
 
     void Start()
     {
         singleton = this;
         StartTimer();
+    }
+
+    /// <summary>
+    /// Resets the Time and Score to zero
+    /// </summary>
+    public static void FullReset()
+    {
+        Time = 0f;
+        Score = 0;
     }
 
     /// <summary>

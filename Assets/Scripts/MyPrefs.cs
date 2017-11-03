@@ -1,224 +1,213 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
-
-public enum IntPref
-{
-    Score
-}
-
-public enum FloatPref
-{
-    XSensitivity,
-    YSensitivity,
-    CrosshairRed,
-    CrosshairGreen,
-    CrosshairBlue,
-    Time
-}
-
-public enum StringPref
-{
-    primaryInputs,
-    secondryInputs
-}
-
-public enum BoolPref
-{
-    xInverted,
-    yInverted
-}
+using Newtonsoft.Json;
 
 public static class MyPrefs
 {
-    static void DoesExist(string pref)
+    public enum Prefs
     {
-        if (!PlayerPrefs.HasKey(pref))
-            throw new System.Exception("Pref doesn't exist!");
+        HighScores,
+        LowTimes,
+        LastPlay,
+        XSensitivity,
+        YSensitivity,
+        CrosshairRed,
+        CrosshairGreen,
+        CrosshairBlue,
+        KeyMappings,
+        XAxisInverted,
+        YAxisInverted
     }
 
-    #region Getters
+    public static GameScore[] HighScores
+    {
+        get
+        {
+            return JsonConvert.DeserializeObject<GameScore[]>(PlayerPrefs.GetString("HighScores"));
+        }
+        set
+        {
+            PlayerPrefs.SetString("HighScores", JsonConvert.SerializeObject(value));
+            PlayerPrefs.Save();
+        }
+    }
+    public static GameScore[] LowTimes
+    {
+        get
+        {
+            return JsonConvert.DeserializeObject<GameScore[]>(PlayerPrefs.GetString("LowTimes"));
+        }
+        set
+        {
+            PlayerPrefs.SetString("LowTimes", JsonConvert.SerializeObject(value));
+            PlayerPrefs.Save();
+        }
+    }
+    public static GameScore LastPlay
+    {
+        get
+        {
+            return JsonConvert.DeserializeObject<GameScore>(PlayerPrefs.GetString("LastPlay"));
+        }
+        set
+        {
+            PlayerPrefs.SetString("LastPlay", JsonConvert.SerializeObject(value));
+            PlayerPrefs.Save();
+        }
+    }
+    public static float XSensitivity
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("XSensitivity");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("XSensitivity", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static float YSensitivity
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("YSensitivity");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("YSensitivity", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static float CrosshairRed
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("CrosshairRed");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("CrosshairRed", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static float CrosshairGreen
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("CrosshairGreen");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("CrosshairGreen", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static float CrosshairBlue
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("CrosshairBlue");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("CrosshairBlue", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static Mapping[] KeyMappings
+    {
+        get
+        {
+            return JsonConvert.DeserializeObject<Mapping[]>(PlayerPrefs.GetString("KeyMappings"));
+        }
+        set
+        {
+            PlayerPrefs.SetString("KeyMappings", JsonConvert.SerializeObject(value));
+            PlayerPrefs.Save();
+        }
+    }
+    public static bool XAxisInverted
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("XAxisInverted") == 1;
+        }
+        set
+        {
+            PlayerPrefs.SetInt("XAxisInverted", value ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+    }
+    public static bool YAxisInverted
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("YAxisInverted") == 1;
+        }
+        set
+        {
+            PlayerPrefs.SetInt("YAxisInverted", value ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+    }
+
+    static MyPrefs()
+    {
+        //If any prefs don't exsist, give them their default values
+        if (!Exists(Prefs.HighScores))
+            HighScores = new GameScore[]
+            {
+                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore(),
+                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore()
+            };
+        if (!Exists(Prefs.LowTimes))
+            LowTimes = new GameScore[]
+            {
+                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore(),
+                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore()
+            };
+        if (!Exists(Prefs.LastPlay))
+            LastPlay = new GameScore();
+        if (!Exists(Prefs.XSensitivity))
+            XSensitivity = 2f;
+        if (!Exists(Prefs.YSensitivity))
+            YSensitivity = 2f;
+        if (!Exists(Prefs.CrosshairRed))
+            CrosshairRed = 0f;
+        if (!Exists(Prefs.CrosshairGreen))
+            CrosshairGreen = 0f;
+        if (!Exists(Prefs.CrosshairBlue))
+            CrosshairBlue = 0f;
+        if (!Exists(Prefs.CrosshairBlue))
+            CrosshairBlue = 0f;
+        //Prefs.KeyMappings is set in MyInput.cs so isn't set here
+        if (!Exists(Prefs.XAxisInverted))
+            XAxisInverted = false;
+        if (!Exists(Prefs.YAxisInverted))
+            YAxisInverted = false;
+    }
+
     /// <summary>
-    /// Returns the value of an integer PlayerPref
+    /// Deletes a PlayerPref
+    /// Note: It will still be in the pref Enum
     /// </summary>
     /// <param name="pref">The name of the PlayerPref</param>
-    /// <returns>The PlayerPrefs value</returns>
-    public static int GetInt(IntPref pref)
+    public static void Delete(Prefs pref)
     {
-        DoesExist(pref.ToString());
-        return PlayerPrefs.GetInt(pref.ToString());
+        PlayerPrefs.DeleteKey(pref.ToString());
     }
 
     /// <summary>
-    /// Returns the value of a float PlayerPref
+    /// Tests to see if a PlayerPref has a value
     /// </summary>
     /// <param name="pref">The name of the PlayerPref</param>
-    /// <returns>The PlayerPrefs value</returns>
-    public static float GetFloat(FloatPref pref)
-    {
-        DoesExist(pref.ToString());
-        return PlayerPrefs.GetFloat(pref.ToString());
-    }
-
-    /// <summary>
-    /// Returns the value of a string PlayerPref
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref</param>
-    /// <returns>The PlayerPrefs value</returns>
-    public static string GetString(StringPref pref)
-    {
-        DoesExist(pref.ToString());
-        return PlayerPrefs.GetString(pref.ToString());
-    }
-
-    /// <summary>
-    /// Returns the value of a boolean PlayerPref
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref</param>
-    /// <returns>The PlayerPrefs value</returns>
-    public static bool GetBool(BoolPref pref)
-    {
-        DoesExist(pref.ToString());
-        return (PlayerPrefs.GetInt(pref.ToString()) == 0) ? false : true;
-    }
-    #endregion
-    #region Setters
-    /// <summary>
-    /// Sets an interger PlayerPref
-    /// </summary>
-    /// <param name="pref">The PlayerPref to set</param>
-    /// <param name="value">The value to set the PlayerPref to</param>
-    public static void SetInt(IntPref pref, int value)
-    {
-        DoesExist(pref.ToString());
-        PlayerPrefs.SetInt(pref.ToString(), value);
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Sets a float PlayerPref
-    /// </summary>
-    /// <param name="pref">The PlayerPref to set</param>
-    /// <param name="value">The value to set the PlayerPref to</param>
-    public static void SetFloat(FloatPref pref, float value)
-    {
-        DoesExist(pref.ToString());
-        PlayerPrefs.SetFloat(pref.ToString(), value);
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Sets a string PlayerPref
-    /// </summary>
-    /// <param name="pref">The PlayerPref to set</param>
-    /// <param name="value">The value to set the PlayerPref to</param>
-    public static void SetString(StringPref pref, string value)
-    {
-        DoesExist(pref.ToString());
-        PlayerPrefs.SetString(pref.ToString(), value);
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Sets a boolean PlayerPref
-    /// </summary>
-    /// <param name="pref">The PlayerPref to set</param>
-    /// <param name="value">The value to set the PlayerPref to</param>
-    public static void SetBool(BoolPref pref, bool value)
-    {
-        DoesExist(pref.ToString());
-        PlayerPrefs.SetInt(pref.ToString(), value ? 1 : 0);
-        PlayerPrefs.Save();
-    }
-    #endregion
-    #region Has
-    /// <summary>
-    /// Tests to see if an integer PlayerPref exsists
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref</param>
-    /// <returns>True if it does exist</returns>
-    public static bool HasInt(IntPref pref)
+    /// <returns>True if it does have a value</returns>
+    public static bool Exists(Prefs pref)
     {
         return PlayerPrefs.HasKey(pref.ToString());
     }
-
-    /// <summary>
-    /// Tests to see if a float PlayerPref exsists
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref</param>
-    /// <returns>True if it does exist</returns>
-    public static bool HasFloat(FloatPref pref)
-    {
-        return PlayerPrefs.HasKey(pref.ToString());
-    }
-
-    /// <summary>
-    /// Tests to see if a string PlayerPref exsists
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref</param>
-    /// <returns>True if it does exist</returns>
-    public static bool HasString(StringPref pref)
-    {
-        return PlayerPrefs.HasKey(pref.ToString());
-    }
-
-    /// <summary>
-    /// Tests to see if a boolean PlayerPref exsists
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref</param>
-    /// <returns>True if it does exist</returns>
-    public static bool HasBool(BoolPref pref)
-    {
-        return (PlayerPrefs.HasKey(pref.ToString()));
-    }
-    #endregion
-    #region Delete
-    /// <summary>
-    /// Deletes an integer PlayerPref
-    /// Note: it will still stay in the IntPref enum
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref to delete</param>
-    public static void DeleteInt(IntPref pref)
-    {
-        DoesExist(pref.ToString());
-        PlayerPrefs.DeleteKey(pref.ToString());
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Deletes a float PlayerPref
-    /// Note: it will still stay in the IntPref enum
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref to delete</param>
-    public static void DeleteFloat(FloatPref pref)
-    {
-        DoesExist(pref.ToString());
-        PlayerPrefs.DeleteKey(pref.ToString());
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Deletes a string PlayerPref
-    /// Note: it will still stay in the IntPref enum
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref to delete</param>
-    public static void DeleteString(StringPref pref)
-    {
-        DoesExist(pref.ToString());
-        PlayerPrefs.DeleteKey(pref.ToString());
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Deletes a boolean PlayerPref
-    /// Note: it will still stay in the IntPref enum
-    /// </summary>
-    /// <param name="pref">The name of the PlayerPref to delete</param>
-    public static void DeleteBool(BoolPref pref)
-    {
-        DoesExist(pref.ToString());
-        PlayerPrefs.DeleteKey(pref.ToString());
-        PlayerPrefs.Save();
-    }
-    #endregion
 }

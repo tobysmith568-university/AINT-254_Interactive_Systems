@@ -64,13 +64,15 @@ public class PlayerGun : MonoBehaviour
 
     void Start()
     {
+        //Game setup
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        Scoring.FullReset();
         gunAnimator = GetComponent<Animator>();
         InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
-        crosshair.color = new Color(MyPrefs.GetFloat(FloatPref.CrosshairRed),
-                                    MyPrefs.GetFloat(FloatPref.CrosshairGreen),
-                                    MyPrefs.GetFloat(FloatPref.CrosshairBlue));
+        crosshair.color = new Color(MyPrefs.CrosshairRed,
+                                    MyPrefs.CrosshairGreen,
+                                    MyPrefs.CrosshairBlue);
         AmmoCount = magSize;
     }
 
@@ -311,6 +313,5 @@ public class PlayerGun : MonoBehaviour
     }
 
     /* END TEST METHODS */
-
     #endregion
 }

@@ -3,14 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Buttons : MonoBehaviour
+/// <summary>
+/// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
+/// </summary>
+public class MainMenu : MonoBehaviour
 {
+    [SerializeField]
+    bool DeleteAllPrefs = false;
+    private void Start()
+    {
+        if (DeleteAllPrefs)
+            PlayerPrefs.DeleteAll();
+    }
+
     /// <summary>
     /// Called by the Play button to load the next level
     /// </summary>
     public void Play()
     {
         SceneManager.LoadScene(4, LoadSceneMode.Single);
+    }
+
+    /// <summary>
+    /// Called by the Leaderboard button to load the leaderboard scene
+    /// </summary>
+    public void Leaderboard()
+    {
+        SceneManager.LoadScene(5, LoadSceneMode.Single);
     }
 
     /// <summary>

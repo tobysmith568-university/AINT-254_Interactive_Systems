@@ -18,89 +18,49 @@ public enum Control
     Reload,
     Pause
 }
-
-public class Mapping
-{
-    public string Name { get; set; }
-    public KeyCode PrimaryInput { get; set; }
-    public KeyCode? SecondryInput { get; set; }
-
-    public Mapping(string name, KeyCode primaryInput, KeyCode? secondryInput = null)
-    {
-        Name = name;
-        PrimaryInput = primaryInput;
-        SecondryInput = secondryInput;
-    }
-}
 public class MyInput : MonoBehaviour
 {
-    public static List<Mapping> keyMaps = new List<Mapping>();
+    public static List<Mapping> keyMaps;
 
-    static string defaultPrimaryKeys = "Mouse0|Mouse1|W|S|A|D|LeftShift|LeftControl|Space|R|Escape";
-    static string defaultSecondryKeys = "null|null|UpArrow|DownArrow|LeftArrow|RightArrow|null|null|null|null|P";
+    static string[,] defaultKeys =
+        {
+            { "Mouse0", "null" }, { "Mouse1", "null" }, { "W", "UpArrow" }, { "S", "DownArrow" },
+            { "A", "LeftArrow" }, { "D", "RightArrow" }, { "LeftShift", "null" }, { "LeftControl", "null" },
+            { "Space", "null" }, { "R", "null" }, { "Escape", "P" }
+        };
 
     static MyInput()
     {
-        //DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------  NEEDS TO BE REMOVED FOR INPUTS TO BE SETTABLE
-        MyPrefs.DeleteString(StringPref.primaryInputs);
-        MyPrefs.DeleteString(StringPref.secondryInputs);
+        //DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ NEEDS TO BE REMOVED FOR INPUTS TO BE SETTABLE
+        PlayerPrefs.DeleteKey("KeyMappings");
         //END DEBUG LINES
 
-        //If the PlayerPref for the inputs cannot be found, add the defaults
-        if (!MyPrefs.HasString(StringPref.primaryInputs)) MyPrefs.SetString(StringPref.primaryInputs, defaultPrimaryKeys);
-        if (!MyPrefs.HasString(StringPref.secondryInputs)) MyPrefs.SetString(StringPref.secondryInputs, defaultSecondryKeys);
-
-        InitializeMaps();
+        if (MyPrefs.Exists(MyPrefs.Prefs.KeyMappings))
+            keyMaps = MyPrefs.KeyMappings.ToList();
+        else
+            ResetMappings();
     }
 
     /// <summary>
     /// This method takes the saved PlayerPref for the inputs and sets up
     /// dictionary entries in the key map dictionary for each of them
     /// </summary>
-    private static void InitializeMaps()
+    private static void ResetMappings()
     {
-        string[] primaryButtonStings = MyPrefs.GetString(StringPref.primaryInputs).Split('|');
-        string[] secondryButtonStings = MyPrefs.GetString(StringPref.secondryInputs).Split('|');
-
+        keyMaps = new List<Mapping>();
         for (int i = 0; i < Enum.GetValues(typeof(Control)).Length; i++)
         {
-            if (secondryButtonStings[i] == "null")
+            if (defaultKeys[i, 1] == "null")
                 keyMaps.Add(new Mapping(
                     ((Control)Enum.GetValues(typeof(Control)).GetValue(i)).ToString(),
-                    (KeyCode)Enum.Parse(typeof(KeyCode), primaryButtonStings[i])));
+                    (KeyCode)Enum.Parse(typeof(KeyCode), defaultKeys[i, 0])));
             else
                 keyMaps.Add(new Mapping(
                     ((Control)Enum.GetValues(typeof(Control)).GetValue(i)).ToString(),
-                    (KeyCode)Enum.Parse(typeof(KeyCode), primaryButtonStings[i]),
-                    (KeyCode)Enum.Parse(typeof(KeyCode), secondryButtonStings[i])));
+                    (KeyCode)Enum.Parse(typeof(KeyCode), defaultKeys[i, 0]),
+                    (KeyCode)Enum.Parse(typeof(KeyCode), defaultKeys[i, 1])));
         }
-    }
-
-    /// <summary>
-    /// Takes each entry in the key map dictionary and saves a single concatenated string in the PlayerPref storage
-    /// </summary>
-    private static void Save()
-    {
-        string primaryDataToSave = "";
-        string secondaryDataToSave = "";
-        foreach (Mapping mapping in keyMaps)
-        {
-            primaryDataToSave += "|" + mapping.PrimaryInput.ToString();
-            secondaryDataToSave += "|" + mapping.SecondryInput.ToString();
-        }
-        MyPrefs.SetString(StringPref.primaryInputs, primaryDataToSave.Substring(1));
-        MyPrefs.SetString(StringPref.secondryInputs, primaryDataToSave.Substring(1));
-    }
-
-    /// <summary>
-    /// Overwrites the input PlayerPref with the default values and re-initializes the dictionary of inputs
-    /// </summary>
-    public static void ResetAllKeys()
-    {
-        MyPrefs.SetString(StringPref.primaryInputs, defaultPrimaryKeys);
-        MyPrefs.SetString(StringPref.secondryInputs, defaultSecondryKeys);
-        Save();
-        InitializeMaps();
+        MyPrefs.KeyMappings = keyMaps.ToArray();
     }
 
     /// <summary>
@@ -116,7 +76,7 @@ public class MyInput : MonoBehaviour
             keyMaps.FirstOrDefault(a => a.Name == input).PrimaryInput = (KeyCode)primaryKey;
         if (secondryKey != null)
             keyMaps.FirstOrDefault(a => a.Name == input).SecondryInput = (KeyCode)secondryKey;
-        Save();
+        MyPrefs.KeyMappings = keyMaps.ToArray();
     }
 
     /// <summary>

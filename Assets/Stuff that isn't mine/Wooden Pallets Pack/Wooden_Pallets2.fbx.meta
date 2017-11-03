@@ -4,7 +4,15 @@ timeCreated: 18446744011573954816
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: woodenpallets2
+    400000: //RootNode
+    400002: woodenpallets2
+    2300000: woodenpallets2
+    3300000: woodenpallets2
     4300000: woodenpallets2
+    7400000: Default Take
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3

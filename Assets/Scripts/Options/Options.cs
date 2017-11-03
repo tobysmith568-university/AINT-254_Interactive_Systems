@@ -13,33 +13,16 @@ public class Options : MonoBehaviour
 
         /* Get all the options from their player prefs */
 
-        //Genera;
-        if (!MyPrefs.HasFloat(FloatPref.XSensitivity))
-            MyPrefs.SetFloat(FloatPref.XSensitivity, 3);
-        if (!MyPrefs.HasFloat(FloatPref.YSensitivity))
-            MyPrefs.SetFloat(FloatPref.YSensitivity, 3);
+        //General
+        xSlider.value = MyPrefs.XSensitivity;
+        ySlider.value = MyPrefs.YSensitivity;
 
-        xSlider.value = MyPrefs.GetFloat(FloatPref.XSensitivity);
-        ySlider.value = MyPrefs.GetFloat(FloatPref.YSensitivity);
-        
-        if (!MyPrefs.HasBool(BoolPref.xInverted))
-            MyPrefs.SetBool(BoolPref.yInverted, false);
-        if (!MyPrefs.HasBool(BoolPref.xInverted))
-            MyPrefs.SetBool(BoolPref.yInverted, false);
+        xToggle.isOn = MyPrefs.XAxisInverted;
+        yToggle.isOn = MyPrefs.YAxisInverted;
 
-        xToggle.isOn = MyPrefs.GetBool(BoolPref.xInverted);
-        yToggle.isOn = MyPrefs.GetBool(BoolPref.yInverted);
-
-        if (!MyPrefs.HasFloat(FloatPref.CrosshairRed))
-            MyPrefs.SetFloat(FloatPref.CrosshairRed, 0);
-        if (!MyPrefs.HasFloat(FloatPref.CrosshairGreen))
-            MyPrefs.SetFloat(FloatPref.CrosshairGreen, 0);
-        if (!MyPrefs.HasFloat(FloatPref.CrosshairBlue))
-            MyPrefs.SetFloat(FloatPref.CrosshairBlue, 0);
-
-        redSlider.value = MyPrefs.GetFloat(FloatPref.CrosshairRed);
-        greenSlider.value = MyPrefs.GetFloat(FloatPref.CrosshairGreen);
-        blueSlider.value = MyPrefs.GetFloat(FloatPref.CrosshairBlue);
+        redSlider.value = MyPrefs.CrosshairRed;
+        greenSlider.value = MyPrefs.CrosshairGreen;
+        blueSlider.value = MyPrefs.CrosshairBlue;
     }
 
     /// <summary>
@@ -158,7 +141,7 @@ public class Options : MonoBehaviour
     public void XAxisChanged()
     {
         xValue.text = ((int)(25 * xSlider.value - 25)).ToString();
-        MyPrefs.SetFloat(FloatPref.XSensitivity, xSlider.value);
+        MyPrefs.XSensitivity = xSlider.value;
     }
 
     /// <summary>
@@ -167,7 +150,7 @@ public class Options : MonoBehaviour
     public void YAxisChanged()
     {
         yValue.text = ((int)(25 * ySlider.value - 25)).ToString();
-        MyPrefs.SetFloat(FloatPref.YSensitivity, ySlider.value);
+        MyPrefs.YSensitivity = ySlider.value;
     }
 
     /// <summary>
@@ -175,7 +158,7 @@ public class Options : MonoBehaviour
     /// </summary>
     public void XToggled()
     {
-        MyPrefs.SetBool(BoolPref.xInverted, xToggle.isOn);
+        MyPrefs.XAxisInverted = xToggle.isOn;
     }
 
     /// <summary>
@@ -183,7 +166,7 @@ public class Options : MonoBehaviour
     /// </summary>
     public void YToggled()
     {
-        MyPrefs.SetBool(BoolPref.yInverted, yToggle.isOn);
+        MyPrefs.YAxisInverted = yToggle.isOn;
     }
 
     /// <summary>
@@ -192,7 +175,7 @@ public class Options : MonoBehaviour
     public void RedChanged()
     {
         crosshair.color = new Color(redSlider.value, crosshair.color.g, crosshair.color.b);
-        MyPrefs.SetFloat(FloatPref.CrosshairRed, redSlider.value);
+        MyPrefs.CrosshairRed = redSlider.value;
     }
 
     /// <summary>
@@ -201,7 +184,7 @@ public class Options : MonoBehaviour
     public void GreenChanged()
     {
         crosshair.color = new Color(crosshair.color.r, greenSlider.value, crosshair.color.b);
-        MyPrefs.SetFloat(FloatPref.CrosshairGreen, greenSlider.value);
+        MyPrefs.CrosshairGreen = greenSlider.value;
     }
 
     /// <summary>
@@ -210,7 +193,7 @@ public class Options : MonoBehaviour
     public void BlueChanged()
     {
         crosshair.color = new Color(crosshair.color.r, crosshair.color.g, blueSlider.value);
-        MyPrefs.SetFloat(FloatPref.CrosshairBlue, blueSlider.value);
+        MyPrefs.CrosshairBlue = blueSlider.value;
     }
     #endregion
 }
