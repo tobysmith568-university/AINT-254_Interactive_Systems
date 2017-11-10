@@ -19,6 +19,8 @@ public class Target : MonoBehaviour
     {
         parent = GetComponent<Transform>().parent;
         mesh = GetComponent<MeshRenderer>();
+        if (gameObject.name.Contains("Person Target"))
+            GetComponent<Animator>().SetInteger("ID", int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
     }
 
     /// <summary>

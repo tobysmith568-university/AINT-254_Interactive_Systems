@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4209527955457930}
   - component: {fileID: 33360255287675252}
   - component: {fileID: 23550930299051202}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4166458272764880}
   - component: {fileID: 198198446959903534}
   - component: {fileID: 199844229500265724}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Flame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4668189773411800}
   - component: {fileID: 33472552296052240}
   - component: {fileID: 23291008905206390}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shoulders
   m_TagString: Target|Body
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 33991720683768742}
   - component: {fileID: 136262354239321940}
   - component: {fileID: 23192581830292280}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Neck
   m_TagString: Target|Body
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4398761180880240}
   - component: {fileID: 114660833918243248}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Target|Body
   m_Icon: {fileID: 0}
@@ -107,7 +107,8 @@ GameObject:
   - component: {fileID: 33301407262478194}
   - component: {fileID: 23712614041094838}
   - component: {fileID: 114846089279578402}
-  m_Layer: 9
+  - component: {fileID: 95004561200731926}
+  m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +125,8 @@ GameObject:
   - component: {fileID: 4362927213620892}
   - component: {fileID: 54013148783624046}
   - component: {fileID: 114606475505733050}
-  m_Layer: 0
+  - component: {fileID: 95367085588799190}
+  m_Layer: 10
   m_Name: Person Target
   m_TagString: Target
   m_Icon: {fileID: 0}
@@ -141,7 +143,7 @@ GameObject:
   - component: {fileID: 4402011178497868}
   - component: {fileID: 33465041285904500}
   - component: {fileID: 23478202873059398}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Scope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +160,7 @@ GameObject:
   - component: {fileID: 4201489312184180}
   - component: {fileID: 198324997531074494}
   - component: {fileID: 199132271295506464}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +179,7 @@ GameObject:
   - component: {fileID: 136857983876262572}
   - component: {fileID: 23608947808643038}
   - component: {fileID: 136804927960763604}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Target|Body
   m_Icon: {fileID: 0}
@@ -192,10 +194,25 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4938228827461360}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: -6488666005112524639, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1741789993187462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4075869038390642}
+  m_Layer: 10
+  m_Name: Eyes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -209,7 +226,7 @@ GameObject:
   - component: {fileID: 4211048493002704}
   - component: {fileID: 33389343557381078}
   - component: {fileID: 23474940079944354}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Black End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,13 +245,26 @@ GameObject:
   - component: {fileID: 135347769591839658}
   - component: {fileID: 23734898455688220}
   - component: {fileID: 114674596446510802}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head
   m_TagString: Target|Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4075869038390642
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1741789993187462}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.93, z: 0}
+  m_LocalScale: {x: 0.9375, y: 1.275, z: 0.9375}
+  m_Children: []
+  m_Father: {fileID: 4362927213620892}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4166458272764880
 Transform:
   m_ObjectHideFlags: 1
@@ -307,12 +337,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1460452214786378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44999695, y: 57.66, z: -14.2400055}
+  m_LocalPosition: {x: 50.53, y: 57.776, z: -78.14}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4669812464788028}
   - {fileID: 4398761180880240}
   - {fileID: 4201489312184180}
+  - {fileID: 4075869038390642}
   - {fileID: 4938228827461360}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -414,7 +445,7 @@ Transform:
   m_Children:
   - {fileID: 4677392646736530}
   m_Father: {fileID: 4362927213620892}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23192581830292280
 MeshRenderer:
@@ -741,8 +772,42 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!95 &95004561200731926
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1374002415782264}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c5a6c8b2be752ed4090c5feccfe177a8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95367085588799190
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1460452214786378}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 33407913132140747a20f512f37ce877, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114606475505733050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -797,9 +862,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf4aabf533e85c4e9a49f9a7cb724f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockedOn: 0
   hand: {fileID: 4938228827461360}
   player: {fileID: 0}
-  strength: 500
+  targetAnimator: {fileID: 95367085588799190}
+  flame: {fileID: 198198446959903534}
+  notGun:
+    serializedVersion: 2
+    m_Bits: 4294965755
+  eyes: {fileID: 4075869038390642}
+  playerMovement: {fileID: 0}
 --- !u!135 &135347769591839658
 SphereCollider:
   m_ObjectHideFlags: 1
