@@ -12543,6 +12543,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4090332584313670}
   - component: {fileID: 111699841532289480}
+  - component: {fileID: 65687343446056034}
   m_Layer: 2
   m_Name: Wooden_Pallets1 (2)
   m_TagString: Untagged
@@ -100546,6 +100547,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65687343446056034
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1320915869757700}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.07788081, z: 1.0628306}
+  m_Center: {x: -4.0671316e-15, y: 0.039706927, z: -0.29912895}
 --- !u!65 &65714933977299796
 BoxCollider:
   m_ObjectHideFlags: 1

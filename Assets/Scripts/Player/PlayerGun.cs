@@ -37,6 +37,11 @@ public class PlayerGun : MonoBehaviour
     Transform targets;
 
     RaycastHit raycastHit;
+    [SerializeField]
+    LayerMask alertOnly;
+    [SerializeField]
+    LayerMask anyButAlert;
+
 
     bool isScoped;
     bool canFire = true;
@@ -83,8 +88,15 @@ public class PlayerGun : MonoBehaviour
         {
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
-            if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit))
-                Hit();
+            if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, alertOnly))
+                Alert();
+            if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, anyButAlert))
+            {
+                Debug.Log("Real bullet hit: " + raycastHit.transform.name);
+                if (raycastHit.transform.tag.Split('|')[0] == "Target")
+                    Hit();
+            }
+
             flame.Play();
             if (isScoped)
                 justFired = true;
@@ -112,71 +124,77 @@ public class PlayerGun : MonoBehaviour
     }
 
     /// <summary>
-    /// Ran when the gun is fired and hits an object
+    /// Ran when the gun is fired and hits a target
     /// </summary>
     void Hit()
     {
         int noscopeBonus = 0, quickscopeBonus = 0, longshotBonus = 0, chainkillBonus = 0, headshotBonus = 0;
-        if (raycastHit.transform.tag.Split('|')[0] == "Target")
-        {
-            //Cancel invokes
-            CancelInvoke("HideScoreMessage");
-            CancelInvoke("IncrementSinceKill");
+        //Cancel invokes
+        CancelInvoke("HideScoreMessage");
+        CancelInvoke("IncrementSinceKill");
 
-            //Tell the target it has been hit
-            raycastHit.transform.GetComponent<Target>().BeenShot();
+        //Tell the target it has been hit
+        raycastHit.transform.GetComponent<Target>().BeenShot();
 
-            //Find the no-scope stat
-            if (sinceScope < 40)
-                noscopeBonus = 30;
-            else if (sinceScope < 50)
-                quickscopeBonus = 50;
-            else if (sinceScope < 60)
-                quickscopeBonus = 40;
-            else if (sinceScope < 70)
-                quickscopeBonus = 30;
-            else if (sinceScope < 80)
-                quickscopeBonus = 20;
-            else if (sinceScope < 90)
-                quickscopeBonus = 10;
+        //Find the no-scope stat
+        if (sinceScope < 40)
+            noscopeBonus = 30;
+        else if (sinceScope < 50)
+            quickscopeBonus = 50;
+        else if (sinceScope < 60)
+            quickscopeBonus = 40;
+        else if (sinceScope < 70)
+            quickscopeBonus = 30;
+        else if (sinceScope < 80)
+            quickscopeBonus = 20;
+        else if (sinceScope < 90)
+            quickscopeBonus = 10;
 
-            //Find the long-shot stat
-            shootDistance = Vector3.Distance(playerTransform.position, raycastHit.transform.position);
-            if (shootDistance > 50)
-                longshotBonus = (int)shootDistance - 50;
+        //Find the long-shot stat
+        shootDistance = Vector3.Distance(playerTransform.position, raycastHit.transform.position);
+        if (shootDistance > 50)
+            longshotBonus = (int)shootDistance - 50;
 
-            //Find the chainkill stat
-            if (sinceKill < 150)
-                chainkillBonus = 30;
+        //Find the chainkill stat
+        if (sinceKill < 150)
+            chainkillBonus = 30;
 
-            //Find the headshot stat
-            if (raycastHit.collider.tag == "Target|Head")
-                headshotBonus = 25;
+        //Find the headshot stat
+        if (raycastHit.collider.tag == "Target|Head")
+            headshotBonus = 25;
 
-            //Show the kill stats
-            string message = "Kill: 100";
-            if (noscopeBonus != 0)
-                message += "\nNo-scope Bonus: " + noscopeBonus;
-            if (quickscopeBonus != 0)
-                message += "\nQuick-scope Bonus: " + quickscopeBonus;
-            if (longshotBonus != 0)
-                message += "\nLongshot Bonus: " + longshotBonus;
-            if (chainkillBonus != 0)
-                message += "\nChainkill Bonus: " + chainkillBonus;
-            if (headshotBonus != 0)
-                message += "\nHeadshot Bonus: " + headshotBonus;
+        //Show the kill stats
+        string message = "Kill: 100";
+        if (noscopeBonus != 0)
+            message += "\nNo-scope Bonus: " + noscopeBonus;
+        if (quickscopeBonus != 0)
+            message += "\nQuick-scope Bonus: " + quickscopeBonus;
+        if (longshotBonus != 0)
+            message += "\nLongshot Bonus: " + longshotBonus;
+        if (chainkillBonus != 0)
+            message += "\nChainkill Bonus: " + chainkillBonus;
+        if (headshotBonus != 0)
+            message += "\nHeadshot Bonus: " + headshotBonus;
 
-            //Show the messages to the player
-            SetScoreMessage(message);
+        //Show the messages to the player
+        SetScoreMessage(message);
 
-            //Increment the player score
-            Scoring.AddScore(100 + noscopeBonus + quickscopeBonus + longshotBonus + chainkillBonus + headshotBonus);
+        //Increment the player score
+        Scoring.AddScore(100 + noscopeBonus + quickscopeBonus + longshotBonus + chainkillBonus + headshotBonus);
 
-            //Set up next kill stats
-            Invoke("HideScoreMessage", 2f);
-            sinceKill = 0;
-            InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
-        }
+        //Set up next kill stats
+        Invoke("HideScoreMessage", 2f);
+        sinceKill = 0;
+        InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
+    }
+
+    /// <summary>
+    /// Ran when the gun is fired and hits a listener
+    /// </summary>
+    void Alert()
+    {
+        Debug.Log("The alert hit: " + raycastHit.transform.name);
+        raycastHit.transform.GetComponentInChildren<TargetGun>().LockOn();
     }
 
     /// <summary>

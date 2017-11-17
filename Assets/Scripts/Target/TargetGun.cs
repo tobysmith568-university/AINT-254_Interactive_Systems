@@ -38,6 +38,8 @@ public class TargetGun : MonoBehaviour
     [SerializeField]
     PlayerMovement playerMovement;
 
+    bool isFirstShot;
+
     void Start()
     {
         thisAnimator = GetComponent<Animator>();
@@ -94,15 +96,30 @@ public class TargetGun : MonoBehaviour
     {
         flame.Play();
         ammo--;
-        Vector3 direction = thisTransform.forward;
-        direction.x += Random.Range(-0.0125f, 0.0125f);
-        direction.y += Random.Range(-0.0125f, 0.0125f);
-        direction.z += Random.Range(-0.0125f, 0.0125f);
+        Vector3 direction = (player.position - thisTransform.position).normalized;
+        if (!isFirstShot)
+        {
+            direction.x += Random.Range(-0.0125f, 0.0125f);
+            direction.y += Random.Range(-0.0125f, 0.0125f);
+            direction.z += Random.Range(-0.0125f, 0.0125f);
+        }
+        else
+            isFirstShot = false;
         Debug.DrawRay(thisTransform.position, direction * 500, Color.blue, 10000f);
         if (Physics.Raycast(thisTransform.position, direction, out raycastHit, 500f, notGun))
         {
+            Vector3 dir = raycastHit.point - thisTransform.position;
+            float mag = dir.magnitude;
+
             if (raycastHit.transform.name == "PlayerMain")
+            {
+                Debug.DrawRay(raycastHit.point, -dir.normalized * mag, Color.red, 10000f);
                 playerMovement.Shot();
+            }
+            else
+            {
+                //Debug.DrawRay(raycastHit.point, -dir.normalized * mag, Color.blue, 10000f);
+            }
         }
 
         if (ammo == 0)
@@ -130,6 +147,12 @@ public class TargetGun : MonoBehaviour
     /// </summary>
     void StartShooting()
     {
+        isFirstShot = true;
         thisAnimator.SetBool("isShooting", true);
+    }
+
+    public void LockOn()
+    {
+        lockedOn = true;
     }
 }
