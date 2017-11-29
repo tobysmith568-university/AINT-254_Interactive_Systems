@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Transform player; 
-    Rigidbody mainRigidBody;
+    Transform thisTransform; 
+    Rigidbody thisRigidBody;
     [SerializeField]
     Animator topAnimator;
     [SerializeField]
@@ -43,8 +43,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        player = GetComponent<Transform>();
-        mainRigidBody = GetComponent<Rigidbody>();
+        thisTransform = GetComponent<Transform>();
+        thisRigidBody = GetComponent<Rigidbody>();
         originalRotation = transform.localRotation;
         distToGround = bottomCollider.bounds.extents.y;
 
@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         
         //Jumping
         if (MyInput.GetButtonDown(Control.Jump) && IsGrounded() && !isCrouching && !isFloating)
-            mainRigidBody.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
+            thisRigidBody.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
 
         //Crouching
         if (MyInput.GetButtonDown(Control.Crouch) && IsGrounded() && !isFloating)
@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         rotationX += Input.GetAxis("Mouse X") * lookSensitivityX;
         rotationX = ClampAngle(rotationX, -360F, 360F);
         Quaternion xQuaternion = Quaternion.AngleAxis((invertX) ? -rotationX : rotationX, Vector3.up);
-        player.localRotation = originalRotation * xQuaternion;
+        thisTransform.localRotation = originalRotation * xQuaternion;
 
         //Looking Y axis
         rotationY += Input.GetAxis("Mouse Y") * lookSensitivityY;
@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Used by other objects, this slows or re-speeds up the look sensitivity while scoped
     /// </summary>
-    /// <param name="isScoped"></param>
+    /// <param name="isScoped">If the player should be scoped or not</param>
     public void SetScoped(bool isScoped)
     {
         if (isScoped)
