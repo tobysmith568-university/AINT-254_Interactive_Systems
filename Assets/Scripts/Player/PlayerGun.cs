@@ -92,6 +92,7 @@ public class PlayerGun : MonoBehaviour
                 Alert();
             if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, anyButAlert))
             {
+                Debug.DrawRay(raycastHit.point, currentCamera.transform.position, Color.yellow, Mathf.Infinity, false);
                 Debug.Log("Real bullet hit: " + raycastHit.transform.name);
                 if (raycastHit.transform.tag.Split('|')[0] == "Target")
                     Hit();
