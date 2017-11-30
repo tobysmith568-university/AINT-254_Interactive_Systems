@@ -109,6 +109,25 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &12845730 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1507832408076922, guid: f90a5f84324135645ad3b8aad916e5da,
+    type: 2}
+  m_PrefabInternal: {fileID: 1438329507}
+--- !u!114 &12845735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 12845730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8e6b1bd47ff4446b6184f1d48ac9d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets: {fileID: 1309024474}
+  targetsRemaining: {fileID: 1891386722}
+  scoreMessage: {fileID: 331110163}
 --- !u!1 &19641534 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1460452214786378, guid: f20fc0c922f8db64295c102769ad6baa,
@@ -1536,26 +1555,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114674596446510802, guid: f20fc0c922f8db64295c102769ad6baa,
-        type: 2}
-      propertyPath: newTargets.Array.data[0]
-      value: 
-      objectReference: {fileID: 202343210}
-    - target: {fileID: 114674596446510802, guid: f20fc0c922f8db64295c102769ad6baa,
-        type: 2}
-      propertyPath: newTargets.Array.data[1]
-      value: 
-      objectReference: {fileID: 19641534}
-    - target: {fileID: 114660833918243248, guid: f20fc0c922f8db64295c102769ad6baa,
-        type: 2}
-      propertyPath: newTargets.Array.data[0]
-      value: 
-      objectReference: {fileID: 202343210}
-    - target: {fileID: 114660833918243248, guid: f20fc0c922f8db64295c102769ad6baa,
-        type: 2}
-      propertyPath: newTargets.Array.data[1]
-      value: 
-      objectReference: {fileID: 19641534}
     - target: {fileID: 114846089279578402, guid: f20fc0c922f8db64295c102769ad6baa,
         type: 2}
       propertyPath: player
@@ -1566,6 +1565,26 @@ Prefab:
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 803014516}
+    - target: {fileID: 114674596446510802, guid: f20fc0c922f8db64295c102769ad6baa,
+        type: 2}
+      propertyPath: newTargets.Array.data[0]
+      value: 
+      objectReference: {fileID: 202343210}
+    - target: {fileID: 114674596446510802, guid: f20fc0c922f8db64295c102769ad6baa,
+        type: 2}
+      propertyPath: newTargets.Array.data[1]
+      value: 
+      objectReference: {fileID: 19641534}
+    - target: {fileID: 114660833918243248, guid: f20fc0c922f8db64295c102769ad6baa,
+        type: 2}
+      propertyPath: newTargets.Array.data[0]
+      value: 
+      objectReference: {fileID: 202343210}
+    - target: {fileID: 114660833918243248, guid: f20fc0c922f8db64295c102769ad6baa,
+        type: 2}
+      propertyPath: newTargets.Array.data[1]
+      value: 
+      objectReference: {fileID: 19641534}
     - target: {fileID: 114606475505733050, guid: f20fc0c922f8db64295c102769ad6baa,
         type: 2}
       propertyPath: newTargets.Array.data[0]
@@ -1579,11 +1598,6 @@ Prefab:
     - target: {fileID: 1460452214786378, guid: f20fc0c922f8db64295c102769ad6baa, type: 2}
       propertyPath: m_Name
       value: Person Target (0)
-      objectReference: {fileID: 0}
-    - target: {fileID: 95367085588799190, guid: f20fc0c922f8db64295c102769ad6baa,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f20fc0c922f8db64295c102769ad6baa, type: 2}
@@ -1738,6 +1752,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f20fc0c922f8db64295c102769ad6baa, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1891386722 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114325064615923844, guid: 21e567300c166b742b2c8508fdc23f2d,
+    type: 2}
+  m_PrefabInternal: {fileID: 203988858}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &1965971316
 Prefab:
   m_ObjectHideFlags: 0
