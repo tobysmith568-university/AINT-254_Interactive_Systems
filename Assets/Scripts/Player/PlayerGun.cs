@@ -26,16 +26,8 @@ public class PlayerGun : MonoBehaviour
     ParticleSystem flame;
 
     [SerializeField]
-    Text scoreMessage;
-
-    [SerializeField]
     Image crosshair;
-
-    [SerializeField]
-    Text targetsRemaining;
-    [SerializeField]
-    Transform targets;
-
+    
     RaycastHit raycastHit;
     [SerializeField]
     LayerMask alertOnly;
@@ -69,10 +61,6 @@ public class PlayerGun : MonoBehaviour
 
     void Start()
     {
-        //Game setup
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Scoring.FullReset();
         gunAnimator = GetComponent<Animator>();
         InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
         crosshair.color = new Color(MyPrefs.CrosshairRed,
@@ -121,7 +109,7 @@ public class PlayerGun : MonoBehaviour
             Reload();
 
         //Scope UI
-        targetsRemaining.text = "Targets Remaining: " + targets.childCount;
+        GameController.UpdateScopeUI();
     }
 
     /// <summary>
@@ -163,28 +151,14 @@ public class PlayerGun : MonoBehaviour
         //Find the headshot stat
         if (raycastHit.collider.tag == "Target|Head")
             headshotBonus = 25;
-
-        //Show the kill stats
-        string message = "Kill: 100";
-        if (noscopeBonus != 0)
-            message += "\nNo-scope Bonus: " + noscopeBonus;
-        if (quickscopeBonus != 0)
-            message += "\nQuick-scope Bonus: " + quickscopeBonus;
-        if (longshotBonus != 0)
-            message += "\nLongshot Bonus: " + longshotBonus;
-        if (chainkillBonus != 0)
-            message += "\nChainkill Bonus: " + chainkillBonus;
-        if (headshotBonus != 0)
-            message += "\nHeadshot Bonus: " + headshotBonus;
-
+        
         //Show the messages to the player
-        SetScoreMessage(message);
+        GameController.SendScoreMessage(100, noscopeBonus, quickscopeBonus, longshotBonus, chainkillBonus, headshotBonus);
 
         //Increment the player score
         Scoring.AddScore(100 + noscopeBonus + quickscopeBonus + longshotBonus + chainkillBonus + headshotBonus);
 
         //Set up next kill stats
-        Invoke("HideScoreMessage", 2f);
         sinceKill = 0;
         InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
     }
@@ -246,23 +220,6 @@ public class PlayerGun : MonoBehaviour
     void IncrementSinceKill()
     {
         sinceKill++;
-    }
-    
-    /// <summary>
-    /// Sets the score message
-    /// </summary>
-    /// <param name="message">The text to set the message to</param>
-    void SetScoreMessage(string message)
-    {
-        scoreMessage.text = message;
-    }
-
-    /// <summary>
-    /// Invoked to hide the score message
-    /// </summary>
-    void HideScoreMessage()
-    {
-        scoreMessage.text = "";
     }
 
     /// <summary>

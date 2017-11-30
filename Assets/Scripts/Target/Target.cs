@@ -15,6 +15,8 @@ public class Target : MonoBehaviour
     Transform parent;
     MeshRenderer mesh;
 
+    public bool beenShot;
+
     void Start()
     {
         parent = GetComponent<Transform>().parent;
@@ -28,6 +30,8 @@ public class Target : MonoBehaviour
     /// </summary>
     public void BeenShot()
     {
+        Debug.Log(gameObject.name);
+        beenShot = true;
         smoke.Play();
         Invoke("Hide", 0.2f);
         Invoke("Kill", 0.5f);
