@@ -76,7 +76,7 @@ public class PlayerGun : MonoBehaviour
         {
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
-            if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, alertOnly))
+            while (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, alertOnly))
                 Alert();
             if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, anyButAlert))
             {

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Listener : MonoBehaviour
 {
+    [SerializeField]
     public TargetGun targetGun;
+
+    [SerializeField]
+    SphereCollider thisCollider;
 
     private void Start()
     {

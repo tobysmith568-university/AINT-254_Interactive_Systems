@@ -38,6 +38,9 @@ public class TargetGun : MonoBehaviour
     [SerializeField]
     PlayerMovement playerMovement;
 
+    [SerializeField]
+    SphereCollider listener;
+
     bool isFirstShot;
 
     void Start()
@@ -154,5 +157,12 @@ public class TargetGun : MonoBehaviour
     public void LockOn()
     {
         lockedOn = true;
+        listener.enabled = false;
+        Invoke("EnableListener", 0.2f);
+    }
+
+    private void EnableListener()
+    {
+        listener.enabled = true;
     }
 }
