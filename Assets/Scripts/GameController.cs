@@ -32,11 +32,6 @@ public class GameController : MonoBehaviour
     [SerializeField]
     Text targetsRemaining;
 
-    public static void PopTarget(Transform target)
-    {
-
-    }
-
     public static void UpdateScopeUI()
     {
         singleton._UpdateScopeUI();

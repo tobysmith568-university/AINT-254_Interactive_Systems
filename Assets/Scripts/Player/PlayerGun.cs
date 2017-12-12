@@ -92,6 +92,8 @@ public class PlayerGun : MonoBehaviour
             AmmoCount--;
             if (AmmoCount == 0 && !isScoped)
                 Reload();
+            else if (AmmoCount == 0 && isScoped)
+                CantFire();
         }
 
         //Scoping
