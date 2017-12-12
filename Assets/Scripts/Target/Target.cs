@@ -23,6 +23,8 @@ public class Target : MonoBehaviour
         mesh = GetComponent<MeshRenderer>();
         if (gameObject.name.Contains("Person Target"))
             GetComponent<Animator>().SetInteger("ID", int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
+
+        GameController.SetTarget(gameObject, true);
     }
 
     /// <summary>
@@ -37,19 +39,9 @@ public class Target : MonoBehaviour
         Invoke("Kill", 0.5f);
 
         //Spawn in the new targets for this target
-        foreach (GameObject target in newTargets)
+        for (int i = 0; i < newTargets.Length; i++)
         {
-            target.SetActive(true);
-            target.GetComponent<Transform>().SetParent(parent);
-        }
-
-        //Check if the game is over
-        if (parent.childCount == 1)
-        {
-            MyPrefs.LastPlay = new GameScore(MyPrefs.LastPlay.Name, Scoring.Score, System.TimeSpan.FromSeconds(Scoring.Time));
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            SceneManager.LoadScene(3, LoadSceneMode.Single);
+            newTargets[i].SetActive(true);
         }
     }
 

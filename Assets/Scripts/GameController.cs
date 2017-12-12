@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
@@ -76,6 +77,27 @@ public class GameController : MonoBehaviour
     void HideScoreMessage()
     {
         scoreMessage.text = "";
+    }
+
+    #endregion
+    #region Detecting when the game should end
+
+    private static Dictionary<GameObject, bool> activeTargets = new Dictionary<GameObject, bool>();
+    
+    public static void SetTarget(GameObject target, bool state)
+    {
+        if (activeTargets.ContainsKey(target))
+            activeTargets[target] = state;
+        else
+            activeTargets.Add(target, state);
+
+        if (activeTargets.Count(a => a.Value == true) > 0)
+            return;
+        
+        MyPrefs.LastPlay = new GameScore(MyPrefs.LastPlay.Name, Scoring.Score, System.TimeSpan.FromSeconds(Scoring.Time));
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(3, LoadSceneMode.Single);
     }
 
     #endregion
