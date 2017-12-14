@@ -103,7 +103,7 @@ public class PlayerGun : MonoBehaviour
             justFired = false;
         }
 
-        if (MyInput.GetButtonDown("Scope") && canFire)
+        if (MyInput.GetButtonDown("Scope") && canFire && AmmoCount > 0)
             ToggleScoped();
 
         //Reloading
