@@ -64,7 +64,6 @@ public class TargetGun : MonoBehaviour
         else if (lockedOn && !isRunning)
         {
             ammo = (Random.Range(0, 100) % 10) + 10;
-            Debug.Log(ammo);
             defaultRotation = thisTransform.rotation;
             eyes.LookAt(player);
             targetRotation = eyes.rotation;

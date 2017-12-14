@@ -81,7 +81,6 @@ public class PlayerGun : MonoBehaviour
             if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, anyButAlert))
             {
                 Debug.DrawRay(raycastHit.point, currentCamera.transform.position, Color.yellow, Mathf.Infinity, false);
-                Debug.Log("Real bullet hit: " + raycastHit.transform.name);
                 if (raycastHit.transform.tag.Split('|')[0] == "Target")
                     Hit();
             }
@@ -124,9 +123,6 @@ public class PlayerGun : MonoBehaviour
         CancelInvoke("HideScoreMessage");
         CancelInvoke("IncrementSinceKill");
 
-        //Tell the target it has been hit
-        raycastHit.transform.GetComponent<Target>().BeenShot();
-
         //Find the no-scope stat
         if (sinceScope < 40)
             noscopeBonus = 30;
@@ -163,6 +159,9 @@ public class PlayerGun : MonoBehaviour
         //Set up next kill stats
         sinceKill = 0;
         InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
+
+        //Tell the target it has been hit
+        raycastHit.transform.GetComponent<Target>().BeenShot();
     }
 
     /// <summary>
@@ -170,7 +169,6 @@ public class PlayerGun : MonoBehaviour
     /// </summary>
     void Alert()
     {
-        Debug.Log("The alert hit: " + raycastHit.transform.name);
         raycastHit.transform.GetComponentInChildren<TargetGun>().LockOn();
     }
 
@@ -280,14 +278,12 @@ public class PlayerGun : MonoBehaviour
     {
         playerMovement.SetScoped(true);
         //m.material.renderQueue = 500;
-        //Debug.Log("Set to: " + m.material.renderQueue);
     }
 
     public void NotInFront()
     {
         playerMovement.SetScoped(false);
         //m.material.renderQueue = defaultQueue;
-        //Debug.Log("Set to: " + m.material.renderQueue);
     }
 
     /* END TEST METHODS */
