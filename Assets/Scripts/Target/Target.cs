@@ -24,7 +24,7 @@ public class Target : MonoBehaviour
         if (gameObject.name.Contains("Person Target"))
             GetComponent<Animator>().SetInteger("ID", int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
 
-        GameController.SetTarget(gameObject, true);
+        //GameController.SetTarget(gameObject, true);
     }
 
     /// <summary>
@@ -32,7 +32,8 @@ public class Target : MonoBehaviour
     /// </summary>
     public void BeenShot()
     {
-        Debug.Log(gameObject.name);
+        //GameController.SetTarget(gameObject, false);
+
         beenShot = true;
         smoke.Play();
         Invoke("Hide", 0.2f);

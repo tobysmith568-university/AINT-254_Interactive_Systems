@@ -91,9 +91,14 @@ public class GameController : MonoBehaviour
         else
             activeTargets.Add(target, state);
 
+
+        Debug.Log("Target Updated - active targets left: " + activeTargets.Count(a => a.Value == true));
+
         if (activeTargets.Count(a => a.Value == true) > 0)
             return;
-        
+
+        Debug.Log("Game Ended");
+
         MyPrefs.LastPlay = new GameScore(MyPrefs.LastPlay.Name, Scoring.Score, System.TimeSpan.FromSeconds(Scoring.Time));
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
