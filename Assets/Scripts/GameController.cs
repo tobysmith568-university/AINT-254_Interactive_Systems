@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         //Game setup
+        activeTargets.Clear();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Scoring.FullReset();
