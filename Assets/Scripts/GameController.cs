@@ -26,6 +26,15 @@ public class GameController : MonoBehaviour
         Scoring.FullReset();
     }
 
+    private void Update()
+    {
+        //Game quitting
+        if (MyInput.GetButtonDown(Control.Pause))
+        {
+            SceneManager.LoadScene(0, LoadSceneMode.Single);
+        }
+    }
+
     #region Updating the UI inside the player's scope
 
     [SerializeField]

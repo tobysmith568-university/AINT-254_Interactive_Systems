@@ -69,10 +69,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //Game quitting ---------------- PROBABLY NEEDS MOVING TO A UI SCRIPT
-        if (MyInput.GetButtonDown(Control.Pause))
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
-
         //Walking and sprinting
         if (MyInput.GetButton(Control.Forward))
             transform.Translate(Vector3.forward * ((Input.GetKey(KeyCode.LeftShift) && !isCrouching && IsGrounded() && !isFloating) ? movementSpeedSprint : movementSpeedForward) * Time.deltaTime);
