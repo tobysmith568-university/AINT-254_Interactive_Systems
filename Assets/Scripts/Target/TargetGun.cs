@@ -36,7 +36,7 @@ public class TargetGun : MonoBehaviour
     RaycastHit raycastHit;
 
     [SerializeField]
-    PlayerMovement playerMovement;
+    Damage playerDamage;
 
     [SerializeField]
     SphereCollider listener;
@@ -101,9 +101,9 @@ public class TargetGun : MonoBehaviour
         Vector3 direction = (player.position - thisTransform.position).normalized;
         if (!isFirstShot)
         {
-            direction.x += Random.Range(-0.0125f, 0.0125f);
-            direction.y += Random.Range(-0.0125f, 0.0125f);
-            direction.z += Random.Range(-0.0125f, 0.0125f);
+            direction.x += Random.Range(-0.01f, 0.01f);
+            direction.y += Random.Range(-0.01f, 0.01f);
+            direction.z += Random.Range(-0.01f, 0.01f);
         }
         else
             isFirstShot = false;
@@ -116,7 +116,7 @@ public class TargetGun : MonoBehaviour
             if (raycastHit.transform.name == "PlayerMain")
             {
                 Debug.DrawRay(raycastHit.point, -dir.normalized * mag, Color.red, 10000f);
-                playerMovement.Shot();
+                playerDamage.Shot();
             }
             else
             {

@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 4457189443053832}
   - component: {fileID: 114248101324786934}
   - component: {fileID: 54280956724162650}
+  - component: {fileID: 114058579728917104}
   m_Layer: 0
   m_Name: PlayerMain
   m_TagString: Untagged
@@ -564,7 +565,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 10
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 512
@@ -636,7 +637,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 10
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 32
@@ -1094,6 +1095,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114058579728917104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1393338046136906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b540bc7955ae4a6488ad631cc388dc87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstDamageRing: {fileID: 0}
+  secondDamageRing: {fileID: 0}
 --- !u!114 &114106012087784410
 MonoBehaviour:
   m_ObjectHideFlags: 1

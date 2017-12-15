@@ -152,12 +152,4 @@ public class PlayerMovement : MonoBehaviour
             lookSensitivityX = lookSensitivityY /= 8;
         }
     }
-
-    /// <summary>
-    /// Called by a target if they shoot the player
-    /// </summary>
-    public void Shot()
-    {
-        Debug.Log("The player has been shot");
-    }
 }
