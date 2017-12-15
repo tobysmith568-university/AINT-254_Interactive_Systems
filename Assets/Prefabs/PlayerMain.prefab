@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 222257218888338396}
   - component: {fileID: 114175374613628692}
   - component: {fileID: 114804757337265526}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 114106012087784410}
   - component: {fileID: 114326626858750842}
   - component: {fileID: 114927664100146338}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 224858460596410250}
   - component: {fileID: 222494658105962154}
   - component: {fileID: 114248774578421558}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Horz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 224271183279952908}
   - component: {fileID: 222642583796150828}
   - component: {fileID: 114288887586983392}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Vert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 224559145933490752}
   - component: {fileID: 222774390801609608}
   - component: {fileID: 114325064615923844}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Targets Remaining
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,8 +472,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1911150707382160}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -1.036, z: 0}
-  m_LocalScale: {x: 12.698442, y: 12.698446, z: 2.7164695}
+  m_LocalPosition: {x: 0.00008814955, y: -1.0359862, z: -0.000013286867}
+  m_LocalScale: {x: 12.698443, y: 12.698455, z: 2.7164712}
   m_Children:
   - {fileID: 224410145404229654}
   m_Father: {fileID: 4342303797968276}
@@ -559,7 +559,7 @@ Camera:
   m_GameObject: {fileID: 1911150707382160}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 3
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -569,13 +569,13 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 7.229635
+  field of view: 5
   orthographic: 0
   orthographic size: 5
-  m_Depth: 1
+  m_Depth: 2
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8192
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1145,10 +1145,13 @@ MonoBehaviour:
   mainCamera: {fileID: 20759592397728270}
   scopeCamera: {fileID: 20955530072951266}
   flame: {fileID: 198886581759863490}
-  scoreMessage: {fileID: 0}
   crosshair: {fileID: 0}
-  targetsRemaining: {fileID: 114325064615923844}
-  targets: {fileID: 0}
+  alertOnly:
+    serializedVersion: 2
+    m_Bits: 4096
+  anyButAlert:
+    serializedVersion: 2
+    m_Bits: 4294962427
   magSize: 8
   ammoText: {fileID: 0}
 --- !u!114 &114804757337265526
@@ -4539,7 +4542,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 20955530072951266}
-  m_PlaneDistance: 0.51
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -4565,7 +4568,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1317.5946, y: 0}
+  m_SizeDelta: {x: 713.3185, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224271183279952908
 RectTransform:
@@ -4592,8 +4595,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1259667356767642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.8074878}
-  m_LocalScale: {x: 0.00011109964, y: 0.00011109964, z: 0.00011109964}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5833083}
+  m_LocalScale: {x: 0.0002780952, y: 0.0002780952, z: 0.0002780952}
   m_Children:
   - {fileID: 224271183279952908}
   - {fileID: 224858460596410250}
@@ -4604,8 +4607,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.000009820323, y: 0.0012077331}
-  m_SizeDelta: {x: 0, y: 580}
+  m_AnchoredPosition: {x: 0, y: 0.002376053}
+  m_SizeDelta: {x: 558.2222, y: 314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224559145933490752
 RectTransform:

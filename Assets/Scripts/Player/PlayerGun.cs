@@ -108,9 +108,6 @@ public class PlayerGun : MonoBehaviour
         //Reloading
         if (MyInput.GetButtonDown(Control.Reload) && canFire)
             Reload();
-
-        //Scope UI
-        GameController.UpdateScopeUI();
     }
 
     /// <summary>
@@ -161,7 +158,7 @@ public class PlayerGun : MonoBehaviour
         InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
 
         //Tell the target it has been hit
-        raycastHit.transform.GetComponent<Target>().BeenShot();
+        raycastHit.transform.GetComponent<Target>().BeenShot();         
     }
 
     /// <summary>

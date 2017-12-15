@@ -12,14 +12,12 @@ public class Target : MonoBehaviour
     [SerializeField]
     GameObject[] newTargets;
 
-    Transform parent;
     MeshRenderer mesh;
 
     public bool beenShot;
 
     void Start()
     {
-        parent = GetComponent<Transform>().parent;
         mesh = GetComponent<MeshRenderer>();
         if (gameObject.name.Contains("Person Target"))
             GetComponent<Animator>().SetInteger("ID", int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));

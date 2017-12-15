@@ -12,36 +12,31 @@ public class GameController : MonoBehaviour
 {
     private static GameController singleton;
 
-    private void Start()
+    private void Awake()
     {
         singleton = this;
+    }
 
+    private void Start()
+    {
         //Game setup
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Scoring.FullReset();
-
-        //Updating the UI inside the player's scope
-        remainingTargets = targets.ToList();
     }
 
     #region Updating the UI inside the player's scope
 
     [SerializeField]
     Transform[] targets;
-    List<Transform> remainingTargets;
     [SerializeField]
     Text targetsRemaining;
 
-    public static void UpdateScopeUI()
+    private void UpdateScopeUI()
     {
-        singleton._UpdateScopeUI();
+        targetsRemaining.text = "Targets Remaining: " + activeTargets.Count(a => a.Value == true);
     }
 
-    private void _UpdateScopeUI()
-    {
-        targetsRemaining.text = "Targets Remaining: " + remainingTargets.Count();
-    }
     #endregion
     #region Setting the points breakdown message after a kill
 
@@ -84,6 +79,11 @@ public class GameController : MonoBehaviour
 
     private static Dictionary<GameObject, bool> activeTargets = new Dictionary<GameObject, bool>();
     
+    /// <summary>
+    /// Called by a Target on Start() as well as when it is shot
+    /// </summary>
+    /// <param name="target">The target which has been shot</param>
+    /// <param name="state">The new state of the target - ie, is it active or not</param>
     public static void SetTarget(GameObject target, bool state)
     {
         if (activeTargets.ContainsKey(target))
@@ -91,8 +91,7 @@ public class GameController : MonoBehaviour
         else
             activeTargets.Add(target, state);
 
-
-        Debug.Log("Target Updated - active targets left: " + activeTargets.Count(a => a.Value == true));
+        singleton.UpdateScopeUI();
 
         if (activeTargets.Count(a => a.Value == true) > 0)
             return;
