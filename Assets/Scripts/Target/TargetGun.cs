@@ -101,9 +101,9 @@ public class TargetGun : MonoBehaviour
         Vector3 direction = (player.position - thisTransform.position).normalized;
         if (!isFirstShot)
         {
-            direction.x += Random.Range(-0.01f, 0.01f);
-            direction.y += Random.Range(-0.01f, 0.01f);
-            direction.z += Random.Range(-0.01f, 0.01f);
+            direction.x += Random.Range(-0.0075f, 0.0075f);
+            direction.y += Random.Range(-0.0075f, 0.0075f);
+            direction.z += Random.Range(-0.0075f, 0.0075f);
         }
         else
             isFirstShot = false;
