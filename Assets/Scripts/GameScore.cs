@@ -25,7 +25,7 @@ public class GameScore
     /// </summary>
     public GameScore()
     {
-        Name = "";
+        Name = "No name";
         Score = 0;
         Time = new System.TimeSpan();
     }

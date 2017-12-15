@@ -44,7 +44,7 @@ public class GameOver : MonoBehaviour
     public void MainMenu()
     {
         //Set the PlayerPrefs
-        gameScore = new GameScore(playerName.text, MyPrefs.LastPlay.Score, MyPrefs.LastPlay.Time);
+        gameScore = new GameScore(playerName.text == ""? "No name" : playerName.text, MyPrefs.LastPlay.Score, MyPrefs.LastPlay.Time);
         
         //Rank the time in the time highscores
         for (int i = 0; i < timeScores.Length; i++)
