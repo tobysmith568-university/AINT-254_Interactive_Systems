@@ -65,14 +65,14 @@ public class MyInput : MonoBehaviour
     /// </summary>
     /// <param name="input">The name of the input</param>
     /// <param name="primaryKey">The new KeyCode for that input</param>
-    public static void SetKeyMap(string input, KeyCode? primaryKey = null, KeyCode? secondryKey = null)
+    public static void SetKeyMap(string input, KeyCode? primaryKey = null, KeyCode? secondaryKey = null)
     {
         if (keyMaps.Where(a => a.Name == input).Count() != 1)
             throw new ArgumentException("Invalid KeyMap in SetKeyMap: " + input);
         if (primaryKey != null)
             keyMaps.FirstOrDefault(a => a.Name == input).PrimaryInput = (KeyCode)primaryKey;
-        if (secondryKey != null)
-            keyMaps.FirstOrDefault(a => a.Name == input).SecondryInput = (KeyCode)secondryKey;
+        if (secondaryKey != null)
+            keyMaps.FirstOrDefault(a => a.Name == input).SecondaryInput = (KeyCode)secondaryKey;
         MyPrefs.KeyMappings = keyMaps.ToArray();
     }
 
@@ -81,12 +81,12 @@ public class MyInput : MonoBehaviour
     /// </summary>
     /// <param name="control">The Control of the input</param>
     /// <param name="primaryKey">The new KeyCode for that input</param>
-    public static void SetKeyMap(Control control, KeyCode? primaryKey = null, KeyCode? secondryKey = null)
+    public static void SetKeyMap(Control control, KeyCode? primaryKey = null, KeyCode? secondaryKey = null)
     {
         if (primaryKey != null)
             keyMaps.FirstOrDefault(a => a.Name == control.ToString()).PrimaryInput = (KeyCode)primaryKey;
-        if (secondryKey != null)
-            keyMaps.FirstOrDefault(a => a.Name == control.ToString()).SecondryInput = (KeyCode)secondryKey;
+        if (secondaryKey != null)
+            keyMaps.FirstOrDefault(a => a.Name == control.ToString()).SecondaryInput = (KeyCode)secondaryKey;
         MyPrefs.KeyMappings = keyMaps.ToArray();
     }
 
@@ -96,7 +96,7 @@ public class MyInput : MonoBehaviour
     /// <param name="control">The Control of the input</param>
     public static void RemoveSecondMapping(Control control)
     {
-        keyMaps.FirstOrDefault(a => a.Name == control.ToString()).SecondryInput = null;
+        keyMaps.FirstOrDefault(a => a.Name == control.ToString()).SecondaryInput = null;
         MyPrefs.KeyMappings = keyMaps.ToArray();
     }
 
@@ -133,8 +133,8 @@ public class MyInput : MonoBehaviour
         if (keyMaps.Where(a => a.Name == input).Count() != 1)
             throw new ArgumentException("Invalid KeyMap in GetButtonDown: " + input);
         Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
-        if (map.SecondryInput != null)
-            return Input.GetKeyDown(map.PrimaryInput) || Input.GetKeyDown((KeyCode)map.SecondryInput);
+        if (map.SecondaryInput != null)
+            return Input.GetKeyDown(map.PrimaryInput) || Input.GetKeyDown((KeyCode)map.SecondaryInput);
         else
             return Input.GetKeyDown(map.PrimaryInput);
     }
@@ -148,8 +148,8 @@ public class MyInput : MonoBehaviour
     {
         string input = control.ToString();
         Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
-        if (map.SecondryInput != null)
-            return Input.GetKeyDown(map.PrimaryInput) || Input.GetKeyDown((KeyCode)map.SecondryInput);
+        if (map.SecondaryInput != null)
+            return Input.GetKeyDown(map.PrimaryInput) || Input.GetKeyDown((KeyCode)map.SecondaryInput);
         else
             return Input.GetKeyDown(map.PrimaryInput);
     }
@@ -164,8 +164,8 @@ public class MyInput : MonoBehaviour
         if (keyMaps.Where(a => a.Name == input).Count() != 1)
             throw new ArgumentException("Invalid KeyMap in GetButtonUp: " + input);
         Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
-        if (map.SecondryInput != null)
-            return Input.GetKeyUp(map.PrimaryInput) || Input.GetKeyUp((KeyCode)map.SecondryInput);
+        if (map.SecondaryInput != null)
+            return Input.GetKeyUp(map.PrimaryInput) || Input.GetKeyUp((KeyCode)map.SecondaryInput);
         else
             return Input.GetKeyUp(map.PrimaryInput);
     }
@@ -179,8 +179,8 @@ public class MyInput : MonoBehaviour
     {
         string input = control.ToString();
         Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
-        if (map.SecondryInput != null)
-            return Input.GetKeyUp(map.PrimaryInput) || Input.GetKeyUp((KeyCode)map.SecondryInput);
+        if (map.SecondaryInput != null)
+            return Input.GetKeyUp(map.PrimaryInput) || Input.GetKeyUp((KeyCode)map.SecondaryInput);
         else
             return Input.GetKeyUp(map.PrimaryInput);
     }
@@ -195,8 +195,8 @@ public class MyInput : MonoBehaviour
         if (keyMaps.Where(a => a.Name == input).Count() != 1)
             throw new ArgumentException("Invalid KeyMap in GetButton: " + input);
         Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
-        if (map.SecondryInput != null)
-            return Input.GetKey(map.PrimaryInput) || Input.GetKey((KeyCode)map.SecondryInput);
+        if (map.SecondaryInput != null)
+            return Input.GetKey(map.PrimaryInput) || Input.GetKey((KeyCode)map.SecondaryInput);
         else
             return Input.GetKey(map.PrimaryInput);
     }
@@ -210,8 +210,8 @@ public class MyInput : MonoBehaviour
     {
         string input = control.ToString();
         Mapping map = keyMaps.FirstOrDefault(a => a.Name == input);
-        if (map.SecondryInput != null)
-            return Input.GetKey(map.PrimaryInput) || Input.GetKey((KeyCode)map.SecondryInput);
+        if (map.SecondaryInput != null)
+            return Input.GetKey(map.PrimaryInput) || Input.GetKey((KeyCode)map.SecondaryInput);
         else
             return Input.GetKey(map.PrimaryInput);
     }

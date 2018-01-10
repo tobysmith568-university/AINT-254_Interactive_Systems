@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
+/// </summary>
+
 public class Options : MonoBehaviour
 {
     private void Start()
@@ -35,9 +39,14 @@ public class Options : MonoBehaviour
         //Controls
         if (currentControl != null)
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && primaryOrSecondry == 1)
+            PrimaryMappingPanel.SetActive(primaryOrSecondary == 0);
+            SecondaryMappingPanel.SetActive(primaryOrSecondary != 0);
+
+            PrimaryMappingText.text = SecondaryMappingText.text = "Press the new " + (primaryOrSecondary == 0 ? "primary" : "secondary") + " mapping for: " + currentControl.Value;
+
+            if (Input.GetKeyDown(KeyCode.Escape) && primaryOrSecondary == 1)
                 Invoke("RemoveMapping", 1f);
-            if (Input.GetKeyUp(KeyCode.Escape) && primaryOrSecondry == 1)
+            if (Input.GetKeyUp(KeyCode.Escape) && primaryOrSecondary == 1)
                 CancelInvoke("RemoveMapping");
 
             //For every possible key input
@@ -47,10 +56,10 @@ public class Options : MonoBehaviour
                 if ((Input.GetKeyDown(kcode) && kcode != KeyCode.Escape) || (Input.GetKeyUp(kcode) && kcode == KeyCode.Escape))
                 {
                     //Map the buttons input to that key
-                    if (primaryOrSecondry == 0)
+                    if (primaryOrSecondary == 0)
                         MyInput.SetKeyMap(control: (Control)currentControl, primaryKey: kcode);
                     else
-                        MyInput.SetKeyMap(control: (Control)currentControl, secondryKey: kcode);
+                        MyInput.SetKeyMap(control: (Control)currentControl, secondaryKey: kcode);
 
                     UpdateButtonText();
 
@@ -61,6 +70,7 @@ public class Options : MonoBehaviour
     }
 
     #region Panel switching
+    [Header("Panel switching")]
     [SerializeField]
     GameObject[] panels;
 
@@ -140,6 +150,7 @@ public class Options : MonoBehaviour
 
 
     #region General tab
+    [Header("General tab")]
     [SerializeField]
     Text xValue;
     [SerializeField]
@@ -228,6 +239,7 @@ public class Options : MonoBehaviour
     #endregion
 
     #region Controls tab
+    [Header("Controls tab")]
     [SerializeField]
     Text[] ShootMappings;
     [SerializeField]
@@ -253,14 +265,22 @@ public class Options : MonoBehaviour
 
     [SerializeField]
     GameObject MappingPanel;
+    [SerializeField]
+    GameObject PrimaryMappingPanel;
+    [SerializeField]
+    Text PrimaryMappingText;
+    [SerializeField]
+    GameObject SecondaryMappingPanel;
+    [SerializeField]
+    Text SecondaryMappingText;
 
     Control? currentControl;
-    int primaryOrSecondry = 0;
+    int primaryOrSecondary = 0;
 
     public void MappingPressed(string mapping)
     {
         currentControl = (Control)System.Enum.Parse(typeof(Control), mapping.Split(' ')[0]);
-        primaryOrSecondry = int.Parse(mapping.Split(' ')[1]);
+        primaryOrSecondary = int.Parse(mapping.Split(' ')[1]);
     }
 
     public void UpdateButtonText()
@@ -271,47 +291,47 @@ public class Options : MonoBehaviour
             {
                 case "Shoot":
                     ShootMappings[0].text = mapping.PrimaryInput.ToString();
-                    ShootMappings[1].text = mapping.SecondryInput.ToString();
+                    ShootMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Scope":
                     ScopeMappings[0].text = mapping.PrimaryInput.ToString();
-                    ScopeMappings[1].text = mapping.SecondryInput.ToString();
+                    ScopeMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Forward":
                     ForwardMappings[0].text = mapping.PrimaryInput.ToString();
-                    ForwardMappings[1].text = mapping.SecondryInput.ToString();
+                    ForwardMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Backward":
                     BackwardMappings[0].text = mapping.PrimaryInput.ToString();
-                    BackwardMappings[1].text = mapping.SecondryInput.ToString();
+                    BackwardMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Left":
                     LeftMappings[0].text = mapping.PrimaryInput.ToString();
-                    LeftMappings[1].text = mapping.SecondryInput.ToString();
+                    LeftMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Right":
                     RightMappings[0].text = mapping.PrimaryInput.ToString();
-                    RightMappings[1].text = mapping.SecondryInput.ToString();
+                    RightMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Sprint":
                     SprintMappings[0].text = mapping.PrimaryInput.ToString();
-                    SprintMappings[1].text = mapping.SecondryInput.ToString();
+                    SprintMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Crouch":
                     CrouchMappings[0].text = mapping.PrimaryInput.ToString();
-                    CrouchMappings[1].text = mapping.SecondryInput.ToString();
+                    CrouchMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Jump":
                     JumpMappings[0].text = mapping.PrimaryInput.ToString();
-                    JumpMappings[1].text = mapping.SecondryInput.ToString();
+                    JumpMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Reload":
                     ReloadMappings[0].text = mapping.PrimaryInput.ToString();
-                    ReloadMappings[1].text = mapping.SecondryInput.ToString();
+                    ReloadMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 case "Pause":
                     PauseMappings[0].text = mapping.PrimaryInput.ToString();
-                    PauseMappings[1].text = mapping.SecondryInput.ToString();
+                    PauseMappings[1].text = mapping.SecondaryInput.ToString();
                     break;
                 default:
                     break;

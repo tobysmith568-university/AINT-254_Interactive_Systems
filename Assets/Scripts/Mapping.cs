@@ -3,15 +3,15 @@ public class Mapping
 {
     string name;
     KeyCode primaryInput;
-    KeyCode? secondryInput;
+    KeyCode? secondaryInput;
     public string Name { get { return name; } set { name = value; } }
     public KeyCode PrimaryInput { get { return primaryInput; } set { primaryInput = value; } }
-    public KeyCode? SecondryInput { get { return secondryInput; } set { secondryInput = value; } }
+    public KeyCode? SecondaryInput { get { return secondaryInput; } set { secondaryInput = value; } }
 
-    public Mapping(string name, KeyCode primaryInput, KeyCode? secondryInput = null)
+    public Mapping(string name, KeyCode primaryInput, KeyCode? secondaryInput = null)
     {
         Name = name;
         PrimaryInput = primaryInput;
-        SecondryInput = secondryInput;
+        SecondaryInput = secondaryInput;
     }
 }
