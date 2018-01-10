@@ -113,9 +113,9 @@ public class MyInput : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds an input by it's name and returns the paired KeyCode
+    /// Finds an input by it's Control and returns the paired KeyCode
     /// </summary>
-    /// <param name="input">The name of the input</param>
+    /// <param name="control">The Control of the input</param>
     /// <returns>The KeyCode assigned to that name</returns>
     public static Mapping GetKeyMap(Control control)
     {
@@ -140,9 +140,9 @@ public class MyInput : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds an input by it's name and returns if this is the current update where it first pressed down
+    /// Finds an input by it's Control and returns if this is the current update where it first pressed down
     /// </summary>
-    /// <param name="input">The name of the input</param>
+    /// <param name="control">The Control of the input</param>
     /// <returns>True if the input is pressed down but wasn't in the previous update</returns>
     public static bool GetButtonDown(Control control)
     {
@@ -171,9 +171,9 @@ public class MyInput : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds an input by it's name and returns if this is the current update where it first released
+    /// Finds an input by it's Control and returns if this is the current update where it first released
     /// </summary>
-    /// <param name="input">The name of the input</param>
+    /// <param name="control">The Control of the input</param>
     /// <returns>True if the input is not pressed down but was in the previous update</returns>
     public static bool GetButtonUp(Control control)
     {
@@ -202,9 +202,9 @@ public class MyInput : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds an input by it's name and returns if it is pressed down or not
+    /// Finds an input by it's Control and returns if it is pressed down or not
     /// </summary>
-    /// <param name="input">The name of the input</param>
+    /// <param name="control">The Control of the input</param>
     /// <returns>True if the input is pressed down irrelevant of the last update</returns>
     public static bool GetButton(Control control)
     {
