@@ -1,11 +1,16 @@
-﻿/// <summary>
+﻿using Newtonsoft.Json;
+
+/// <summary>
 /// Stores a name, time, and score
 /// </summary>
 public class GameScore
 {
+    [JsonProperty("Name")]
     public string Name { get; set; }
+    [JsonProperty("Score")]
     public int Score { get; set; }
-    public System.TimeSpan Time { get; set; }
+    [JsonProperty("Duration")]
+    public int Duration { get; set; }
 
     /// <summary>
     /// Stores a name, time, and score
@@ -13,11 +18,11 @@ public class GameScore
     /// <param name="name">The name of the player</param>
     /// <param name="score">The score they achieved</param>
     /// <param name="time">How long they played for</param>
-    public GameScore(string name, int score, System.TimeSpan time)
+    public GameScore(string name, int score, int time)
     {
         Name = name;
         Score = score;
-        Time = time;
+        Duration = time;
     }
 
     /// <summary>
@@ -27,7 +32,7 @@ public class GameScore
     {
         Name = "No name";
         Score = 0;
-        Time = new System.TimeSpan();
+        Duration = 0;
     }
 
     /// <summary>
@@ -37,7 +42,7 @@ public class GameScore
     /// <returns>True if this GameScore is faster than <c>other</c></returns>
     public bool FasterThan(GameScore other)
     {
-        return other.Time.Ticks == 0 ? true : Time.CompareTo(other.Time) < 0;
+        return other.Duration == 0 ? true : Duration < other.Duration;
     }
     
     /// <summary>

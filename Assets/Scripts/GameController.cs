@@ -108,7 +108,7 @@ public class GameController : MonoBehaviour
 
         Debug.Log("Game Ended");
 
-        MyPrefs.LastPlay = new GameScore(MyPrefs.LastPlay.Name, Scoring.Score, System.TimeSpan.FromSeconds(Scoring.Time));
+        MyPrefs.LastPlay = new GameScore(MyPrefs.LastPlay.Name, Scoring.Score, (int)System.TimeSpan.FromSeconds(Scoring.Time).TotalMilliseconds);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene(3, LoadSceneMode.Single);

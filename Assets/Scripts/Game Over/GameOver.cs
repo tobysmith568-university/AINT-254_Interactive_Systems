@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Net;
 
 /// <summary>
 /// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
@@ -28,7 +29,7 @@ public class GameOver : MonoBehaviour
         gameScore = MyPrefs.LastPlay;
 
         //Show the stats
-        time.text = "Time:\n" + new System.DateTime().Add(gameScore.Time).ToString("m:ss:f");
+        time.text = "Time:\n" + new System.DateTime().AddMilliseconds(gameScore.Duration).ToString("m:ss:f");
         score.text = "Score:\n" + gameScore.Score.ToString();
     }
 
@@ -44,7 +45,7 @@ public class GameOver : MonoBehaviour
     public void MainMenu()
     {
         //Set the PlayerPrefs
-        gameScore = new GameScore(playerName.text == ""? "No name" : playerName.text, MyPrefs.LastPlay.Score, MyPrefs.LastPlay.Time);
+        gameScore = new GameScore(playerName.text == ""? "No name" : playerName.text, MyPrefs.LastPlay.Score, MyPrefs.LastPlay.Duration);
         
         //Rank the time in the time highscores
         for (int i = 0; i < timeScores.Length; i++)
@@ -72,6 +73,15 @@ public class GameOver : MonoBehaviour
                 scoreScores[i] = gameScore;
                 break;
             }
+        }
+
+        //Send the highscore off to the server
+        using (WebClient wc = new WebClient())
+        {
+            string url = "http://tobysmith.uk/ShooterUnknown/SendScore.php?" +
+                "pass=we345678i9olkjhgtrewazsxcvbnjkio90pokjyt432waw23erfr567ujhg" +
+                "&score={\"Name\":\"" + gameScore.Name + "\",\"Duration\":" + gameScore.Duration + ",\"Score\":" + gameScore.Score + "}";
+            wc.DownloadStringAsync(new System.Uri(url));
         }
 
         //Save the new highscores

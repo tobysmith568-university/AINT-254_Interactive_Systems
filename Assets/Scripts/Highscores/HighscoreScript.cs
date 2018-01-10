@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Net;
+using Newtonsoft.Json;
+using UnityEngine.Networking;
 
 /// <summary>
 /// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
@@ -10,27 +13,49 @@ using UnityEngine.SceneManagement;
 public class HighscoreScript : MonoBehaviour
 {
     [SerializeField]
-    Text scoresText;
+    Text[] localScores;
     [SerializeField]
-    Text timesText;
+    Text[] localTimes;
+    [SerializeField]
+    Text[] globalScores;
+    [SerializeField]
+    Text[] globalTimes;
 
     void Start()
     {
-        //Show the score highscores
-        string message = "The Score Highscores:";
-        foreach (GameScore score in MyPrefs.HighScores)
+        StartCoroutine(GetText());
+
+        for (int i = 0; i < 10; i++)
         {
-            message = message + "\n" + score.Name + ": " + score.Score;
-        }
-        scoresText.text = message;
-        
-        //Show the time highscores
-        message = "This Time Lowscores:";
-        foreach (GameScore score in MyPrefs.LowTimes)
+            if (MyPrefs.HighScores[i].Score != 0)
+                localScores[i].text = MyPrefs.HighScores[i].Name + " : " + MyPrefs.HighScores[i].Score;
+            if (MyPrefs.LowTimes[i].Duration != 0)
+                localTimes[i].text = MyPrefs.LowTimes[i].Name + " : " + new System.DateTime().AddMilliseconds(MyPrefs.LowTimes[i].Duration).ToString("m:ss:f");
+        }        
+    }
+
+    IEnumerator GetText()
+    {
+        UnityWebRequest www = UnityWebRequest.Get("http://tobysmith.uk/ShooterUnknown/SendScore.php?pass=we345678i9olkjhgtrewazsxcvbnjkio90pokjyt432waw23erfr567ujhg");
+        yield return www.Send();
+
+        if (www.isNetworkError || www.isHttpError)
         {
-            message = message + "\n" + score.Name + ": " + new System.DateTime().Add(score.Time).ToString("m:ss:f");
+            Debug.Log(www.error);
         }
-        timesText.text = message;
+        else
+        {
+            Debug.Log("Downloaded");
+            ScoreDownload scores = JsonConvert.DeserializeObject<ScoreDownload>(www.downloadHandler.text);
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (scores.ScoreScores[i].Score != 0)
+                    globalScores[i].text = scores.ScoreScores[i].Name + " : " + scores.ScoreScores[i].Score;
+                if (scores.TimeScores[i].Duration != 0)
+                    globalTimes[i].text = scores.TimeScores[i].Name + " : " + new System.DateTime().AddMilliseconds(scores.TimeScores[i].Duration).ToString("m:ss:f");
+            }
+        }
     }
 
     /// <summary>
@@ -39,23 +64,5 @@ public class HighscoreScript : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene(0, LoadSceneMode.Single);
-    }
-
-    /// <summary>
-    /// Called by the ClearAll button to clear all the highscores
-    /// </summary>
-    public void ClearScores()
-    {
-        MyPrefs.HighScores = new GameScore[]
-            {
-                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore(),
-                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore()
-            };
-        MyPrefs.LowTimes = new GameScore[]
-            {
-                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore(),
-                new GameScore(), new GameScore(), new GameScore(), new GameScore(), new GameScore()
-            };
-        Start();
     }
 }

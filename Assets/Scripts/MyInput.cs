@@ -18,23 +18,20 @@ public enum Control
     Reload,
     Pause
 }
+
 public class MyInput : MonoBehaviour
 {
     public static List<Mapping> keyMaps;
 
     static string[,] defaultKeys =
         {
-            { "Mouse0", "null" }, { "Mouse1", "null" }, { "W", "UpArrow" }, { "S", "DownArrow" },
+            { "Mouse0", "null" }, { "Mouse1", "null" },  { "W", "UpArrow" },      { "S", "DownArrow" },
             { "A", "LeftArrow" }, { "D", "RightArrow" }, { "LeftShift", "null" }, { "LeftControl", "null" },
-            { "Space", "null" }, { "R", "null" }, { "Escape", "P" }
+            { "Space", "null" },  { "R", "null" },       { "Escape", "P" }
         };
 
     static MyInput()
     {
-        //DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ DEBUG LINES ------------ NEEDS TO BE REMOVED FOR INPUTS TO BE SETTABLE
-        PlayerPrefs.DeleteKey("KeyMappings");
-        //END DEBUG LINES
-
         if (MyPrefs.Exists(MyPrefs.Prefs.KeyMappings))
             keyMaps = MyPrefs.KeyMappings.ToList();
         else
@@ -45,7 +42,7 @@ public class MyInput : MonoBehaviour
     /// This method takes the saved PlayerPref for the inputs and sets up
     /// dictionary entries in the key map dictionary for each of them
     /// </summary>
-    private static void ResetMappings()
+    public static void ResetMappings()
     {
         keyMaps = new List<Mapping>();
         for (int i = 0; i < Enum.GetValues(typeof(Control)).Length; i++)
@@ -76,6 +73,30 @@ public class MyInput : MonoBehaviour
             keyMaps.FirstOrDefault(a => a.Name == input).PrimaryInput = (KeyCode)primaryKey;
         if (secondryKey != null)
             keyMaps.FirstOrDefault(a => a.Name == input).SecondryInput = (KeyCode)secondryKey;
+        MyPrefs.KeyMappings = keyMaps.ToArray();
+    }
+
+    /// <summary>
+    /// Finds an input by it's Control and overwrites it's KeyCode
+    /// </summary>
+    /// <param name="control">The Control of the input</param>
+    /// <param name="primaryKey">The new KeyCode for that input</param>
+    public static void SetKeyMap(Control control, KeyCode? primaryKey = null, KeyCode? secondryKey = null)
+    {
+        if (primaryKey != null)
+            keyMaps.FirstOrDefault(a => a.Name == control.ToString()).PrimaryInput = (KeyCode)primaryKey;
+        if (secondryKey != null)
+            keyMaps.FirstOrDefault(a => a.Name == control.ToString()).SecondryInput = (KeyCode)secondryKey;
+        MyPrefs.KeyMappings = keyMaps.ToArray();
+    }
+
+    /// <summary>
+    /// Removes the optional secondary mapping of an input
+    /// </summary>
+    /// <param name="control">The Control of the input</param>
+    public static void RemoveSecondMapping(Control control)
+    {
+        keyMaps.FirstOrDefault(a => a.Name == control.ToString()).SecondryInput = null;
         MyPrefs.KeyMappings = keyMaps.ToArray();
     }
 

@@ -23,12 +23,44 @@ public class Options : MonoBehaviour
         redSlider.value = MyPrefs.CrosshairRed;
         greenSlider.value = MyPrefs.CrosshairGreen;
         blueSlider.value = MyPrefs.CrosshairBlue;
+
+        //Controls
+        UpdateButtonText();
     }
 
-    /// <summary>
-    /// Code for switching between the different panels in the scene
-    /// </summary>
-    #region Panels
+    private void Update()
+    {
+        MappingPanel.SetActive(currentControl != null);
+
+        //Controls
+        if (currentControl != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && primaryOrSecondry == 1)
+                Invoke("RemoveMapping", 1f);
+            if (Input.GetKeyUp(KeyCode.Escape) && primaryOrSecondry == 1)
+                CancelInvoke("RemoveMapping");
+
+            //For every possible key input
+            foreach (KeyCode kcode in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                //If it's being pressed
+                if ((Input.GetKeyDown(kcode) && kcode != KeyCode.Escape) || (Input.GetKeyUp(kcode) && kcode == KeyCode.Escape))
+                {
+                    //Map the buttons input to that key
+                    if (primaryOrSecondry == 0)
+                        MyInput.SetKeyMap(control: (Control)currentControl, primaryKey: kcode);
+                    else
+                        MyInput.SetKeyMap(control: (Control)currentControl, secondryKey: kcode);
+
+                    UpdateButtonText();
+
+                    currentControl = null;
+                }
+            }
+        }
+    }
+
+    #region Panel switching
     [SerializeField]
     GameObject[] panels;
 
@@ -106,10 +138,8 @@ public class Options : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// Code for the general tab (0)
-    /// </summary>
-    #region General
+
+    #region General tab
     [SerializeField]
     Text xValue;
     [SerializeField]
@@ -195,5 +225,112 @@ public class Options : MonoBehaviour
         crosshair.color = new Color(crosshair.color.r, crosshair.color.g, blueSlider.value);
         MyPrefs.CrosshairBlue = blueSlider.value;
     }
+    #endregion
+
+    #region Controls tab
+    [SerializeField]
+    Text[] ShootMappings;
+    [SerializeField]
+    Text[] ScopeMappings;
+    [SerializeField]
+    Text[] ForwardMappings;
+    [SerializeField]
+    Text[] BackwardMappings;
+    [SerializeField]
+    Text[] LeftMappings;
+    [SerializeField]
+    Text[] RightMappings;
+    [SerializeField]
+    Text[] SprintMappings;
+    [SerializeField]
+    Text[] CrouchMappings;
+    [SerializeField]
+    Text[] JumpMappings;
+    [SerializeField]
+    Text[] ReloadMappings;
+    [SerializeField]
+    Text[] PauseMappings;
+
+    [SerializeField]
+    GameObject MappingPanel;
+
+    Control? currentControl;
+    int primaryOrSecondry = 0;
+
+    public void MappingPressed(string mapping)
+    {
+        currentControl = (Control)System.Enum.Parse(typeof(Control), mapping.Split(' ')[0]);
+        primaryOrSecondry = int.Parse(mapping.Split(' ')[1]);
+    }
+
+    public void UpdateButtonText()
+    {
+        foreach (Mapping mapping in MyInput.keyMaps)
+        {
+            switch (mapping.Name)
+            {
+                case "Shoot":
+                    ShootMappings[0].text = mapping.PrimaryInput.ToString();
+                    ShootMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Scope":
+                    ScopeMappings[0].text = mapping.PrimaryInput.ToString();
+                    ScopeMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Forward":
+                    ForwardMappings[0].text = mapping.PrimaryInput.ToString();
+                    ForwardMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Backward":
+                    BackwardMappings[0].text = mapping.PrimaryInput.ToString();
+                    BackwardMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Left":
+                    LeftMappings[0].text = mapping.PrimaryInput.ToString();
+                    LeftMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Right":
+                    RightMappings[0].text = mapping.PrimaryInput.ToString();
+                    RightMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Sprint":
+                    SprintMappings[0].text = mapping.PrimaryInput.ToString();
+                    SprintMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Crouch":
+                    CrouchMappings[0].text = mapping.PrimaryInput.ToString();
+                    CrouchMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Jump":
+                    JumpMappings[0].text = mapping.PrimaryInput.ToString();
+                    JumpMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Reload":
+                    ReloadMappings[0].text = mapping.PrimaryInput.ToString();
+                    ReloadMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                case "Pause":
+                    PauseMappings[0].text = mapping.PrimaryInput.ToString();
+                    PauseMappings[1].text = mapping.SecondryInput.ToString();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void ResetMappings()
+    {
+        MyInput.ResetMappings();
+        UpdateButtonText();
+    }
+
+    private void RemoveMapping()
+    {
+        MyInput.RemoveSecondMapping((Control)currentControl);
+        UpdateButtonText();
+        currentControl = null;
+    }
+    
     #endregion
 }
