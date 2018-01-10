@@ -45,7 +45,6 @@ public class HighscoreScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("Downloaded");
             ScoreDownload scores = JsonConvert.DeserializeObject<ScoreDownload>(www.downloadHandler.text);
 
             for (int i = 0; i < 10; i++)
