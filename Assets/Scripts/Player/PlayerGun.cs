@@ -85,7 +85,7 @@ public class PlayerGun : MonoBehaviour
     void Update()
     {
         //Firing
-        if (MyInput.GetButtonDown(Control.Shoot) && canFire && AmmoCount > 0)
+        if (MyInput.GetButtonDown(Control.Shoot) && canFire && AmmoCount > 0 && !reloadSource.isPlaying)
         {
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
@@ -117,7 +117,7 @@ public class PlayerGun : MonoBehaviour
             justFired = false;
         }
 
-        if (MyInput.GetButtonDown("Scope") && canFire && AmmoCount > 0)
+        if (MyInput.GetButtonDown(Control.Scope) && canFire && AmmoCount > 0)
             ToggleScoped();
 
         //Reloading
@@ -260,9 +260,7 @@ public class PlayerGun : MonoBehaviour
     /// </summary>
     public void ScopedOut()
     {
-        if (AmmoCount == 0)
-            Reload();
-        if (queuedReload)
+        if (AmmoCount == 0 || queuedReload)
             Reload();
     }
 
