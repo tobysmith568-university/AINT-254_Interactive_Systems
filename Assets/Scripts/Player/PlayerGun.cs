@@ -100,15 +100,15 @@ public class PlayerGun : MonoBehaviour
             }
 
             gunFire.Play();
-
             flame.Play();
+
             if (isScoped)
             {
                 justFired = true;
                 queuedReloadSound = true;
             }
             else
-                reloadSource.Play();
+                Invoke("ReloadSound", 0.40f);
 
             AmmoCount--;
             if (AmmoCount == 0 && !isScoped)
