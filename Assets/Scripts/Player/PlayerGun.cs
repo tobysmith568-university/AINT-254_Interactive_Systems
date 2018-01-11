@@ -100,7 +100,7 @@ public class PlayerGun : MonoBehaviour
             {
                 Debug.DrawRay(raycastHit.point, currentCamera.transform.position, Color.yellow, Mathf.Infinity, false);
                 if (raycastHit.transform.tag.Split('|')[0] == "Target")
-                    Hit();
+                    TargetHit();
             }
 
             gunFire.Play();
@@ -143,7 +143,7 @@ public class PlayerGun : MonoBehaviour
     /// <summary>
     /// Ran when the gun is fired and hits a target
     /// </summary>
-    void Hit()
+    void TargetHit()
     {
         int noscopeBonus = 0, quickscopeBonus = 0, longshotBonus = 0, chainkillBonus = 0, headshotBonus = 0;
         //Cancel invokes
