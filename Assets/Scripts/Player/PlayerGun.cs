@@ -37,6 +37,8 @@ public class PlayerGun : MonoBehaviour
 
     [SerializeField]
     AudioSource gunFire;
+    [SerializeField]
+    AudioSource reloadSource;
 
     [SerializeField]
     BlurOptimized blur;
@@ -124,7 +126,7 @@ public class PlayerGun : MonoBehaviour
 
         //Camera blur
         blur.enabled = blurEnabled;
-        blur.blurSize = (int)blurSize;
+        blur.blurSize = blurSize;
     }
 
     /// <summary>
@@ -285,6 +287,11 @@ public class PlayerGun : MonoBehaviour
             ToggleScoped();
             queuedReload = false;
         }
+    }
+
+    public void ReloadSound()
+    {
+        reloadSource.Play();
     }
 
     /* TEST METHODS: For keeping the gun on top of everything else */

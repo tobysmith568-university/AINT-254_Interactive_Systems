@@ -366,7 +366,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1460452214786378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4499969, y: 58.221, z: -14.24001}
+  m_LocalPosition: {x: 50.53, y: 56.27, z: -78.14}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4669812464788028}
@@ -825,9 +825,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 174.7066
+  MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -835,16 +835,16 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0
-      value: 1.0196419
-      inSlope: 0
-      outSlope: 0
+      time: 0.18350744
+      value: 0.15534973
+      inSlope: -0.18923464
+      outSlope: -0.18923464
       tangentMode: 0
     - serializedVersion: 2
-      time: 1
+      time: 0.93333435
       value: 0
-      inSlope: -1.0057569
-      outSlope: -1.0057569
+      inSlope: -0.1921584
+      outSlope: -0.1921584
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -853,8 +853,8 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0.0044441223
-      value: 0.8315506
+      time: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -968,7 +968,12 @@ MonoBehaviour:
   eyes: {fileID: 4075869038390642}
   playerDamage: {fileID: 0}
   listener: {fileID: 135128563089859138}
-  gunFire: {fileID: 82372187236624532}
+  fireSource: {fileID: 82372187236624532}
+  bulletWizzes:
+  - {fileID: 8300000, guid: 5604c10c482871645944e12ca2d25fea, type: 3}
+  - {fileID: 8300000, guid: bcafd7c4724aa414ea900e652cbd994f, type: 3}
+  - {fileID: 8300000, guid: b10d3febd1cb8fe4bba0d93a5117a0d6, type: 3}
+  - {fileID: 8300000, guid: 3f26c96deeaf3574bb25329660716479, type: 3}
 --- !u!135 &135128563089859138
 SphereCollider:
   m_ObjectHideFlags: 1

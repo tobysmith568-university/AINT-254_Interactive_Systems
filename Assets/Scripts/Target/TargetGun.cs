@@ -42,7 +42,9 @@ public class TargetGun : MonoBehaviour
     SphereCollider listener;
 
     [SerializeField]
-    AudioSource gunFire;
+    AudioSource fireSource;
+    [SerializeField]
+    AudioClip[] bulletWizzes;
 
     bool isFirstShot;
 
@@ -99,7 +101,8 @@ public class TargetGun : MonoBehaviour
     /// </summary>
     void Shoot()
     {
-        gunFire.Play();
+        int upperOdd = 3;
+        fireSource.Play();
         flame.Play();
         ammo--;
         Vector3 direction = (player.position - thisTransform.position).normalized;
@@ -119,6 +122,7 @@ public class TargetGun : MonoBehaviour
 
             if (raycastHit.transform.name == "PlayerMain")
             {
+                upperOdd = 0;
                 Debug.DrawRay(raycastHit.point, -dir.normalized * mag, Color.red, 10000f);
                 playerDamage.Shot();
             }
@@ -126,6 +130,16 @@ public class TargetGun : MonoBehaviour
             {
                 //Debug.DrawRay(raycastHit.point, -dir.normalized * mag, Color.blue, 10000f);
             }
+        }
+
+        if (Random.Range(0, upperOdd) == 1)
+        {
+            AudioClip clip = bulletWizzes[Random.Range(0, bulletWizzes.Length - 1)];
+            Vector3 position = player.position;
+            position.x += Random.Range(-2f, 2f);
+            position.y += Random.Range(-2f, 2f);
+            position.z += Random.Range(-2f, 2f);
+            AudioSource.PlayClipAtPoint(clip, position);
         }
 
         if (ammo == 0)
