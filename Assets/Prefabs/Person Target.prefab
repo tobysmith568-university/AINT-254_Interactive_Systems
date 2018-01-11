@@ -88,7 +88,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4398761180880240}
-  - component: {fileID: 114660833918243248}
   m_Layer: 10
   m_Name: Body
   m_TagString: Target|Body
@@ -108,6 +107,7 @@ GameObject:
   - component: {fileID: 23712614041094838}
   - component: {fileID: 114846089279578402}
   - component: {fileID: 95004561200731926}
+  - component: {fileID: 82372187236624532}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -261,7 +261,6 @@ GameObject:
   - component: {fileID: 33355892883753710}
   - component: {fileID: 135347769591839658}
   - component: {fileID: 23734898455688220}
-  - component: {fileID: 114674596446510802}
   m_Layer: 10
   m_Name: Head
   m_TagString: Target|Head
@@ -367,7 +366,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1460452214786378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 50.53, y: 57.776, z: -78.14}
+  m_LocalPosition: {x: -0.4499969, y: 58.221, z: -14.24001}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4669812464788028}
@@ -805,6 +804,87 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!82 &82372187236624532
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1374002415782264}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243279661626954910, guid: d3a7170af65ee5d4c89a9340413e8f34,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 848628b8e4328844fab6058cf142e1d6, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 174.7066
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1.0196419
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: -1.0057569
+      outSlope: -1.0057569
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.0044441223
+      value: 0.8315506
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0.5809517
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95004561200731926
 Animator:
   serializedVersion: 3
@@ -851,6 +931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetGun: {fileID: 114846089279578402}
+  thisCollider: {fileID: 135128563089859138}
 --- !u!114 &114606475505733050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -863,39 +944,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoke: {fileID: 198324997531074494}
-  newTargets:
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &114660833918243248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1347038837138948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d6ad242eb0b8114e86a803f13833edb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoke: {fileID: 198324997531074494}
-  newTargets:
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &114674596446510802
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1971640317189982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d6ad242eb0b8114e86a803f13833edb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoke: {fileID: 198324997531074494}
-  newTargets:
-  - {fileID: 0}
-  - {fileID: 0}
+  newTargets: []
+  beenShot: 0
 --- !u!114 &114846089279578402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -916,7 +966,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294965755
   eyes: {fileID: 4075869038390642}
-  playerMovement: {fileID: 0}
+  playerDamage: {fileID: 0}
+  listener: {fileID: 135128563089859138}
+  gunFire: {fileID: 82372187236624532}
 --- !u!135 &135128563089859138
 SphereCollider:
   m_ObjectHideFlags: 1

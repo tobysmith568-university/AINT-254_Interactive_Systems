@@ -28,6 +28,22 @@ public class Options : MonoBehaviour
         greenSlider.value = MyPrefs.CrosshairGreen;
         blueSlider.value = MyPrefs.CrosshairBlue;
 
+        //Video
+        fullscreenToggle.isOn = Screen.fullScreen;
+
+        List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+        for (int i = 0; i < Screen.resolutions.Length; i++)
+        {
+            options.Add(new Dropdown.OptionData(Screen.resolutions[i].width + "x" + Screen.resolutions[i].height + " " + Screen.resolutions[i].refreshRate + "Hz"));
+        }
+        ResolutionDropdown.AddOptions(options);
+        for (int i = 0; i < Screen.resolutions.Length; i++)
+        {
+            if (Screen.resolutions[i].width == Screen.currentResolution.width
+                        && Screen.resolutions[i].height == Screen.currentResolution.height)
+                ResolutionDropdown.value = i;
+        }
+
         //Controls
         UpdateButtonText();
     }
@@ -237,6 +253,27 @@ public class Options : MonoBehaviour
         MyPrefs.CrosshairBlue = blueSlider.value;
     }
     #endregion
+
+    #region Video tab
+    [Header("Video tab")]
+    [SerializeField]
+    Toggle fullscreenToggle;
+    [SerializeField]
+    Dropdown ResolutionDropdown;
+
+    public void FullscreenToggled()
+    {
+        Screen.fullScreen = MyPrefs.Fullscreen = fullscreenToggle.isOn;
+    }
+
+    public void ResolutionChanged()
+    {
+        Screen.SetResolution(Screen.resolutions[ResolutionDropdown.value].width, Screen.resolutions[ResolutionDropdown.value].height, Screen.fullScreen);
+        MyPrefs.Resolution = Screen.currentResolution;
+    }
+
+    #endregion
+
 
     #region Controls tab
     [Header("Controls tab")]

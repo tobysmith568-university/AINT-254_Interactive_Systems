@@ -19,7 +19,9 @@ public static class MyPrefs
         CrosshairBlue,
         KeyMappings,
         XAxisInverted,
-        YAxisInverted
+        YAxisInverted,
+        Resolution,
+        Fullscreen
     }
 
     public static GameScore[] HighScores
@@ -154,6 +156,30 @@ public static class MyPrefs
             PlayerPrefs.Save();
         }
     }
+    public static Resolution Resolution
+    {
+        get
+        {
+            return JsonConvert.DeserializeObject<Resolution>(PlayerPrefs.GetString("Resolution"));
+        }
+        set
+        {
+            PlayerPrefs.SetString("Resolution", JsonConvert.SerializeObject(value));
+            PlayerPrefs.Save();
+        }
+    }
+    public static bool Fullscreen
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("Fullscreen") == 1;
+        }
+        set
+        {
+            PlayerPrefs.SetInt("Fullscreen", value ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+    }
 
     static MyPrefs()
     {
@@ -189,6 +215,10 @@ public static class MyPrefs
             XAxisInverted = false;
         if (!Exists(Prefs.YAxisInverted))
             YAxisInverted = false;
+        if (!Exists(Prefs.Resolution))
+            Resolution = Screen.currentResolution;
+        if (!Exists(Prefs.YAxisInverted))
+            YAxisInverted = Screen.fullScreen;
     }
 
     /// <summary>

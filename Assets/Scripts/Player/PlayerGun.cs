@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.ImageEffects;
 
 public class PlayerGun : MonoBehaviour
 {
@@ -33,6 +34,16 @@ public class PlayerGun : MonoBehaviour
     LayerMask alertOnly;
     [SerializeField]
     LayerMask anyButAlert;
+
+    [SerializeField]
+    AudioSource gunFire;
+
+    [SerializeField]
+    BlurOptimized blur;
+    [SerializeField]
+    bool blurEnabled;
+    [SerializeField]
+    float blurSize;
 
 
     bool isScoped;
@@ -85,6 +96,8 @@ public class PlayerGun : MonoBehaviour
                     Hit();
             }
 
+            gunFire.Play();
+
             flame.Play();
             if (isScoped)
                 justFired = true;
@@ -108,6 +121,10 @@ public class PlayerGun : MonoBehaviour
         //Reloading
         if (MyInput.GetButtonDown(Control.Reload) && canFire)
             Reload();
+
+        //Camera blur
+        blur.enabled = blurEnabled;
+        blur.blurSize = (int)blurSize;
     }
 
     /// <summary>

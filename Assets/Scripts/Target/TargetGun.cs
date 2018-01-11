@@ -41,6 +41,9 @@ public class TargetGun : MonoBehaviour
     [SerializeField]
     SphereCollider listener;
 
+    [SerializeField]
+    AudioSource gunFire;
+
     bool isFirstShot;
 
     void Start()
@@ -96,6 +99,7 @@ public class TargetGun : MonoBehaviour
     /// </summary>
     void Shoot()
     {
+        gunFire.Play();
         flame.Play();
         ammo--;
         Vector3 direction = (player.position - thisTransform.position).normalized;
