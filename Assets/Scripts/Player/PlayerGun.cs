@@ -39,6 +39,10 @@ public class PlayerGun : MonoBehaviour
     AudioSource gunFire;
     [SerializeField]
     AudioSource reloadSource;
+    [SerializeField]
+    AudioClip magIn;
+    [SerializeField]
+    AudioClip magOut;
 
     [SerializeField]
     BlurOptimized blur;
@@ -302,6 +306,16 @@ public class PlayerGun : MonoBehaviour
     public void ReloadSound()
     {
         reloadSource.Play();
+    }
+
+    public void MagOut()
+    {
+        reloadSource.PlayOneShot(magOut);
+    }
+
+    public void MagIn()
+    {
+        reloadSource.PlayOneShot(magIn);
     }
 
     /* TEST METHODS: For keeping the gun on top of everything else */
