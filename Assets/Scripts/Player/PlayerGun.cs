@@ -51,6 +51,7 @@ public class PlayerGun : MonoBehaviour
     bool isScoped;
     bool canFire = true;
     bool justFired = false;
+    bool queuedReloadSound = false;
 
     int sinceScope = 0;
     int sinceKill = 0;
@@ -102,7 +103,13 @@ public class PlayerGun : MonoBehaviour
 
             flame.Play();
             if (isScoped)
+            {
                 justFired = true;
+                queuedReloadSound = true;
+            }
+            else
+                reloadSource.Play();
+
             AmmoCount--;
             if (AmmoCount == 0 && !isScoped)
                 Reload();
@@ -117,11 +124,11 @@ public class PlayerGun : MonoBehaviour
             justFired = false;
         }
 
-        if (MyInput.GetButtonDown(Control.Scope) && canFire && AmmoCount > 0)
+        if (MyInput.GetButtonDown(Control.Scope) && canFire && AmmoCount > 0 && !reloadSource.isPlaying)
             ToggleScoped();
 
         //Reloading
-        if (MyInput.GetButtonDown(Control.Reload) && canFire)
+        if (MyInput.GetButtonDown(Control.Reload) && canFire && !reloadSource.isPlaying)
             Reload();
 
         //Camera blur
@@ -262,6 +269,11 @@ public class PlayerGun : MonoBehaviour
     {
         if (AmmoCount == 0 || queuedReload)
             Reload();
+        else if (queuedReloadSound)
+        {
+            reloadSource.Play();
+            queuedReloadSound = false;
+        }
     }
 
     /// <summary>
