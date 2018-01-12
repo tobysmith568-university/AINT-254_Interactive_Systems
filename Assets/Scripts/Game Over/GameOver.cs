@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Net;
-using UnityEngine.Networking;
 
 /// <summary>
 /// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
@@ -85,8 +84,15 @@ public class GameOver : MonoBehaviour
                 break;
             }
         }
-
-        StartCoroutine(GetText());
+        
+        //Send the highscore off to the server
+        using (WebClient wc = new WebClient())
+        {
+            string url = "http://tobysmith.uk/ShooterUnknown/SendScore.php?" +
+                "pass=we345678i9olkjhgtrewazsxcvbnjkio90pokjyt432waw23erfr567ujhg" +
+                "&score={\"Name\":\"" + gameScore.Name + "\",\"Duration\":" + gameScore.Duration + ",\"Score\":" + gameScore.Score + "}";
+            wc.DownloadStringAsync(new System.Uri(url));
+        }
 
         //Save the new highscores
         MyPrefs.LowTimes = timeScores;
@@ -95,21 +101,8 @@ public class GameOver : MonoBehaviour
         //Switch the scene
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
-    IEnumerator GetText()
-    {
-        string url = "http://tobysmith.uk/ShooterUnknown/SendScore.php?" +
-            "pass=we345678i9olkjhgtrewazsxcvbnjkio90pokjyt432waw23erfr567ujhg" +
-            "&score={\"Name\":\"" + gameScore.Name + "\",\"Duration\":" + gameScore.Duration + ",\"Score\":" + gameScore.Score + "}";
-        UnityWebRequest www = UnityWebRequest.Get(url);
-        yield return www.Send();
 
-        if (www.isNetworkError || www.isHttpError)
-        {
-            Debug.Log(www.error);
-        }
-    }
-
-        int index = 0;
+    int index = 0;
     public void TitleEnter()
     {
         Color color;
