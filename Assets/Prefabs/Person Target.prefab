@@ -974,6 +974,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bcafd7c4724aa414ea900e652cbd994f, type: 3}
   - {fileID: 8300000, guid: b10d3febd1cb8fe4bba0d93a5117a0d6, type: 3}
   - {fileID: 8300000, guid: 3f26c96deeaf3574bb25329660716479, type: 3}
+  mixerGroup: {fileID: 243279661626954910, guid: d3a7170af65ee5d4c89a9340413e8f34,
+    type: 2}
 --- !u!135 &135128563089859138
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class TargetGun : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class TargetGun : MonoBehaviour
     AudioSource fireSource;
     [SerializeField]
     AudioClip[] bulletWizzes;
+    [SerializeField]
+    AudioMixerGroup mixerGroup;
 
     bool isFirstShot;
 
@@ -139,11 +142,27 @@ public class TargetGun : MonoBehaviour
             position.x += Random.Range(-2f, 2f);
             position.y += Random.Range(-2f, 2f);
             position.z += Random.Range(-2f, 2f);
-            AudioSource.PlayClipAtPoint(clip, position);
+            
+            BulletWizz(clip, position);
         }
 
         if (ammo == 0)
             lockedOn = false;
+    }
+
+    private AudioSource BulletWizz(AudioClip clip, Vector3 pos)
+    {
+        GameObject tempGO = new GameObject("TempAudio");
+        tempGO.transform.position = pos;
+        AudioSource aSource = tempGO.AddComponent<AudioSource>();
+        aSource.clip = clip;
+        aSource.minDistance = 0;
+        aSource.maxDistance = 25;
+        aSource.outputAudioMixerGroup = mixerGroup;
+
+        aSource.Play();
+        Destroy(tempGO, clip.length);
+        return aSource;
     }
 
     /// <summary>
