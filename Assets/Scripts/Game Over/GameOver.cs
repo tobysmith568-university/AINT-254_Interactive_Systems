@@ -22,6 +22,9 @@ public class GameOver : MonoBehaviour
     [SerializeField]
     InputField playerName;
 
+    [SerializeField]
+    AudioSource whoop;
+
     GameScore[] timeScores;
     GameScore[] scoreScores;
     GameScore gameScore;
@@ -110,6 +113,8 @@ public class GameOver : MonoBehaviour
         ColorUtility.TryParseHtmlString(colours[index], out color);
         title.color = color;
         index = (index == colours.Length - 1) ? 0 : index + 1;
+
+        Whoop();
     }
 
     public void TitleExit()
@@ -117,5 +122,11 @@ public class GameOver : MonoBehaviour
         Color color;
         ColorUtility.TryParseHtmlString("#AD4043FF", out color);
         title.color = color;
+    }
+
+    public void Whoop()
+    {
+        if (!whoop.isPlaying)
+            whoop.Play();
     }
 }

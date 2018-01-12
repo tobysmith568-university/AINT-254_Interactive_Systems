@@ -16,6 +16,8 @@ public class MainMenu : MonoBehaviour
     Image title;
     [SerializeField]
     AudioMixer mixer;
+    [SerializeField]
+    AudioSource whoop;
 
     private void Start()
     {
@@ -41,6 +43,8 @@ public class MainMenu : MonoBehaviour
         ColorUtility.TryParseHtmlString(colours[index], out color);
         title.color = color;
         index = (index == colours.Length - 1) ? 0 : index + 1;
+
+        Whoop();
     }
 
     public void TitleExit()
@@ -48,6 +52,12 @@ public class MainMenu : MonoBehaviour
         Color color;
         ColorUtility.TryParseHtmlString("#AD4043FF", out color);
         title.color = color;
+    }
+
+    public void Whoop()
+    {
+        if (!whoop.isPlaying)
+            whoop.Play();
     }
 
     /// <summary>

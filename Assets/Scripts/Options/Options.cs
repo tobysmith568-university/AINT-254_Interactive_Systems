@@ -14,6 +14,9 @@ public class Options : MonoBehaviour
     [SerializeField]
     Image title;
 
+    [SerializeField]
+    AudioSource whoop;
+    
     private void Start()
     {
         //Show the first panel
@@ -120,6 +123,8 @@ public class Options : MonoBehaviour
         ColorUtility.TryParseHtmlString(colours[index], out color);
         title.color = color;
         index = (index == colours.Length - 1) ? 0 : index + 1;
+
+        Whoop();
     }
 
     public void TitleExit()
@@ -127,6 +132,12 @@ public class Options : MonoBehaviour
         Color color;
         ColorUtility.TryParseHtmlString("#AD4043FF", out color);
         title.color = color;
+    }
+
+    public void Whoop()
+    {
+        if (!whoop.isPlaying)
+            whoop.Play();
     }
 
     #region Panel switching

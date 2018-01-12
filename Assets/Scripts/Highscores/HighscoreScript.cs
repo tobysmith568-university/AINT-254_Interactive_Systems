@@ -24,6 +24,9 @@ public class HighscoreScript : MonoBehaviour
     [SerializeField]
     Image title;
 
+    [SerializeField]
+    AudioSource whoop;
+
     void Start()
     {
         StartCoroutine(GetText());
@@ -70,6 +73,8 @@ public class HighscoreScript : MonoBehaviour
         ColorUtility.TryParseHtmlString(colours[index], out color);
         title.color = color;
         index = (index == colours.Length - 1) ? 0 : index + 1;
+
+        Whoop();
     }
 
     public void TitleExit()
@@ -77,6 +82,12 @@ public class HighscoreScript : MonoBehaviour
         Color color;
         ColorUtility.TryParseHtmlString("#AD4043FF", out color);
         title.color = color;
+    }
+
+    public void Whoop()
+    {
+        if (!whoop.isPlaying)
+            whoop.Play();
     }
 
     /// <summary>
