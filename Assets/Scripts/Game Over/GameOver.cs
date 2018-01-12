@@ -11,6 +11,11 @@ using System.Net;
 public class GameOver : MonoBehaviour
 {
     [SerializeField]
+    Image title;
+    [SerializeField]
+    Button menuButton;
+
+    [SerializeField]
     Text time;
     [SerializeField]
     Text score;
@@ -23,20 +28,25 @@ public class GameOver : MonoBehaviour
 
     void Start()
     {
+        TitleExit();
+
         //Get the PlayerPrefs
         timeScores = MyPrefs.LowTimes;
         scoreScores = MyPrefs.HighScores;
         gameScore = MyPrefs.LastPlay;
 
         //Show the stats
-        time.text = "Time:\n" + new System.DateTime().AddMilliseconds(gameScore.Duration).ToString("m:ss:f");
-        score.text = "Score:\n" + gameScore.Score.ToString();
+        time.text = new System.DateTime().AddMilliseconds(gameScore.Duration).ToString("m:ss:f");
+        score.text = gameScore.Score.ToString();
+        playerName.text = gameScore.Name;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Application.Quit();
+        menuButton.interactable = playerName.text.Length > 0;
+
+        if (Input.GetKeyDown(KeyCode.Return) && menuButton.interactable)
+            MainMenu();
     }
 
     /// <summary>
@@ -45,7 +55,7 @@ public class GameOver : MonoBehaviour
     public void MainMenu()
     {
         //Set the PlayerPrefs
-        gameScore = new GameScore(playerName.text == ""? "No name" : playerName.text, MyPrefs.LastPlay.Score, MyPrefs.LastPlay.Duration);
+        MyPrefs.LastPlay = gameScore = new GameScore(playerName.text == ""? "No name" : playerName.text, MyPrefs.LastPlay.Score, MyPrefs.LastPlay.Duration);
         
         //Rank the time in the time highscores
         for (int i = 0; i < timeScores.Length; i++)
@@ -89,6 +99,23 @@ public class GameOver : MonoBehaviour
         MyPrefs.HighScores = scoreScores;
         
         //Switch the scene
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+    }
+
+    int index = 0;
+    public void TitleEnter()
+    {
+        Color color;
+        string[] colours = { "#FFB32AFF", "#33D311FF", "#008EE3FF", "#A216D4FF" };
+        ColorUtility.TryParseHtmlString(colours[index], out color);
+        title.color = color;
+        index = (index == colours.Length - 1) ? 0 : index + 1;
+    }
+
+    public void TitleExit()
+    {
+        Color color;
+        ColorUtility.TryParseHtmlString("#AD4043FF", out color);
+        title.color = color;
     }
 }

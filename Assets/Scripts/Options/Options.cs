@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -10,9 +11,13 @@ using UnityEngine.UI;
 
 public class Options : MonoBehaviour
 {
+    [SerializeField]
+    Image title;
+
     private void Start()
     {
         //Show the first panel
+        TitleExit();
         ShowPanel0();
 
         /* Get all the options from their player prefs */
@@ -28,15 +33,29 @@ public class Options : MonoBehaviour
         greenSlider.value = MyPrefs.CrosshairGreen;
         blueSlider.value = MyPrefs.CrosshairBlue;
 
+        //Sound
+        float level;
+        mixer.GetFloat("master", out level);
+        masterVolume.value = level;
+
+        mixer.GetFloat("player", out level);
+        playerVolume.value = level;
+
+        mixer.GetFloat("targets", out level);
+        targetsVolume.value = level;
+
+        mixer.GetFloat("UI", out level);
+        UIVolume.value = level;
+
         //Video
         fullscreenToggle.isOn = Screen.fullScreen;
 
-        List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+        List<Dropdown.OptionData> resolutionOptions = new List<Dropdown.OptionData>();
         for (int i = 0; i < Screen.resolutions.Length; i++)
         {
-            options.Add(new Dropdown.OptionData(Screen.resolutions[i].width + "x" + Screen.resolutions[i].height + " " + Screen.resolutions[i].refreshRate + "Hz"));
+            resolutionOptions.Add(new Dropdown.OptionData(Screen.resolutions[i].width + "x" + Screen.resolutions[i].height + " " + Screen.resolutions[i].refreshRate + "Hz"));
         }
-        ResolutionDropdown.AddOptions(options);
+        ResolutionDropdown.AddOptions(resolutionOptions);
         for (int i = 0; i < Screen.resolutions.Length; i++)
         {
             if (Screen.resolutions[i].width == Screen.currentResolution.width
@@ -44,15 +63,23 @@ public class Options : MonoBehaviour
                 ResolutionDropdown.value = i;
         }
 
+        List<Dropdown.OptionData> qualityOptions = new List<Dropdown.OptionData>();
+        for (int i = 0; i < QualitySettings.names.Length; i++)
+        {
+            qualityOptions.Add(new Dropdown.OptionData(QualitySettings.names[i]));
+        }
+        QualityDropdown.AddOptions(qualityOptions);
+        QualityDropdown.value = QualitySettings.GetQualityLevel();
+
         //Controls
         UpdateButtonText();
     }
 
     private void Update()
     {
+        //Controls
         MappingPanel.SetActive(currentControl != null);
 
-        //Controls
         if (currentControl != null)
         {
             PrimaryMappingPanel.SetActive(primaryOrSecondary == 0);
@@ -83,6 +110,23 @@ public class Options : MonoBehaviour
                 }
             }
         }
+    }
+
+    int index = 0;
+    public void TitleEnter()
+    {
+        Color color;
+        string[] colours = { "#FFB32AFF", "#33D311FF", "#008EE3FF", "#A216D4FF" };
+        ColorUtility.TryParseHtmlString(colours[index], out color);
+        title.color = color;
+        index = (index == colours.Length - 1) ? 0 : index + 1;
+    }
+
+    public void TitleExit()
+    {
+        Color color;
+        ColorUtility.TryParseHtmlString("#AD4043FF", out color);
+        title.color = color;
     }
 
     #region Panel switching
@@ -160,7 +204,7 @@ public class Options : MonoBehaviour
     /// </summary>
     public void MainMenu()
     {
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
     #endregion
 
@@ -254,12 +298,72 @@ public class Options : MonoBehaviour
     }
     #endregion
 
+
+    #region Sound tab
+    [Header("General tab")]
+    [SerializeField]
+    AudioMixer mixer;
+    [SerializeField]
+    Slider masterVolume;
+    [SerializeField]
+    Slider playerVolume;
+    [SerializeField]
+    Slider targetsVolume;
+    [SerializeField]
+    Slider UIVolume;
+    [SerializeField]
+    Text masterLabel;
+    [SerializeField]
+    Text playerLabel;
+    [SerializeField]
+    Text targetsLabel;
+    [SerializeField]
+    Text UILabel;
+
+    public void MasterChanged()
+    {
+        mixer.SetFloat("master", masterVolume.value == masterVolume.minValue ? -80 : masterVolume.value);
+        masterLabel.text = GetPercentage(masterVolume);
+        MyPrefs.MasterVolume = masterVolume.value;
+    }
+
+    public void PlayerChanged()
+    {
+        mixer.SetFloat("player", playerVolume.value == playerVolume.minValue ? -80 : playerVolume.value);
+        playerLabel.text = GetPercentage(playerVolume);
+        MyPrefs.PlayerVolume = playerVolume.value;
+    }
+
+    public void TargetChanged()
+    {
+        mixer.SetFloat("targets", targetsVolume.value == targetsVolume.minValue ? -80 : targetsVolume.value);
+        targetsLabel.text = GetPercentage(targetsVolume);
+        MyPrefs.TargetsVolume = targetsVolume.value;
+    }
+
+    public void UIChanged()
+    {
+        mixer.SetFloat("UI", UIVolume.value == masterVolume.minValue ? -80 : masterVolume.value);
+        UILabel.text = GetPercentage(UIVolume);
+        MyPrefs.UIVolume = UIVolume.value;
+    }
+
+    private string GetPercentage(Slider slider)
+    {
+        return ((int)((slider.value - slider.minValue) / (slider.maxValue - slider.minValue) * 100)).ToString();
+    }
+
+    #endregion
+
+
     #region Video tab
     [Header("Video tab")]
     [SerializeField]
     Toggle fullscreenToggle;
     [SerializeField]
     Dropdown ResolutionDropdown;
+    [SerializeField]
+    Dropdown QualityDropdown;
 
     public void FullscreenToggled()
     {
@@ -270,6 +374,11 @@ public class Options : MonoBehaviour
     {
         Screen.SetResolution(Screen.resolutions[ResolutionDropdown.value].width, Screen.resolutions[ResolutionDropdown.value].height, Screen.fullScreen);
         MyPrefs.Resolution = Screen.currentResolution;
+    }
+
+    public void QualityChanged()
+    {
+        QualitySettings.SetQualityLevel(QualityDropdown.value, true);
     }
 
     #endregion

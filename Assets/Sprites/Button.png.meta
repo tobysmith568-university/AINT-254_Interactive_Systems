@@ -1,0 +1,325 @@
+fileFormatVersion: 2
+guid: b33f99ed5e6e19948bf0b95351aa5a4e
+timeCreated: 1515704499
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Button_0
+    21300002: Button_1
+    21300004: Button_2
+    21300006: Button_3
+    21300008: Button_4
+    21300010: Button_5
+    21300012: Button_6
+    21300014: Button_7
+    21300016: Button_8
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 2
+    wrapW: 2
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 0
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 75, y: 75, z: 75, w: 75}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Button_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 21.333332
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Button_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 21.333332
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Button_2
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 21.333332
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Button_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 11.333333
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Button_4
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 11.333333
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Button_5
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 11.333333
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Button_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1.333333
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Button_7
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1.333333
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Button_8
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1.333333
+        width: 10.666667
+        height: 10.666667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline:
+    - - {x: 252, y: -294}
+      - {x: 254, y: -292}
+      - {x: 256, y: -292}
+      - {x: 261, y: -290}
+      - {x: 263, y: -288}
+      - {x: 266, y: -287}
+      - {x: 268, y: -284}
+      - {x: 269, y: -284}
+      - {x: 282, y: -271}
+      - {x: 282, y: -270}
+      - {x: 285, y: -266}
+      - {x: 288, y: -266}
+      - {x: 290, y: -264}
+      - {x: 290, y: -260}
+      - {x: 289, y: -259}
+      - {x: 292, y: -253}
+      - {x: 293, y: -247}
+      - {x: 294, y: -246}
+      - {x: 294, y: -243}
+      - {x: 295, y: -242}
+      - {x: 295, y: 241}
+      - {x: 294, y: 242}
+      - {x: 294, y: 246}
+      - {x: 293, y: 247}
+      - {x: 292, y: 253}
+      - {x: 290, y: 256}
+      - {x: 289, y: 260}
+      - {x: 286, y: 264}
+      - {x: 286, y: 268}
+      - {x: 284, y: 270}
+      - {x: 282, y: 270}
+      - {x: 282, y: 271}
+      - {x: 269, y: 284}
+      - {x: 268, y: 284}
+      - {x: 261, y: 290}
+      - {x: 256, y: 292}
+      - {x: 254, y: 292}
+      - {x: 250, y: 294}
+      - {x: 250, y: 296}
+      - {x: 248, y: 298}
+      - {x: 244, y: 298}
+      - {x: 242, y: 296}
+      - {x: 240, y: 296}
+      - {x: 239, y: 297}
+      - {x: -235, y: 297}
+      - {x: -236, y: 298}
+      - {x: -240, y: 298}
+      - {x: -242, y: 296}
+      - {x: -249, y: 295}
+      - {x: -252, y: 293}
+      - {x: -257, y: 292}
+      - {x: -261, y: 289}
+      - {x: -265, y: 288}
+      - {x: -267, y: 286}
+      - {x: -271, y: 284}
+      - {x: -283, y: 271}
+      - {x: -283, y: 270}
+      - {x: -287, y: 265}
+      - {x: -288, y: 263}
+      - {x: -290, y: 260}
+      - {x: -291, y: 256}
+      - {x: -294, y: 252}
+      - {x: -294, y: 247}
+      - {x: -298, y: 245}
+      - {x: -298, y: 240}
+      - {x: -296, y: 238}
+      - {x: -296, y: -241}
+      - {x: -295, y: -242}
+      - {x: -295, y: -246}
+      - {x: -294, y: -247}
+      - {x: -294, y: -252}
+      - {x: -291, y: -256}
+      - {x: -291, y: -258}
+      - {x: -290, y: -259}
+      - {x: -290, y: -264}
+      - {x: -288, y: -266}
+      - {x: -286, y: -266}
+      - {x: -283, y: -272}
+      - {x: -270, y: -284}
+      - {x: -269, y: -284}
+      - {x: -266, y: -288}
+      - {x: -265, y: -290}
+      - {x: -260, y: -290}
+      - {x: -252, y: -294}
+      - {x: -246, y: -295}
+      - {x: -245, y: -296}
+      - {x: -242, y: -296}
+      - {x: -241, y: -297}
+      - {x: 235, y: -297}
+      - {x: 236, y: -298}
+      - {x: 240, y: -298}
+      - {x: 242, y: -296}
+      - {x: 248, y: -295}
+      - {x: 249, y: -294}
+    physicsShape:
+    - - {x: -16, y: 16}
+      - {x: -16, y: -16}
+      - {x: 15, y: -16}
+      - {x: 16, y: -14}
+      - {x: 16, y: 11}
+      - {x: 118.02908, y: 183.15213}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0e359c955a7c7b4418d4b5774a887f30
+timeCreated: 1515695131
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: ARB-218 Big Blunt MAR-50
+  fontNames:
+  - ARB-218 Big Blunt MAR-50
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

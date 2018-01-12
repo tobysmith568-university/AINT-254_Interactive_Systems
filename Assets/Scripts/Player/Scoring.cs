@@ -57,7 +57,7 @@ public class Scoring : MonoBehaviour
     void Tick()
     {
         Time = Time + 0.1f;
-        timeText.text = "Time: " + Time.ToString("0.0");
+        timeText.text = Time.ToString("0.0");
     }
     #endregion
 
@@ -68,7 +68,7 @@ public class Scoring : MonoBehaviour
     public static void AddScore(int score)
     {
         Score += score;
-        singleton.scoreText.text = "Score: " + Score;
+        singleton.scoreText.text = "" + Score;
     }
     #endregion
 }

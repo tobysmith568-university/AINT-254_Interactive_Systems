@@ -21,6 +21,9 @@ public class HighscoreScript : MonoBehaviour
     [SerializeField]
     Text[] globalTimes;
 
+    [SerializeField]
+    Image title;
+
     void Start()
     {
         StartCoroutine(GetText());
@@ -31,7 +34,9 @@ public class HighscoreScript : MonoBehaviour
                 localScores[i].text = MyPrefs.HighScores[i].Name + " : " + MyPrefs.HighScores[i].Score;
             if (MyPrefs.LowTimes[i].Duration != 0)
                 localTimes[i].text = MyPrefs.LowTimes[i].Name + " : " + new System.DateTime().AddMilliseconds(MyPrefs.LowTimes[i].Duration).ToString("m:ss:f");
-        }        
+        }
+
+        TitleExit();
     }
 
     IEnumerator GetText()
@@ -57,11 +62,28 @@ public class HighscoreScript : MonoBehaviour
         }
     }
 
+    int index = 0;
+    public void TitleEnter()
+    {
+        Color color;
+        string[] colours = { "#FFB32AFF", "#33D311FF", "#008EE3FF", "#A216D4FF" };
+        ColorUtility.TryParseHtmlString(colours[index], out color);
+        title.color = color;
+        index = (index == colours.Length - 1) ? 0 : index + 1;
+    }
+
+    public void TitleExit()
+    {
+        Color color;
+        ColorUtility.TryParseHtmlString("#AD4043FF", out color);
+        title.color = color;
+    }
+
     /// <summary>
     /// Called by the MainMenu button to load the main menu scene
     /// </summary>
     public void MainMenu()
     {
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 }

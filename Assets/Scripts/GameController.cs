@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour
         //Game quitting
         if (MyInput.GetButtonDown(Control.Pause))
         {
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
         }
     }
 
@@ -108,7 +108,8 @@ public class GameController : MonoBehaviour
 
         Debug.Log("Game Ended");
 
-        MyPrefs.LastPlay = new GameScore(MyPrefs.LastPlay.Name, Scoring.Score, (int)System.TimeSpan.FromSeconds(Scoring.Time).TotalMilliseconds);
+        string name = MyPrefs.LastPlay.Name;
+        MyPrefs.LastPlay = new GameScore(name, Scoring.Score, (int)System.TimeSpan.FromSeconds(Scoring.Time).TotalMilliseconds);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene(3, LoadSceneMode.Single);
@@ -116,7 +117,7 @@ public class GameController : MonoBehaviour
 
     public static void Killed()
     {
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene(4);
     }
 
     #endregion

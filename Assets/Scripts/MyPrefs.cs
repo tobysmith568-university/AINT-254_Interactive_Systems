@@ -21,7 +21,11 @@ public static class MyPrefs
         XAxisInverted,
         YAxisInverted,
         Resolution,
-        Fullscreen
+        Fullscreen,
+        MasterVolume,
+        PlayerVolume,
+        TargetsVolume,
+        UIVolume
     }
 
     public static GameScore[] HighScores
@@ -180,6 +184,54 @@ public static class MyPrefs
             PlayerPrefs.Save();
         }
     }
+    public static float MasterVolume
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("MasterVolume");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("MasterVolume", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static float PlayerVolume
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("PlayerVolume");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("PlayerVolume", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static float TargetsVolume
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("TargetsVolume");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("TargetsVolume", value);
+            PlayerPrefs.Save();
+        }
+    }
+    public static float UIVolume
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("UIVolume");
+        }
+        set
+        {
+            PlayerPrefs.SetFloat("UIVolume", value);
+            PlayerPrefs.Save();
+        }
+    }
 
     static MyPrefs()
     {
@@ -219,6 +271,14 @@ public static class MyPrefs
             Resolution = Screen.currentResolution;
         if (!Exists(Prefs.YAxisInverted))
             YAxisInverted = Screen.fullScreen;
+        if (!Exists(Prefs.MasterVolume))
+            MasterVolume = 0f;
+        if (!Exists(Prefs.PlayerVolume))
+            PlayerVolume = 0f;
+        if (!Exists(Prefs.TargetsVolume))
+            TargetsVolume = 0f;
+        if (!Exists(Prefs.UIVolume))
+            UIVolume = 0f;
     }
 
     /// <summary>
