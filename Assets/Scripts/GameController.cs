@@ -51,37 +51,88 @@ public class GameController : MonoBehaviour
     #region Setting the points breakdown message after a kill
 
     [SerializeField]
-    Text scoreMessage;
+    Text[] labelMessages;
+    [SerializeField]
+    Text[] scoreMessages;
+    [SerializeField]
+    AudioSource beepSource;
 
     public static void SendScoreMessage(int killScore = 100, int noscopeBonus = 0, int quickscopeBonus = 0, int longshotBonus = 0, int chainkillBonus = 0, int headshotBonus = 0)
     {
-        singleton._SendScoreMessage(killScore, noscopeBonus, quickscopeBonus, longshotBonus, chainkillBonus, headshotBonus);
+        singleton.StartCoroutine(singleton._SendScoreMessage(killScore, noscopeBonus, quickscopeBonus, longshotBonus, chainkillBonus, headshotBonus));
     }
 
-    private void _SendScoreMessage(int killScore = 100, int noscopeBonus = 0, int quickscopeBonus = 0, int longshotBonus = 0, int chainkillBonus = 0, int headshotBonus = 0)
+    IEnumerator _SendScoreMessage(int killScore = 100, int noscopeBonus = 0, int quickscopeBonus = 0, int longshotBonus = 0, int chainkillBonus = 0, int headshotBonus = 0)
     {
-        string message = "Kill: " + killScore;
+        int index = 0;
+
+        if (killScore != 0)
+        {
+            StopCoroutine(HideMessage(index, 2));
+            labelMessages[index].text = "Kill:";
+            scoreMessages[index].text = "" + killScore;
+            StartCoroutine(HideMessage(index, 2));
+            beepSource.Play();
+            index++;
+        }
+        yield return new WaitForSeconds(0.1f);
         if (noscopeBonus != 0)
-            message += "\nNo-scope Bonus: " + noscopeBonus;
+        {
+            StopCoroutine(HideMessage(index, 2));
+            labelMessages[index].text = "No-scope Bonus:";
+            scoreMessages[index].text = "" + noscopeBonus;
+            StartCoroutine(HideMessage(index, 2));
+            beepSource.Play();
+            index++;
+        }
+        yield return new WaitForSeconds(0.1f);
         if (quickscopeBonus != 0)
-            message += "\nQuick-scope Bonus: " + quickscopeBonus;
+        {
+            StopCoroutine(HideMessage(index, 2));
+            labelMessages[index].text = "Quick-scope Bonus:";
+            scoreMessages[index].text = "" + quickscopeBonus;
+            StartCoroutine(HideMessage(index, 2));
+            beepSource.Play();
+            index++;
+        }
+        yield return new WaitForSeconds(0.1f);
         if (longshotBonus != 0)
-            message += "\nLongshot Bonus: " + longshotBonus;
+        {
+            StopCoroutine(HideMessage(index, 2));
+            labelMessages[index].text = "Longshot Bonus:";
+            scoreMessages[index].text = "" + longshotBonus;
+            StartCoroutine(HideMessage(index, 2));
+            beepSource.Play();
+            index++;
+        }
+        yield return new WaitForSeconds(0.1f);
         if (chainkillBonus != 0)
-            message += "\nChainkill Bonus: " + chainkillBonus;
+        {
+            StopCoroutine(HideMessage(index, 2));
+            labelMessages[index].text = "Chainkill Bonus:";
+            scoreMessages[index].text = "" + chainkillBonus;
+            StartCoroutine(HideMessage(index, 2));
+            beepSource.Play();
+            index++;
+        }
+        yield return new WaitForSeconds(0.1f);
         if (headshotBonus != 0)
-            message += "\nHeadshot Bonus: " + headshotBonus;
-
-        scoreMessage.text = message;
-        Invoke("HideScoreMessage", 2f);
+        {
+            StopCoroutine(HideMessage(index, 2));
+            labelMessages[index].text = "Headshot Bonus:";
+            scoreMessages[index].text = "" + headshotBonus;
+            StartCoroutine(HideMessage(index, 2));
+            beepSource.Play();
+            index++;
+        }
     }
 
-    /// <summary>
-    /// Invoked to hide the score message
-    /// </summary>
-    void HideScoreMessage()
+    IEnumerator HideMessage(int message, int delay)
     {
-        scoreMessage.text = "";
+        yield return new WaitForSeconds(delay);
+
+        labelMessages[message].enabled = false;
+        scoreMessages[message].enabled = false;
     }
 
     #endregion
