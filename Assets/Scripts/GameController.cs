@@ -57,6 +57,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     AudioSource beepSource;
 
+    Coroutine[] coroutines = new Coroutine[6];
+
     public static void SendScoreMessage(int killScore = 100, int noscopeBonus = 0, int quickscopeBonus = 0, int longshotBonus = 0, int chainkillBonus = 0, int headshotBonus = 0)
     {
         singleton.StartCoroutine(singleton._SendScoreMessage(killScore, noscopeBonus, quickscopeBonus, longshotBonus, chainkillBonus, headshotBonus));
@@ -68,71 +70,50 @@ public class GameController : MonoBehaviour
 
         if (killScore != 0)
         {
-            StopCoroutine(HideMessage(index, 2));
-            labelMessages[index].text = "Kill:";
-            scoreMessages[index].text = "" + killScore;
-            StartCoroutine(HideMessage(index, 2));
-            beepSource.Play();
-            index++;
+            AddScore(ref index, "Kill:", killScore);
+            yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(0.1f);
         if (noscopeBonus != 0)
         {
-            StopCoroutine(HideMessage(index, 2));
-            labelMessages[index].text = "No-scope Bonus:";
-            scoreMessages[index].text = "" + noscopeBonus;
-            StartCoroutine(HideMessage(index, 2));
-            beepSource.Play();
-            index++;
+            AddScore(ref index, "No-scope Bonus:", noscopeBonus);
+            yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(0.1f);
         if (quickscopeBonus != 0)
         {
-            StopCoroutine(HideMessage(index, 2));
-            labelMessages[index].text = "Quick-scope Bonus:";
-            scoreMessages[index].text = "" + quickscopeBonus;
-            StartCoroutine(HideMessage(index, 2));
-            beepSource.Play();
-            index++;
+            AddScore(ref index, "Quick-scope Bonus:", quickscopeBonus);
+            yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(0.1f);
         if (longshotBonus != 0)
         {
-            StopCoroutine(HideMessage(index, 2));
-            labelMessages[index].text = "Longshot Bonus:";
-            scoreMessages[index].text = "" + longshotBonus;
-            StartCoroutine(HideMessage(index, 2));
-            beepSource.Play();
-            index++;
+            AddScore(ref index, "Longshot Bonus:", longshotBonus);
+            yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(0.1f);
         if (chainkillBonus != 0)
         {
-            StopCoroutine(HideMessage(index, 2));
-            labelMessages[index].text = "Chainkill Bonus:";
-            scoreMessages[index].text = "" + chainkillBonus;
-            StartCoroutine(HideMessage(index, 2));
-            beepSource.Play();
-            index++;
-        }
-        yield return new WaitForSeconds(0.1f);
+            AddScore(ref index, "Chainkill Bonus:", chainkillBonus);
+            yield return new WaitForSeconds(0.1f);
+        }        
         if (headshotBonus != 0)
-        {
-            StopCoroutine(HideMessage(index, 2));
-            labelMessages[index].text = "Headshot Bonus:";
-            scoreMessages[index].text = "" + headshotBonus;
-            StartCoroutine(HideMessage(index, 2));
-            beepSource.Play();
-            index++;
-        }
+            AddScore(ref index, "Headshot Bonus:", headshotBonus);
+    }
+
+    private void AddScore(ref int index, string label, int score)
+    {
+        if (coroutines[index] != null)
+            StopCoroutine(coroutines[index]);
+        labelMessages[index].text = label;
+        scoreMessages[index].text = "" + score;
+        coroutines[index] = StartCoroutine(HideMessage(index, 2));
+        beepSource.Play();
+        index++;
     }
 
     IEnumerator HideMessage(int message, int delay)
     {
         yield return new WaitForSeconds(delay);
 
-        labelMessages[message].enabled = false;
-        scoreMessages[message].enabled = false;
+        labelMessages[message].text = "";
+        scoreMessages[message].text = "";
     }
 
     #endregion

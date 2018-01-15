@@ -58,7 +58,7 @@ public class PlayerGun : MonoBehaviour
     bool queuedReloadSound = false;
 
     int sinceScope = 0;
-    int sinceKill = 0;
+    int sinceKill = 250;
     float shootDistance = 0;
 
     [SerializeField]
@@ -98,7 +98,7 @@ public class PlayerGun : MonoBehaviour
                 Alert();
             if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, anyButAlert))
             {
-                Debug.DrawRay(raycastHit.point, currentCamera.transform.position, Color.yellow, Mathf.Infinity, false);
+                //Debug.DrawRay(raycastHit.point, currentCamera.transform.position, Color.yellow, Mathf.Infinity, false);
                 if (raycastHit.transform.tag.Split('|')[0] == "Target")
                     TargetHit();
             }
@@ -170,7 +170,7 @@ public class PlayerGun : MonoBehaviour
             longshotBonus = (int)shootDistance - 50;
 
         //Find the chainkill stat
-        if (sinceKill < 150)
+        if (sinceKill < 250)
             chainkillBonus = 30;
 
         //Find the headshot stat
