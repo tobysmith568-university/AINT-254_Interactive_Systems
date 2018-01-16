@@ -394,6 +394,10 @@ Prefab:
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 1076034763321104, guid: 69882006d925ce04ab0f8c16fb2d8d6e, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69882006d925ce04ab0f8c16fb2d8d6e, type: 2}
   m_IsPrefabParent: 0
@@ -992,6 +996,16 @@ Prefab:
         type: 2}
       propertyPath: m_Text
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 224413239912058032, guid: 53be10d615410484aa222a3f4d485290,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 230.22223
+      objectReference: {fileID: 0}
+    - target: {fileID: 224387359578040290, guid: 53be10d615410484aa222a3f4d485290,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 230.22223
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53be10d615410484aa222a3f4d485290, type: 2}
