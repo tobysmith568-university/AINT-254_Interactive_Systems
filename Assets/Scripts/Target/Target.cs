@@ -18,7 +18,6 @@ public class Target : MonoBehaviour
 
     void Awake()
     {
-        GameController.SetTarget(gameObject, true);
     }
 
     void Start()
@@ -27,6 +26,7 @@ public class Target : MonoBehaviour
         if (gameObject.name.Contains("Person Target"))
             GetComponent<Animator>().SetInteger("ID", int.Parse(gameObject.name.Split('(')[1].Split(')')[0]));
 
+        GameController.SetTarget(gameObject, true);
     }
 
     /// <summary>

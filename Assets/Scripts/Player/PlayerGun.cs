@@ -29,7 +29,6 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     Image crosshair;
     
-    RaycastHit raycastHit;
     [SerializeField]
     LayerMask alertOnly;
     [SerializeField]
@@ -50,7 +49,13 @@ public class PlayerGun : MonoBehaviour
     bool blurEnabled;
     [SerializeField]
     float blurSize;
+    [SerializeField]
+    Transform muzzle;
 
+    RaycastHit alertRaycastHit;
+
+    [SerializeField]
+    GameObject bulletPrefab;
 
     bool isScoped;
     bool canFire = true;
@@ -94,15 +99,7 @@ public class PlayerGun : MonoBehaviour
         {
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
-            while (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, alertOnly))
-                Alert();
-            if (Physics.Raycast(currentCamera.transform.position, currentCamera.transform.forward, out raycastHit, Mathf.Infinity, anyButAlert))
-            {
-                //Debug.DrawRay(raycastHit.point, currentCamera.transform.position, Color.yellow, Mathf.Infinity, false);
-                if (raycastHit.transform.tag.Split('|')[0] == "Target")
-                    TargetHit();
-            }
-
+            
             gunFire.Play();
             flame.Play();
 
@@ -119,6 +116,8 @@ public class PlayerGun : MonoBehaviour
                 Reload();
             else if (AmmoCount == 0 && isScoped)
                 CantFire();
+
+            Instantiate(bulletPrefab, muzzle.position, muzzle.rotation).GetComponent<Bullet>().Shoot(this);            
         }
 
         //Scoping
@@ -143,7 +142,7 @@ public class PlayerGun : MonoBehaviour
     /// <summary>
     /// Ran when the gun is fired and hits a target
     /// </summary>
-    void TargetHit()
+    public void TargetHit()
     {
         int noscopeBonus = 0, quickscopeBonus = 0, longshotBonus = 0, chainkillBonus = 0, headshotBonus = 0;
         //Cancel invokes
@@ -165,7 +164,7 @@ public class PlayerGun : MonoBehaviour
             quickscopeBonus = 10;
 
         //Find the long-shot stat
-        shootDistance = Vector3.Distance(playerTransform.position, raycastHit.transform.position);
+        shootDistance = Vector3.Distance(playerTransform.position, GameController.raycastHit.transform.position);
         if (shootDistance > 50)
             longshotBonus = (int)shootDistance - 50;
 
@@ -174,7 +173,7 @@ public class PlayerGun : MonoBehaviour
             chainkillBonus = 30;
 
         //Find the headshot stat
-        if (raycastHit.collider.tag == "Target|Head")
+        if (GameController.raycastHit.collider.tag == "Target|Head")
             headshotBonus = 25;
         
         //Show the messages to the player
@@ -188,15 +187,7 @@ public class PlayerGun : MonoBehaviour
         InvokeRepeating("IncrementSinceKill", 0.01f, 0.01f);
 
         //Tell the target it has been hit
-        raycastHit.transform.GetComponent<Target>().BeenShot();         
-    }
-
-    /// <summary>
-    /// Ran when the gun is fired and hits a listener
-    /// </summary>
-    void Alert()
-    {
-        raycastHit.transform.GetComponentInChildren<TargetGun>().LockOn();
+        GameController.raycastHit.transform.GetComponent<Target>().BeenShot();         
     }
 
     /// <summary>

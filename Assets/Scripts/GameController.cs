@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
 {
     private static GameController singleton;
 
+    public static RaycastHit raycastHit;
+
     private void Awake()
     {
         singleton = this;
