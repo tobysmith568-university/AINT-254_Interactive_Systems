@@ -56,6 +56,8 @@ public class PlayerGun : MonoBehaviour
 
     [SerializeField]
     GameObject bulletPrefab;
+    [SerializeField]
+    PoolManager poolManager;
 
     bool isScoped;
     bool canFire = true;
@@ -117,7 +119,8 @@ public class PlayerGun : MonoBehaviour
             else if (AmmoCount == 0 && isScoped)
                 CantFire();
 
-            Instantiate(bulletPrefab, muzzle.position, muzzle.rotation).GetComponent<Bullet>().Shoot(this);            
+            PoolObject newBullet = poolManager.GetPooledObject();
+            newBullet.bullet.Shoot(muzzle.position, muzzle.rotation, this);          
         }
 
         //Scoping
