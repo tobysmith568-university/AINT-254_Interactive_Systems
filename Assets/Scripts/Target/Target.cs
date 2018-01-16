@@ -16,10 +16,6 @@ public class Target : MonoBehaviour
 
     public bool beenShot;
 
-    void Awake()
-    {
-    }
-
     void Start()
     {
         mesh = GetComponent<MeshRenderer>();

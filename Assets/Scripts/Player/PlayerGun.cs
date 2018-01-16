@@ -21,7 +21,6 @@ public class PlayerGun : MonoBehaviour
     Camera mainCamera;
     [SerializeField]
     Camera scopeCamera;
-    Camera currentCamera;
 
     [SerializeField]
     ParticleSystem flame;
@@ -97,26 +96,31 @@ public class PlayerGun : MonoBehaviour
         //Firing
         if (MyInput.GetButtonDown(Control.Shoot) && canFire && AmmoCount > 0 && !reloadSource.isPlaying)
         {
+            //Animate the shot
             handAnimator.SetTrigger("Shoot");
-            currentCamera = (isScoped) ? scopeCamera : mainCamera;
 
+            //Play the sound and particle effect
             gunFire.Play();
             flame.Play();
 
+            //If the gun is scoped up, queue an automatic unscoping and a reload sound
             if (isScoped)
             {
                 justFired = true;
                 queuedReloadSound = true;
             }
+            //Else invoke the reload sound for 'now'
             else
                 Invoke("ReloadSound", 0.40f);
 
+            //Reduce the ammo by one and decide if the gun needs to be reloaded
             AmmoCount--;
             if (AmmoCount == 0 && !isScoped)
                 Reload();
             else if (AmmoCount == 0 && isScoped)
                 CantFire();
 
+            //Fire a bullet
             Instantiate(bulletPrefab, muzzle.position, muzzle.rotation).GetComponent<Bullet>().Shoot(this);
         }
 
@@ -294,16 +298,25 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plays the reloading sound
+    /// </summary>
     public void ReloadSound()
     {
         reloadSource.Play();
     }
 
+    /// <summary>
+    /// Plays the magazine being removed sound
+    /// </summary>
     public void MagOut()
     {
         reloadSource.PlayOneShot(magOut);
     }
 
+    /// <summary>
+    /// Plays the magazine being loaded sound
+    /// </summary>
     public void MagIn()
     {
         reloadSource.PlayOneShot(magIn);

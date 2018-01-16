@@ -28,18 +28,22 @@ public class Bullet : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Calculate if the bullet has moved more than 10cm
         thisPos = transform.position;
         stepDirection = GetComponent<Rigidbody>().velocity.normalized;
         stepSize = (thisPos - previousPos).magnitude;
         if (stepSize > 0.1)
         {
             RaycastHit alertRaycastHit;
+
+            //If so, fire as many rays as it takes to clear out and trigger any listener colliders
             while (Physics.Raycast(previousPos, stepDirection, out alertRaycastHit, stepSize, alertOnlyLayerMask))
                 alertRaycastHit.transform.GetComponentInChildren<TargetGun>().LockOn();
 
+            //Fire one damage ray
             if (Physics.Raycast(previousPos, stepDirection, out GameController.raycastHit, stepSize, killLayerMask))
             {
-                Debug.Log(GameController.raycastHit.transform.name);
+                //If it hits a collider with the target tag, tell it it's been hit
                 if (GameController.raycastHit.transform.tag.Split('|')[0] == "Target")
                     thisParent.TargetHit();
 
@@ -50,6 +54,10 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shoots the bullet from a given parent
+    /// </summary>
+    /// <param name="parent">Where to shoot the bullet from</param>
     public void Shoot(PlayerGun parent)
     {
         thisParent = parent;

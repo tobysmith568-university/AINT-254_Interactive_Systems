@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// THIS SCRIPT IS ADDED TO THE EVENT LISTENER GAMEOBJECT IN THE SCENE!
+/// </summary>
 public class Killed : MonoBehaviour
 {
     [SerializeField]
@@ -12,6 +15,8 @@ public class Killed : MonoBehaviour
     [SerializeField]
     AudioSource whoop;
 
+    int index = 0;
+
     private void Start()
     {
         TitleExit();
@@ -19,12 +24,17 @@ public class Killed : MonoBehaviour
         Cursor.visible = true;
     }
 
+    /// <summary>
+    /// Loads the Main Menu scene
+    /// </summary>
     public void MainMenu()
     {
         SceneManager.LoadScene(1);
     }
 
-    int index = 0;
+    /// <summary>
+    /// Changes the colour of the title when rolled-over
+    /// </summary>
     public void TitleEnter()
     {
         Color color;
@@ -36,6 +46,9 @@ public class Killed : MonoBehaviour
         Whoop();
     }
 
+    /// <summary>
+    /// Returns the colour of the title to it's default
+    /// </summary>
     public void TitleExit()
     {
         Color color;
@@ -43,6 +56,9 @@ public class Killed : MonoBehaviour
         title.color = color;
     }
 
+    /// <summary>
+    /// Plays the roll-over 'Whoop' sound
+    /// </summary>
     public void Whoop()
     {
         if (!whoop.isPlaying)

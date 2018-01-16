@@ -19,6 +19,11 @@ public class Damage : MonoBehaviour
         StartCoroutine(Fade());
     }
 
+    /// <summary>
+    /// Sets the aplha channel of an Image
+    /// </summary>
+    /// <param name="image">The Image</param>
+    /// <param name="alpha">The new value for the alpha channel</param>
     private void SetAlpha(Image image, float alpha)
     {
         Color tempColor = image.color;
@@ -42,6 +47,10 @@ public class Damage : MonoBehaviour
         Debug.Log("1: " + firstDamageRing.color.a + " | 2: " + secondDamageRing.color.a);
     }
 
+    /// <summary>
+    /// Fades out the two damage rings
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Fade()
     {
         while (true)

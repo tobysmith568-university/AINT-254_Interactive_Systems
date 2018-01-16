@@ -17,6 +17,8 @@ public class Options : MonoBehaviour
     [SerializeField]
     AudioSource whoop;
     
+    int index = 0;
+
     private void Start()
     {
         //Show the first panel
@@ -53,6 +55,7 @@ public class Options : MonoBehaviour
         //Video
         fullscreenToggle.isOn = Screen.fullScreen;
 
+            //The resolution dropdown
         List<Dropdown.OptionData> resolutionOptions = new List<Dropdown.OptionData>();
         for (int i = 0; i < Screen.resolutions.Length; i++)
         {
@@ -66,6 +69,7 @@ public class Options : MonoBehaviour
                 ResolutionDropdown.value = i;
         }
 
+            //The quality dropdown
         List<Dropdown.OptionData> qualityOptions = new List<Dropdown.OptionData>();
         for (int i = 0; i < QualitySettings.names.Length; i++)
         {
@@ -115,7 +119,9 @@ public class Options : MonoBehaviour
         }
     }
 
-    int index = 0;
+    /// <summary>
+    /// Changes the colour of the title when rolled-over
+    /// </summary>
     public void TitleEnter()
     {
         Color color;
@@ -127,6 +133,9 @@ public class Options : MonoBehaviour
         Whoop();
     }
 
+    /// <summary>
+    /// Returns the colour of the title to it's default
+    /// </summary>
     public void TitleExit()
     {
         Color color;
@@ -134,6 +143,9 @@ public class Options : MonoBehaviour
         title.color = color;
     }
 
+    /// <summary>
+    /// Returns the colour of the title to it's default
+    /// </summary>
     public void Whoop()
     {
         if (!whoop.isPlaying)
@@ -331,6 +343,9 @@ public class Options : MonoBehaviour
     [SerializeField]
     Text UILabel;
 
+    /// <summary>
+    /// Called when the master volume Volume level is changed
+    /// </summary>
     public void MasterChanged()
     {
         mixer.SetFloat("master", masterVolume.value == masterVolume.minValue ? -80 : masterVolume.value);
@@ -338,6 +353,9 @@ public class Options : MonoBehaviour
         MyPrefs.MasterVolume = masterVolume.value;
     }
 
+    /// <summary>
+    /// Called when the player volume level is changed
+    /// </summary>
     public void PlayerChanged()
     {
         mixer.SetFloat("player", playerVolume.value == playerVolume.minValue ? -80 : playerVolume.value);
@@ -345,6 +363,9 @@ public class Options : MonoBehaviour
         MyPrefs.PlayerVolume = playerVolume.value;
     }
 
+    /// <summary>
+    /// Called when the target volume level is changed
+    /// </summary>
     public void TargetChanged()
     {
         mixer.SetFloat("targets", targetsVolume.value == targetsVolume.minValue ? -80 : targetsVolume.value);
@@ -352,6 +373,9 @@ public class Options : MonoBehaviour
         MyPrefs.TargetsVolume = targetsVolume.value;
     }
 
+    /// <summary>
+    /// Called when the UI volume level is changed
+    /// </summary>
     public void UIChanged()
     {
         mixer.SetFloat("UI", UIVolume.value == masterVolume.minValue ? -80 : masterVolume.value);
@@ -359,6 +383,11 @@ public class Options : MonoBehaviour
         MyPrefs.UIVolume = UIVolume.value;
     }
 
+    /// <summary>
+    /// Retuns the percentage a given slider is
+    /// </summary>
+    /// <param name="slider">The Slider</param>
+    /// <returns>How full it is as a percentage</returns>
     private string GetPercentage(Slider slider)
     {
         return ((int)((slider.value - slider.minValue) / (slider.maxValue - slider.minValue) * 100)).ToString();
@@ -376,17 +405,29 @@ public class Options : MonoBehaviour
     [SerializeField]
     Dropdown QualityDropdown;
 
+    /// <summary>
+    /// Called when the full-screen toggle is toggled
+    /// Changes the full-screen toggle to the opposite of what it is
+    /// </summary>
     public void FullscreenToggled()
     {
         Screen.fullScreen = MyPrefs.Fullscreen = fullscreenToggle.isOn;
     }
 
+    /// <summary>
+    /// Called when the resolution dropdown is changed
+    /// Changes the current resolution
+    /// </summary>
     public void ResolutionChanged()
     {
         Screen.SetResolution(Screen.resolutions[ResolutionDropdown.value].width, Screen.resolutions[ResolutionDropdown.value].height, Screen.fullScreen);
         MyPrefs.Resolution = Screen.currentResolution;
     }
 
+    /// <summary>
+    /// Called when the video quality dropdown is changed
+    /// Changes the current video qualiity
+    /// </summary>
     public void QualityChanged()
     {
         QualitySettings.SetQualityLevel(QualityDropdown.value, true);
@@ -434,12 +475,19 @@ public class Options : MonoBehaviour
     Control? currentControl;
     int primaryOrSecondary = 0;
 
+    /// <summary>
+    /// Called when a mapping button is pressed
+    /// </summary>
+    /// <param name="mapping">A string representing the mapping</param>
     public void MappingPressed(string mapping)
     {
         currentControl = (Control)System.Enum.Parse(typeof(Control), mapping.Split(' ')[0]);
         primaryOrSecondary = int.Parse(mapping.Split(' ')[1]);
     }
 
+    /// <summary>
+    /// Updates the text on all of the mapping buttons via Strings representing them
+    /// </summary>
     public void UpdateButtonText()
     {
         foreach (Mapping mapping in MyInput.keyMaps)
@@ -496,12 +544,19 @@ public class Options : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resets all mappings to the default values in the MyInput class
+    /// </summary>
     public void ResetMappings()
     {
         MyInput.ResetMappings();
         UpdateButtonText();
     }
 
+    /// <summary>
+    /// Removes a secondary mapping from a control - leaving just one
+    /// (primary) mapping
+    /// </summary>
     private void RemoveMapping()
     {
         MyInput.RemoveSecondMapping((Control)currentControl);

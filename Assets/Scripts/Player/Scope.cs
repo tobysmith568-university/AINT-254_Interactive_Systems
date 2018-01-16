@@ -17,6 +17,7 @@ class Scope : MonoBehaviour
 
     private void Update()
     {
+        //Update the distance measure in the scope
         distance.text = "Distance: ";
         if (Physics.Raycast(scopeCamera.position, transform.up, out raycastHit, Mathf.Infinity, layermask))
             distance.text += raycastHit.distance.ToString("f1") + "m";

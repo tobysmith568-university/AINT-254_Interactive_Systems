@@ -11,20 +11,18 @@ using UnityEngine.Audio;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField]
-    bool DeleteAllPrefs = false;
-    [SerializeField]
     Image title;
     [SerializeField]
     AudioMixer mixer;
     [SerializeField]
     AudioSource whoop;
 
+    int index = 0;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        if (DeleteAllPrefs)
-            PlayerPrefs.DeleteAll();
         
         mixer.SetFloat("master", MyPrefs.MasterVolume);
         mixer.SetFloat("player", MyPrefs.PlayerVolume);
@@ -34,7 +32,9 @@ public class MainMenu : MonoBehaviour
         TitleExit();
     }
 
-    int index = 0;
+    /// <summary>
+    /// Changes the colour of the title when rolled-over
+    /// </summary>
     public void TitleEnter()
     {
         string[] colours = { "#FFB32AFF", "#33D311FF", "#008EE3FF", "#A216D4FF" };
@@ -47,6 +47,9 @@ public class MainMenu : MonoBehaviour
         Whoop();
     }
 
+    /// <summary>
+    /// Returns the colour of the title to it's default
+    /// </summary>
     public void TitleExit()
     {
         Color color;
@@ -54,6 +57,9 @@ public class MainMenu : MonoBehaviour
         title.color = color;
     }
 
+    /// <summary>
+    /// Plays the roll-over 'Whoop' sound
+    /// </summary>
     public void Whoop()
     {
         if (!whoop.isPlaying)
@@ -84,6 +90,9 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(5, LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Quits the application
+    /// </summary>
     public void Quit()
     {
         Application.Quit();

@@ -20,10 +20,6 @@ public class TargetGun : MonoBehaviour
     [SerializeField]
     ParticleSystem flame;
 
-    bool isRunning;
-
-    int ammo;
-
     [SerializeField]
     LayerMask notGun;
 
@@ -50,6 +46,10 @@ public class TargetGun : MonoBehaviour
     AudioMixerGroup mixerGroup;
 
     bool isFirstShot;
+
+    bool isRunning;
+
+    int ammo;
 
     void Start()
     {
@@ -105,9 +105,14 @@ public class TargetGun : MonoBehaviour
     void Shoot()
     {
         int upperOdd = 3;
+
+        //Play the sound and particle effects
         fireSource.Play();
         flame.Play();
+
         ammo--;
+
+        //Find the direction of the player and mildly make it randomly innaccurate if it's not the forst shot
         Vector3 direction = (player.position - thisTransform.position).normalized;
         if (!isFirstShot)
         {
@@ -123,6 +128,7 @@ public class TargetGun : MonoBehaviour
             Vector3 dir = raycastHit.point - thisTransform.position;
             float mag = dir.magnitude;
 
+            //If a ray fired in that direction hits the player, tell them they're damaged
             if (raycastHit.transform.name == "PlayerMain")
             {
                 upperOdd = 0;
@@ -135,6 +141,7 @@ public class TargetGun : MonoBehaviour
             }
         }
 
+        //If the ray missed, decide if a random bullet sound should play
         if (Random.Range(0, upperOdd) == 1)
         {
             AudioClip clip = bulletWizzes[Random.Range(0, bulletWizzes.Length - 1)];
@@ -150,6 +157,12 @@ public class TargetGun : MonoBehaviour
             lockedOn = false;
     }
 
+    /// <summary>
+    /// Creates, plays, and destroys a bullet sound
+    /// </summary>
+    /// <param name="clip">The sound to play</param>
+    /// <param name="pos">Where to play it from</param>
+    /// <returns>The new, temporary, audioSource</returns>
     private AudioSource BulletWizz(AudioClip clip, Vector3 pos)
     {
         GameObject tempGO = new GameObject("TempAudio");
@@ -190,6 +203,10 @@ public class TargetGun : MonoBehaviour
         thisAnimator.SetBool("isShooting", true);
     }
 
+    /// <summary>
+    /// Locks the targets gun onto the player
+    /// Disables the target's listener for a fifth of a second
+    /// </summary>
     public void LockOn()
     {
         lockedOn = true;
@@ -197,6 +214,9 @@ public class TargetGun : MonoBehaviour
         Invoke("EnableListener", 0.2f);
     }
 
+    /// <summary>
+    /// Enables the targets listener
+    /// </summary>
     private void EnableListener()
     {
         listener.enabled = true;

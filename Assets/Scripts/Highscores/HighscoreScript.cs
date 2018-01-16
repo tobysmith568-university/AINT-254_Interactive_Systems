@@ -27,10 +27,14 @@ public class HighscoreScript : MonoBehaviour
     [SerializeField]
     AudioSource whoop;
 
+    int index = 0;
+
     void Start()
     {
+        //Find the global highscores
         StartCoroutine(GetText());
 
+        //Load in the local highscores
         for (int i = 0; i < 10; i++)
         {
             if (MyPrefs.HighScores[i].Score != 0)
@@ -42,19 +46,23 @@ public class HighscoreScript : MonoBehaviour
         TitleExit();
     }
 
+    /// <summary>
+    /// Requests, and downloads the global high scores and quickest times
+    /// </summary>
+    /// <returns>IEnumerator</returns>
     IEnumerator GetText()
     {
         UnityWebRequest www = UnityWebRequest.Get("http://tobysmith.uk/ShooterUnknown/SendScore.php?pass=we345678i9olkjhgtrewazsxcvbnjkio90pokjyt432waw23erfr567ujhg");
         yield return www.Send();
 
         if (www.isNetworkError || www.isHttpError)
-        {
             Debug.Log(www.error);
-        }
         else
         {
+            //If there is a cuccessful download, convert the data to a Scores data object
             ScoreDownload scores = JsonConvert.DeserializeObject<ScoreDownload>(www.downloadHandler.text);
 
+            //Add the newly found global scores to the UI
             for (int i = 0; i < 10; i++)
             {
                 if (scores.ScoreScores[i].Score != 0)
@@ -65,7 +73,9 @@ public class HighscoreScript : MonoBehaviour
         }
     }
 
-    int index = 0;
+    /// <summary>
+    /// Changes the colour of the title when rolled-over
+    /// </summary>
     public void TitleEnter()
     {
         Color color;
@@ -77,6 +87,9 @@ public class HighscoreScript : MonoBehaviour
         Whoop();
     }
 
+    /// <summary>
+    /// Returns the colour of the title to it's default
+    /// </summary>
     public void TitleExit()
     {
         Color color;
@@ -84,6 +97,9 @@ public class HighscoreScript : MonoBehaviour
         title.color = color;
     }
 
+    /// <summary>
+    /// Plays the roll-over 'Whoop' sound
+    /// </summary>
     public void Whoop()
     {
         if (!whoop.isPlaying)

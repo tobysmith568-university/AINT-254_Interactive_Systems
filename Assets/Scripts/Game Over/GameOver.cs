@@ -29,6 +29,8 @@ public class GameOver : MonoBehaviour
     GameScore[] scoreScores;
     GameScore gameScore;
 
+    int index = 0;
+
     void Start()
     {
         TitleExit();
@@ -46,8 +48,10 @@ public class GameOver : MonoBehaviour
 
     void Update()
     {
+        //If there's text in the name text box, allow the button to be clicked
         menuButton.interactable = playerName.text.Length > 0;
 
+        //If the button can be pressed and 'Return' is pressed
         if (Input.GetKeyDown(KeyCode.Return) && menuButton.interactable)
             MainMenu();
     }
@@ -105,7 +109,9 @@ public class GameOver : MonoBehaviour
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
-    int index = 0;
+    /// <summary>
+    /// Changes the colour of the title when rolled-over
+    /// </summary>
     public void TitleEnter()
     {
         Color color;
@@ -117,6 +123,9 @@ public class GameOver : MonoBehaviour
         Whoop();
     }
 
+    /// <summary>
+    /// Returns the colour of the title to it's default
+    /// </summary>
     public void TitleExit()
     {
         Color color;
@@ -124,6 +133,9 @@ public class GameOver : MonoBehaviour
         title.color = color;
     }
 
+    /// <summary>
+    /// Plays the roll-over 'Whoop' sound
+    /// </summary>
     public void Whoop()
     {
         if (!whoop.isPlaying)

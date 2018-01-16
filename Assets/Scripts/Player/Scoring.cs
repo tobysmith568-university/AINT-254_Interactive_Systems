@@ -40,20 +40,27 @@ public class Scoring : MonoBehaviour
         Score = 0;
     }
 
-    /// <summary>
-    /// Code to change the game time
-    /// </summary>
     #region Time
+
+    /// <summary>
+    /// Starts a timer which ticks every second
+    /// </summary>
     static void StartTimer()
     {
         singleton.InvokeRepeating("Tick", 0.1f, 0.1f);
     }
 
+    /// <summary>
+    /// Stops the timer which ticks every second
+    /// </summary>
     static void StopTimer()
     {
         singleton.CancelInvoke("Tick");
     }
 
+    /// <summary>
+    /// The tick of the timer which ticks every second
+    /// </summary>
     void Tick()
     {
         Time = Time + 0.1f;
@@ -61,14 +68,16 @@ public class Scoring : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// Code to change the player's score
-    /// </summary>
     #region Score
+
+    /// <summary>
+    /// Adds a given value to the player score
+    /// </summary>
     public static void AddScore(int score)
     {
         Score += score;
         singleton.scoreText.text = "" + Score;
     }
+
     #endregion
 }
