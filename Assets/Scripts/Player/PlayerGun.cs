@@ -56,8 +56,6 @@ public class PlayerGun : MonoBehaviour
 
     [SerializeField]
     GameObject bulletPrefab;
-    [SerializeField]
-    PoolManager poolManager;
 
     bool isScoped;
     bool canFire = true;

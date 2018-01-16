@@ -309,7 +309,7 @@ Transform:
   - {fileID: 1770487721}
   - {fileID: 1309024474}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &460574817 stripped
 MonoBehaviour:
@@ -354,7 +354,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4020600931719398, guid: 69882006d925ce04ab0f8c16fb2d8d6e, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 65184702744685744, guid: 69882006d925ce04ab0f8c16fb2d8d6e,
         type: 2}
@@ -536,7 +536,7 @@ RectTransform:
   m_Children:
   - {fileID: 487030047}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -826,7 +826,7 @@ Prefab:
     - target: {fileID: 224725522952369592, guid: 53be10d615410484aa222a3f4d485290,
         type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224725522952369592, guid: 53be10d615410484aa222a3f4d485290,
         type: 2}
@@ -2279,7 +2279,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4035650963067280, guid: e3f13e2bc4c4e1a43b929b2d9db8b3a7, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e3f13e2bc4c4e1a43b929b2d9db8b3a7, type: 2}
@@ -2493,7 +2493,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4457189443053832, guid: 21e567300c166b742b2c8508fdc23f2d, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114517782314641174, guid: 21e567300c166b742b2c8508fdc23f2d,
         type: 2}
@@ -2574,7 +2574,7 @@ Prefab:
         type: 2}
       propertyPath: poolManager
       value: 
-      objectReference: {fileID: 2077381803}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 21e567300c166b742b2c8508fdc23f2d, type: 2}
   m_IsPrefabParent: 0
@@ -2701,50 +2701,6 @@ SphereCollider:
   m_PrefabParentObject: {fileID: 135128563089859138, guid: f20fc0c922f8db64295c102769ad6baa,
     type: 2}
   m_PrefabInternal: {fileID: 2113553220}
---- !u!1 &2077381802
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2077381804}
-  - component: {fileID: 2077381803}
-  m_Layer: 0
-  m_Name: PoolManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2077381803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2077381802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffa2c8a10892fd34e838a3adf472d9f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pooledObjects:
-  - name: Bullets
-    prefab: {fileID: 1147870735675814, guid: e3f13e2bc4c4e1a43b929b2d9db8b3a7, type: 2}
-    amount: 8
---- !u!4 &2077381804
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2077381802}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2089822911 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114354882228423158, guid: 53be10d615410484aa222a3f4d485290,
