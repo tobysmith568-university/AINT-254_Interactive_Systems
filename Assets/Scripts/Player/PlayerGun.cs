@@ -101,7 +101,7 @@ public class PlayerGun : MonoBehaviour
         {
             handAnimator.SetTrigger("Shoot");
             currentCamera = (isScoped) ? scopeCamera : mainCamera;
-            
+
             gunFire.Play();
             flame.Play();
 
@@ -119,8 +119,7 @@ public class PlayerGun : MonoBehaviour
             else if (AmmoCount == 0 && isScoped)
                 CantFire();
 
-            PoolObject newBullet = poolManager.GetPooledObject();
-            newBullet.bullet.Shoot(muzzle.position, muzzle.rotation, this);          
+            Instantiate(bulletPrefab, muzzle.position, muzzle.rotation).GetComponent<Bullet>().Shoot(this);
         }
 
         //Scoping

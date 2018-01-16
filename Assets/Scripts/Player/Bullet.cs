@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    PlayerGun thisGun;
+    PlayerGun thisParent;
     Vector3 previousPos;
     Vector3 thisPos;
     Vector3 stepDirection;
@@ -21,8 +21,9 @@ public class Bullet : MonoBehaviour
 
     int counter;
 
-    void Awake()
+    void Start()
     {
+        Destroy(gameObject, 10);
     }
 
     void FixedUpdate()
@@ -40,30 +41,19 @@ public class Bullet : MonoBehaviour
             {
                 Debug.Log(GameController.raycastHit.transform.name);
                 if (GameController.raycastHit.transform.tag.Split('|')[0] == "Target")
-                    thisGun.TargetHit();
+                    thisParent.TargetHit();
 
-                StopAllCoroutines();
-                gameObject.SetActive(false);
+                Destroy(gameObject);
             }
             else
                 previousPos = thisPos;
         }
     }
 
-    public void Shoot(Vector3 position, Quaternion rotation, PlayerGun parent)
+    public void Shoot(PlayerGun parent)
     {
-        gameObject.SetActive(true);
-        StartCoroutine(SetNotActive(2f));
-        transform.position = position;
-        transform.rotation = rotation;
-        thisGun = parent;
+        thisParent = parent;
         previousPos = transform.position;
         GetComponent<Rigidbody>().AddForce(transform.forward * speed, ForceMode.VelocityChange);
-    }
-
-    IEnumerator SetNotActive(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        gameObject.SetActive(false);
     }
 }
